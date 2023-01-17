@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-export default function UsersPage() {
+export default function ScoreBoardPage() {
   const loggedInUser = useSelector((state) => state.user.loggedInUser)
   console.log(loggedInUser)
   // Redirect if user accesses page directly via url and does not have permissions 

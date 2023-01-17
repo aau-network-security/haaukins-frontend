@@ -13,10 +13,9 @@ import ReactTooltip from 'react-tooltip';
 export default function NavItem({ icon, title, navSize, to, customClickEvent }) {
     return (
         <Flex
-            mt={30}
-            flexDir="column"
+            flexDir="row"
             w="100%"
-            alignItems={navSize === "small" ? "center" : "flex-start"}
+            alignItems="center"
         >
             <Menu placement="right">
                     <Link
@@ -28,7 +27,7 @@ export default function NavItem({ icon, title, navSize, to, customClickEvent }) 
                         w={navSize === "large" && "100%"}
                         to={to}
                         data-tip={title}
-                        data-place="right"
+                        data-place="bottom"
                         data-effect="solid"
                         data-background-color="#211a52"
                         onClick={customClickEvent}
