@@ -8,6 +8,10 @@ import ProfilePage from './pages/ProfilePage'
 import ChallengesPage from './pages/ChallengesPage'
 import Sidebar from './components/navbar/Sidebar'
 import SignupPage from './pages/SignupPage';
+import ScoreBoardPage from './pages/ScoreBoardPage';
+import TeamsPage from './pages/TeamsPage';
+import LabInfoPage from './pages/LabInfoPage'
+import FaqPage from './pages/FaqPage';
 import { Flex } from '@chakra-ui/react'
 import { BASE_URL } from './api/client'
 import { useFetch } from 'react-async'
@@ -54,13 +58,10 @@ function AppRouter() {
             <Routes>
                 <Route element= {
                     <>
-                    <Sidebar/>
-                        {/* <Flex w="100vw" height='100%'>
-                            
-                            <Flex w="100%" overflowX={"auto"}>
-                                <Outlet/>
-                            </Flex>
-                        </Flex> */}
+                        <Sidebar/>
+                        <Flex w="100%" overflowX={"auto"}>
+                            <Outlet/>
+                        </Flex>
                     </>
                 }>
                 <Route path="" element={<HomePage />} />
@@ -68,6 +69,10 @@ function AppRouter() {
                 <Route path='signup' element={<SignupPage />} />
                 <Route path="profile" element={<ProfilePage />} />
                 <Route path="challenges" element={<ChallengesPage />} />
+                <Route path="teams" element={<TeamsPage />} />
+                <Route path="scoreboard" element={<ScoreBoardPage />} />
+                <Route path="labinfo" element={<LabInfoPage />} />
+                <Route path="faq" element={<FaqPage />} />
                     <Route element={<AuthWrapper />}>
                             {/* <Route path="" element={<HomePage />} />
                             <Route path="profile" element={<ProfilePage />} />

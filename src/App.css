@@ -24,31 +24,84 @@
 }
 
 
+.hover-underline-animation-light {
+  display: inline-block;
+  position: relative;
+  color: #dfdfe3;
+}
 
+.hover-underline-animation-light ::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: #dfdfe3;
+  transform-origin: center;
+  transition: transform 0.25s ease-out;
+}
 
+.hover-underline-animation-light :hover::after {
+  transform: scaleX(1);
+  transform-origin: center;
+}
+
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: #211a52;
+}
+
+.hover-underline-animation::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: #211a52;
+  transform-origin: center;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover::after {
+  transform: scaleX(1);
+  transform-origin: center;
+}
 
 
 /* css */
+html{
+  background: url("assets/background.png") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: #f7fafc;
+}
 body{
-  height: 100vh;
+  min-height: 100%;
+  background: #00000000!important;
 }
 .App {
   font-family: Roboto, sans-serif;
-  background-color: #f7fafc;
+  background-color: #dfdfe300;
   height: 100%;
-  background-image: url("assets/background.png");
 }
 #root {
   height: 100%;
 }
 
-.container {
+/* .container {
   padding: 16px 16px 16px 16px;
   width: 100%;
   background-color: white;
   border-radius: 15px;
   box-shadow:rgb(0 0 0 / 2%) 0px 3.5px 5.5px;
-}
+} */
 
 .container-header {
   width: 100%;

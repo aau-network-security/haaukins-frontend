@@ -1,28 +1,21 @@
 import React, { useState } from 'react'
 import {
     Flex as Box,
-    Text,
-    IconButton,
-    Divider,
-    Avatar,
-    Heading,
-    Icon,
-    MenuButton,
-    Menu,
-    Spacer,
-    Flex
+    Flex,
+    HStack
 } from '@chakra-ui/react'
 import {
-    FiCalendar,
-    FiLogOut,
-    FiSettings
+    FiLogOut
 } from 'react-icons/fi'
-import { FaRegBuilding, FaFlagCheckered, FaNetworkWired, FaUsers } from 'react-icons/fa'
-import { RiDashboardLine, RiUserSettingsLine } from 'react-icons/ri'
+import { FaFlagCheckered, FaNetworkWired, FaQuestion } from 'react-icons/fa'
+import { NavLink as ReactLink } from 'react-router-dom'
+import { RiUserSettingsLine, RiTeamLine } from 'react-icons/ri'
+import { SlGraph } from 'react-icons/sl'
 import NavItem from './NavItem'
-import Logo from '../Logo'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../features/users/userSlice'
+import ReactTooltip from 'react-tooltip'
+import { Link } from 'react-router-dom'
 
 // TODO new logos
 export default function Sidebar() {
@@ -32,47 +25,68 @@ export default function Sidebar() {
         dispatch(logoutUser())
     }
     const loggedInUser = useSelector((state) => state.user.loggedInUser)
+    const scrolledToTop = useSelector((state) => state.generic.scrolledToTop)
 
     return (
         <Flex
-            backgroundColor="white"
+            backgroundColor={scrolledToTop ? '#fff' : '#211a52'}
             pos="sticky"
+            top="0"
             h="75px"
-            boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
             w="100%"
             flexDir="row"
+            fontWeight="bold"
+            bg={scrolledToTop ? "transparent" : "solid"}
             justifyContent="space-between"
         >
             <Box
                 flexDir="row"
-                w="100%"
+                w="fit-content"
+                marginLeft="25px"
+                alignItems="center"
+                h="75px"
+                color={scrolledToTop ? "#54616e" : "#dfdfe3"}
+                position="fixed"
+                fontSize="35px"
+                as="nav"
+            >   
+                <Link
+                    as={ReactLink}
+                    _hover={{ textDecor: 'none'}}
+                    to={"/"}
+                >Event Title</Link>                 
+            </Box>
+
+            <Box
+                flexDir="row"
+                w="fit-content"
+                display="flex"
+                top="0"
+                margin="auto"
                 alignItems="center"
                 as="nav"
             >   
-                <h1>Event Title</h1>                 
+                <HStack spacing="20px">
+                    <NavItem navSize={navSize} displayTitle icon={RiTeamLine} title="Teams" to="/teams" />
+                    <NavItem navSize={navSize} displayTitle icon={SlGraph} title="Scoreboard" to="/scoreboard" />
+                    <NavItem navSize={navSize} displayTitle icon={FaFlagCheckered} title="Challenges" to="/challenges" />
+                    <NavItem navSize={navSize} displayTitle icon={FaNetworkWired} title="Labinfo" to="/labinfo" />
+                    <NavItem navSize={navSize} displayTitle icon={FaQuestion} title="FAQ" to="/faq" />
+                </HStack>  
             </Box>
-            <Spacer/>
+
             <Box
                 flexDir="row"
-                w="100%"
+                w="fit-content"
+                right="0"
+                m="15.639px 20px 15.639px 0px"
+                position="fixed"
                 alignItems="center"
                 as="nav"
             >
-
-                <NavItem navSize={navSize} icon={RiDashboardLine} title="Dashboard" to="/" />
-                <NavItem navSize={navSize} icon={FiCalendar} title="Events" to="/events" />
-                <NavItem navSize={navSize} icon={FaFlagCheckered} title="Challenges" to="/challenges" />
-                <NavItem navSize={navSize} icon={RiUserSettingsLine} title="Profile" to="/profile" />
-            </Box>
-            <Spacer/>
-
-            <Box
-                flexDir="row"
-                w="33%"
-                alignItems="flex-right"
-                as="nav"
-            >
+                <NavItem navSize={navSize} icon={RiUserSettingsLine} title="Profile" to="/profile"/>
                 <NavItem navSize={navSize} icon={FiLogOut} title="Logout" to="/login" customClickEvent={logout}/>
+                
                 {/* <Menu placement="right" p={"12px 12px 5px 12px"} _hover={{ textDecor: 'none', backgroundColor: "#211a52", color: "#FFF"}} >
                     <MenuButton w="100%" lineHeight={1.35} >
                         <Flex>

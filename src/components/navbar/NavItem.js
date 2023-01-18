@@ -8,47 +8,39 @@ import {
     MenuButton,
 } from '@chakra-ui/react'
 import { NavLink as ReactLink } from 'react-router-dom'
-import ReactTooltip from 'react-tooltip';
+import { useSelector } from 'react-redux';
 
-export default function NavItem({ icon, title, navSize, to, customClickEvent }) {
+export default function NavItem({ icon, title, navSize, to, customClickEvent, displayTitle}) {
+    const scrolledToTop = useSelector((state) => state.generic.scrolledToTop)
     return (
         <Flex
             flexDir="row"
             w="100%"
             alignItems="center"
+            className={scrolledToTop ? "hover-underline-animation" : "hover-underline-animation-light" }
+            color={scrolledToTop ? "" : "#dfdfe3"}
         >
             <Menu placement="right">
                     <Link
                         as={ReactLink}
-                        _activeLink={{backgroundColor: "#211a52", color: "#fff"}}
                         p={"12px 12px 5px 12px"}
-                        borderRadius={8}
-                        _hover={{ textDecor: 'none', backgroundColor: "#211a52", color: "#FFF"}}
+                        borderBottom="3px solid transparent"
+                        _activeLink={scrolledToTop ? {borderBottom: "solid", borderBottomRadius: "0", borderBottomColor: "#211a52"} : {borderBottom: "solid", borderBottomRadius: "0", borderBottomColor: "#dfdfe3"}}
+                        _hover={{ textDecor: 'none'}}
                         w={navSize === "large" && "100%"}
                         to={to}
-                        data-tip={title}
-                        data-place="bottom"
-                        data-effect="solid"
-                        data-background-color="#211a52"
                         onClick={customClickEvent}
                     >                        
                             <MenuButton w="100%" lineHeight={1.35} >
                                 <Flex>
                                     <Icon as={icon} fontSize="xl" />
-                                    <Text ml={5} display={navSize === "small" ? "none" : "flex"}>{title}</Text>
+                                    <Text ml={5} display={displayTitle === true ? "flex" : "none"}>{title}</Text>
                                 </Flex>
                             </MenuButton>
                     </Link>
-                    <ReactTooltip/>
-                {/* <MenuList
-                    py={0}
-                    border="none"
-                    w={200}
-                    h={200}
-                    ml={5}
-                >
-                    <NavHoverBox title={title} icon={icon} description={description} />
-                </MenuList> */}
+                    {/* _hover={{ textDecor: 'none', backgroundColor: "#211a52", color: "#FFF"}} */}
+                    {/* _activeLink={{backgroundColor: "#211a52", color: "#fff"}} */}
+                    {/* _activeLink={{borderBottom: "solid", borderBottomRadius: "0", borderBottomColor: "#211a52"}} */}
             </Menu>
         </Flex>
     )
