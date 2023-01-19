@@ -1,4 +1,4 @@
-import { Box, Center, Flex, HStack, Image, Text, VStack } from "@chakra-ui/react";
+import { Box, Center, Flex, HStack, Image, Text, VStack, Icon } from "@chakra-ui/react";
 import React from "react";
 import { Link } from '@chakra-ui/react'
 import ifLogoBlack from '../assets/if_logo_black.png'
@@ -10,6 +10,7 @@ import keaLogo from '../assets/kea-90.jpg'
 import happyLogo from '../assets/happy-90.png'
 import eaaLogo from '../assets/eaa-90.png'
 import cbslogo from '../assets/cbs.png'
+import { FaDiscord } from 'react-icons/fa'
 export default function HomePage() {
     return (
       <>
@@ -34,6 +35,8 @@ export default function HomePage() {
         >
           <Center>A Platform for Cyber Security Exercises</Center>
         </Box>
+
+
         <Box
           marginTop="60px"
         >
@@ -53,6 +56,8 @@ export default function HomePage() {
             </Link>
           </Center>
         </Box>
+
+
         <Box
           marginTop="60px"
         >
@@ -99,11 +104,13 @@ export default function HomePage() {
             </Flex>
           </Center>
         </Box>
+
+
         <Box
           marginTop="60px"
         >
           <Center>
-            <Text>Maybe some cyberskills stuff down here?</Text>
+            <Text>Interested in improving your Cyber security skillset? Check out the Cyberskills community!</Text>
           </Center>
         </Box>
         <Box
@@ -123,11 +130,21 @@ export default function HomePage() {
          marginTop="20px"
         >
           <Center>
-            <Text>Some facebook/discord groups could go here</Text>
+            <Text>You are more than welcome to join the CyberSkills Discord Server, and join the community</Text>
           </Center>          
         </Box>
+        <Box>
+          <Center>
+            <Link href="https://discord.gg/cyberskills" target="_blank" color="#5864ed">
+              <Icon as={FaDiscord} fontSize="50px"></Icon>
+            </Link>
+          </Center>
+        </Box>
+
+
         <Box
-          marginTop="20px"
+          marginTop="60px"
+          marginBottom="150px"
         >
           <Center>
             <HStack spacing="15px">

@@ -6,7 +6,8 @@ import { useDispatch } from "react-redux";
 import { setLoggedInUser } from "./features/users/userSlice";
 import ProfilePage from './pages/ProfilePage'
 import ChallengesPage from './pages/ChallengesPage'
-import Sidebar from './components/navbar/Sidebar'
+import Navbar from './components/navbar/Navbar'
+import Footer from './components/Footer';
 import SignupPage from './pages/SignupPage';
 import ScoreBoardPage from './pages/ScoreBoardPage';
 import TeamsPage from './pages/TeamsPage';
@@ -58,10 +59,11 @@ function AppRouter() {
             <Routes>
                 <Route element= {
                     <>
-                        <Sidebar/>
+                        <Navbar/>
                         <Flex w="100%" overflowX={"auto"}>
                             <Outlet/>
                         </Flex>
+                        <Footer/>
                     </>
                 }>
                 <Route path="" element={<HomePage />} />

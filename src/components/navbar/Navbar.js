@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
+    Button,
     Flex as Box,
     Flex,
     HStack
 } from '@chakra-ui/react'
 import {
-    FiLogOut
+    FiLogOut,
+    FiLogIn
 } from 'react-icons/fi'
 import { FaFlagCheckered, FaNetworkWired, FaQuestion } from 'react-icons/fa'
 import { NavLink as ReactLink } from 'react-router-dom'
@@ -14,18 +16,40 @@ import { SlGraph } from 'react-icons/sl'
 import NavItem from './NavItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../features/users/userSlice'
-import ReactTooltip from 'react-tooltip'
 import { Link } from 'react-router-dom'
+import ConfigureLabMenu from './ConfigureLabMenu'
 
 // TODO new logos
-export default function Sidebar() {
-    const [navSize, changeNavSize] = useState("small") // Used for the menu buttom which is also commented out below
+export default function Navbar() {
+    const [navSize, changeNavSize] = useState("large") // Used for the menu buttom which is also commented out below
     const dispatch = useDispatch()
     const logout = () => {
         dispatch(logoutUser())
     }
     const loggedInUser = useSelector((state) => state.user.loggedInUser)
     const scrolledToTop = useSelector((state) => state.generic.scrolledToTop)
+
+    const [width, setWindowWidth] = useState(0);
+    const updateDimensions = () => {
+        const width = window.innerWidth
+        setWindowWidth(width)
+    }
+
+    useEffect(() => { 
+        updateDimensions();
+
+        window.addEventListener("resize", updateDimensions);
+        console.log("width and navsize: ", width, navSize)
+        if (width >= 1250 ) {
+            changeNavSize("large")
+        } else if (width < 1250 && width >= 850 ) {
+            changeNavSize("medium")
+        } else if (width < 850) {
+            changeNavSize("small")
+        }
+        return () => 
+            window.removeEventListener("resize", updateDimensions);
+    })
 
     return (
         <Flex
@@ -38,6 +62,7 @@ export default function Sidebar() {
             fontWeight="bold"
             bg={scrolledToTop ? "transparent" : "solid"}
             justifyContent="space-between"
+            zIndex="1100"
         >
             <Box
                 flexDir="row"
@@ -67,11 +92,11 @@ export default function Sidebar() {
                 as="nav"
             >   
                 <HStack spacing="20px">
-                    <NavItem navSize={navSize} displayTitle icon={RiTeamLine} title="Teams" to="/teams" />
-                    <NavItem navSize={navSize} displayTitle icon={SlGraph} title="Scoreboard" to="/scoreboard" />
-                    <NavItem navSize={navSize} displayTitle icon={FaFlagCheckered} title="Challenges" to="/challenges" />
-                    <NavItem navSize={navSize} displayTitle icon={FaNetworkWired} title="Labinfo" to="/labinfo" />
-                    <NavItem navSize={navSize} displayTitle icon={FaQuestion} title="FAQ" to="/faq" />
+                    <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={RiTeamLine} title="Teams" to="/teams" />
+                    <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={SlGraph} title="Scoreboard" to="/scoreboard" />
+                    <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={FaFlagCheckered} title="Challenges" to="/challenges" />
+                    <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={FaNetworkWired} title="Labinfo" to="/labinfo" />
+                    <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={FaQuestion} title="FAQ" to="/faq" />
                 </HStack>  
             </Box>
 
@@ -83,9 +108,11 @@ export default function Sidebar() {
                 position="fixed"
                 alignItems="center"
                 as="nav"
-            >
-                <NavItem navSize={navSize} icon={RiUserSettingsLine} title="Profile" to="/profile"/>
-                <NavItem navSize={navSize} icon={FiLogOut} title="Logout" to="/login" customClickEvent={logout}/>
+            >   
+                <ConfigureLabMenu/>
+                <NavItem navSize={navSize} displayTooltip={true} icon={RiUserSettingsLine} title="Profile" to="/profile"/>
+                <NavItem navSize={navSize} displayTooltip={true} icon={FiLogOut} title="Logout" to="/login" customClickEvent={logout}/>
+                
                 
                 {/* <Menu placement="right" p={"12px 12px 5px 12px"} _hover={{ textDecor: 'none', backgroundColor: "#211a52", color: "#FFF"}} >
                     <MenuButton w="100%" lineHeight={1.35} >
