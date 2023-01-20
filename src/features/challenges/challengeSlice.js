@@ -4,7 +4,13 @@ import apiClient from "../../api/client"
 const initialState = {
     loading: false,
     categories: [],
-    allChallenges: [],
+    selectedChallenge: {
+        name: "",
+        points: 0,
+        solved: false,
+        solves: [],
+        description: "",
+    },
     error: ''
 }
 // TODO: change to async like other reducers
@@ -26,6 +32,11 @@ export const fetchChallenges = createAsyncThunk('challenge/fetchChallenges', asy
 const challengeSlice = createSlice({
     name: 'challenge',
     initialState,
+    reducers: {
+        setSelectedChallenge: (state, action) => {
+            state.selectedChallenge = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchChallenges.pending, (state) => {
             state.loading = true
@@ -47,3 +58,4 @@ const challengeSlice = createSlice({
 })
 
 export default challengeSlice.reducer
+export const { setSelectedChallenge } = challengeSlice.actions

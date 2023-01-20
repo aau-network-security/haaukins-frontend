@@ -7,6 +7,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 
 import App from './App';
 import './App.css'
+import './github-markdown.css'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ChakraProvider>

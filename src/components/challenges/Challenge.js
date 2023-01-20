@@ -1,13 +1,14 @@
 import { Box, Button, Center, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 
-export default function Challenge({name, points, solved, description, solves, containerStatus}) {
+export default function Challenge({name, points, solved, description, solves, containerStatus, onClick}) {
   return (
     <Button 
       height="100px"
       w="100%"
       bg={solved === false ? '#211a52' : '#5caf8d'}
       _hover={solved === false ? {bg: '#18123a'} : {bg: '#4c9a79'}}
+      onClick={onClick}
     >
       <Center w="100%" color="#dfdfe3" fontWeight="400" fontFamily="'Audiowide', cursive">
         <VStack spacing="15px">
