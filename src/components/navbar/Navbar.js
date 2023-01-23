@@ -95,7 +95,7 @@ export default function Navbar() {
                     <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={RiTeamLine} title="Teams" to="/teams" />
                     <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={SlGraph} title="Scoreboard" to="/scoreboard" />
                     <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={FaFlagCheckered} title="Challenges" to="/challenges" />
-                    <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={FaNetworkWired} title="Labinfo" to="/labinfo" />
+                    <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={FaNetworkWired} title="Lab" to="/lab" />
                     <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={FaQuestion} title="FAQ" to="/faq" />
                 </HStack>  
             </Box>
