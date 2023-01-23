@@ -92,7 +92,7 @@ export default function Navbar() {
                 as="nav"
             >   
                 <HStack spacing="20px">
-                    <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={RiTeamLine} title="Teams" to="/teams" />
+                    {/* <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={RiTeamLine} title="Teams" to="/teams" /> */}
                     <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={SlGraph} title="Scoreboard" to="/scoreboard" />
                     <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={FaFlagCheckered} title="Challenges" to="/challenges" />
                     <NavItem navSize={navSize} displayTooltip={false} displayTitle icon={FaNetworkWired} title="Lab" to="/lab" />

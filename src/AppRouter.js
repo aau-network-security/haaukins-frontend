@@ -71,7 +71,7 @@ function AppRouter() {
                 <Route path='signup' element={<SignupPage />} />
                 <Route path="profile" element={<ProfilePage />} />
                 <Route path="challenges" element={<ChallengesPage />} />
-                <Route path="teams" element={<TeamsPage />} />
+                {/* <Route path="teams" element={<TeamsPage />} /> */}
                 <Route path="scoreboard" element={<ScoreBoardPage />} />
                 <Route path="lab" element={<LabPage />} />
                 <Route path="faq" element={<FaqPage />} />
