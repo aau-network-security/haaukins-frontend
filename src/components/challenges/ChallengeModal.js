@@ -2,6 +2,7 @@ import { Box, Button, Center, Flex, FormControl, FormLabel, HStack, Input, Input
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { FaFlag } from 'react-icons/fa'
+import ChallengeSolvesTable from './ChallengeSolvesTable'
 
 export default function ChallengeModal({ isOpen, onClose }) {
     const selectedChallenge = useSelector((state) => state.challenge.selectedChallenge)
@@ -36,7 +37,7 @@ export default function ChallengeModal({ isOpen, onClose }) {
 
                 <TabPanels >
                         <TabPanel>
-                            <Flex maxH="600px" overflowX="auto" marginRight="3px" padding="0px 40px 0px 45px">
+                            <Flex maxH="600px" overflowY="auto" marginRight="3px" padding="0px 40px 0px 45px">
                                 <Stack w="100%">
                                     <Flex w="100%" flexDir="column" fontFamily="Audiowide" fontSize="20px">
                                         <Box w="100%" marginTop="15px">
@@ -66,7 +67,7 @@ export default function ChallengeModal({ isOpen, onClose }) {
                                                         children={<FaFlag color='#7e8b9f'/>}
                                                     />
                                                     <Input 
-                                                        disabled={!selectedChallenge.solved ? false : true} 
+                                                        isDisabled={!selectedChallenge.solved ? false : true} 
                                                         size="lg" 
                                                         borderBottomWidth="2px" 
                                                         variant='flushed' 
@@ -82,7 +83,7 @@ export default function ChallengeModal({ isOpen, onClose }) {
                                                 _hover={{backgroundColor: '#434d56'}}
                                                 color="#dfdfe3"
                                                 variant='solid'
-                                                disabled={!selectedChallenge.solved ? false : true}
+                                                isDisabled={!selectedChallenge.solved ? false : true}
                                             >
                                                 {!selectedChallenge.solved ? 
                                                 <>
@@ -100,8 +101,11 @@ export default function ChallengeModal({ isOpen, onClose }) {
                                 </ModalFooter>
                             </form>  
                         </TabPanel>
-                        <TabPanel maxH="600px" overflowX="auto" marginRight="3px" padding="0px 40px 0px 45px">
-                        <p>two!</p>
+                        <TabPanel >
+                            <Flex maxH="600px">
+                                <ChallengeSolvesTable/>
+                            </Flex>
+                            
                         </TabPanel>
                     </TabPanels>
                 </Tabs>                      

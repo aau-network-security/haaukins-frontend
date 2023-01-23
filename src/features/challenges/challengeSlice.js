@@ -6,6 +6,8 @@ const initialState = {
     categories: [],
     selectedChallenge: {
         name: "",
+        tag: "",
+        parentTag: "",
         points: 0,
         solved: false,
         solves: [],
