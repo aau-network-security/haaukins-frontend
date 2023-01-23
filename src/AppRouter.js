@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 import SignupPage from './pages/SignupPage';
 import ScoreBoardPage from './pages/ScoreBoardPage';
 import TeamsPage from './pages/TeamsPage';
-import LabInfoPage from './pages/LabInfoPage'
+import LabPage from './pages/LabPage'
 import FaqPage from './pages/FaqPage';
 import { Flex } from '@chakra-ui/react'
 import { BASE_URL } from './api/client'
@@ -73,7 +73,7 @@ function AppRouter() {
                 <Route path="challenges" element={<ChallengesPage />} />
                 <Route path="teams" element={<TeamsPage />} />
                 <Route path="scoreboard" element={<ScoreBoardPage />} />
-                <Route path="labinfo" element={<LabInfoPage />} />
+                <Route path="lab" element={<LabPage />} />
                 <Route path="faq" element={<FaqPage />} />
                     <Route element={<AuthWrapper />}>
                             {/* <Route path="" element={<HomePage />} />

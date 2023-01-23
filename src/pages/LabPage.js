@@ -1,14 +1,14 @@
-import { Box, Center, Flex, Text, Icon } from "@chakra-ui/react";
-import { RiTeamLine } from "react-icons/ri"
+import { Box, Center, Flex, Icon, Text } from "@chakra-ui/react";
+import { FaNetworkWired } from "react-icons/fa"
 import React from "react";
 
-export default function TeamsPage() {
+export default function LabPage() {
   return (
     <Flex maxW={"1140px"} w="100%" m={"auto"} flexDir="column" color="#211a52">
       <Box w="100%" marginTop="50px" marginBottom="50px">
         <Center w="100%" fontSize="50px">
-          <Icon as={RiTeamLine} />
-          <Text marginLeft="20px">Teams</Text>
+          <Icon as={FaNetworkWired} />
+          <Text marginLeft="20px">Lab</Text>
         </Center>
       </Box>
     </Flex>
