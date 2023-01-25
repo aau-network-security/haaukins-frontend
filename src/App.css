@@ -140,3 +140,36 @@ body{
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: #211a52;
 }
+
+
+/* Solves table */
+.solve-table th, td {
+  border-bottom: 1px solid #ddd;
+  border-color: #ddd;
+  bottom: 0;
+}
+
+.rotated-header th {
+  height: 240px;
+  vertical-align: bottom;
+  line-height: 1;
+  overflow-x: visible;
+  border-bottom: 1px solid #ddd;
+}
+
+.rotated-header-container {
+  width: 15px;
+}
+
+.rotated-header-content {
+  overflow-x: visible;
+  transform-origin: bottom left;
+  transform: translateX(10px) rotate(-20deg);
+}
+
+.table-solve-icon-container {
+  width: 20px!important;
+  padding: 0 0 0 0!important;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
