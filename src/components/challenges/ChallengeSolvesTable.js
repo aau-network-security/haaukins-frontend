@@ -13,7 +13,7 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-import { GiDrop, GiTrophy } from "react-icons/gi";
+import { GiDrop, GiMedal } from "react-icons/gi";
 
 function ChallengeSolvesTable() {
   const selectedChallenge = useSelector(
@@ -64,12 +64,12 @@ function ChallengeSolvesTable() {
                       )}
                       {key == 1 && (
                         <Td>
-                          <Icon fontSize="xl" color="silver" as={GiTrophy}></Icon>
+                          <Icon fontSize="xl" color="silver" as={GiMedal}></Icon>
                         </Td>
                       )}
                       {key == 2 && (
                         <Td>
-                          <Icon fontSize="xl" color="#CD7F32" as={GiTrophy}></Icon>
+                          <Icon fontSize="xl" color="#CD7F32" as={GiMedal}></Icon>
                         </Td>
                       )}
                     </>
