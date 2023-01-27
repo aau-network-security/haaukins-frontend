@@ -29,8 +29,8 @@
   position: absolute;
   width: 100%;
   transform: scaleX(0);
-  height: 3px;
-  bottom: 0;
+  height: 2px;
+  bottom: -2px;
   left: 0;
   background-color: #dfdfe3;
   transform-origin: center;
@@ -53,8 +53,8 @@
   position: absolute;
   width: 100%;
   transform: scaleX(0);
-  height: 3px;
-  bottom: 0;
+  height: 2px;
+  bottom: -2px;
   left: 0;
   background-color: #211a52;
   transform-origin: center;

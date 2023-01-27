@@ -18,7 +18,7 @@ export default function NavItem({ icon, title, navSize, to, customClickEvent, di
             flexDir="row"
             w="100%"
             alignItems="center"
-            className={scrolledToTop ? "hover-underline-animation" : "hover-underline-animation-light" }
+            
             color={scrolledToTop ? "" : "#dfdfe3"}
         >
             <Menu placement="right">
@@ -26,6 +26,7 @@ export default function NavItem({ icon, title, navSize, to, customClickEvent, di
                         id={title}
                         as={ReactLink}
                         p={"12px 12px 5px 12px"}
+                        className={scrolledToTop ? "hover-underline-animation" : "hover-underline-animation-light" }
                         borderBottom="3px solid transparent"
                         _activeLink={scrolledToTop ? {borderBottom: "solid", borderBottomRadius: "0", borderBottomColor: "#211a52"} : {borderBottom: "solid", borderBottomRadius: "0", borderBottomColor: "#dfdfe3"}}
                         _hover={{ textDecor: 'none'}}
