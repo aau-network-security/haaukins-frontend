@@ -13,7 +13,10 @@ export default function ScoreBoardPage() {
         </Center>
       </Box>
       <Box>
+        <Center>
         <ScoreTable/>
+        </Center>
+        
       </Box>
     </Flex>
   )

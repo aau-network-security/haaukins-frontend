@@ -143,17 +143,20 @@ body{
 
 
 /* Solves table */
+.solve-table-container {
+  caret-color: transparent;
+}
 .solve-table th, td {
   border-bottom: 1px solid #ddd;
   border-color: #ddd;
   bottom: 0;
+  height: 57.894px;
 }
 
 .rotated-header th {
-  height: 240px;
+  height: 100px;
   vertical-align: bottom;
   line-height: 1;
-  overflow-x: visible;
   border-bottom: 1px solid #ddd;
 }
 
@@ -162,13 +165,11 @@ body{
 }
 
 .rotated-header-content {
-  overflow-x: visible;
   transform-origin: bottom left;
   transform: translateX(10px) rotate(-20deg);
 }
 
 .table-solve-icon-container {
-  width: 20px!important;
   padding: 0 0 0 0!important;
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
