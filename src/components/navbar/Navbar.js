@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import {
-    Button,
     Flex as Box,
     Flex,
     HStack
 } from '@chakra-ui/react'
 import {
-    FiLogOut,
-    FiLogIn
+    FiLogOut
 } from 'react-icons/fi'
 import { FaFlagCheckered, FaNetworkWired, FaQuestion } from 'react-icons/fa'
 import { NavLink as ReactLink } from 'react-router-dom'
-import { RiUserSettingsLine, RiTeamLine } from 'react-icons/ri'
+import { RiUserSettingsLine } from 'react-icons/ri'
 import { SlGraph } from 'react-icons/sl'
 import NavItem from './NavItem'
 import { useDispatch, useSelector } from 'react-redux'

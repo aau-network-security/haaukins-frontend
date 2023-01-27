@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react';
 import {
     Flex,
     Text,
@@ -6,8 +6,8 @@ import {
     Link,
     Menu,
     MenuButton,
-} from '@chakra-ui/react'
-import { NavLink as ReactLink } from 'react-router-dom'
+} from '@chakra-ui/react';
+import { NavLink as ReactLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 

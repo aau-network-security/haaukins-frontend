@@ -2,17 +2,13 @@ import React from "react";
 import {
   Table,
   Thead,
-  Tbody,
-  Tfoot,
-  Tr,
+  Tbody, Tr,
   Th,
-  Td,
-  TableCaption,
-  TableContainer,
+  Td, TableContainer,
   Center,
   Icon,
   Switch,
-  HStack,
+  HStack
 } from "@chakra-ui/react";
 import { FaFlag } from "react-icons/fa";
 import { GiDrop, GiTrophy, GiMedal } from "react-icons/gi";

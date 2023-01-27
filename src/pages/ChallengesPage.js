@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Icon, Text, Grid, GridItem, SimpleGrid } from '@chakra-ui/react'
+import { Box, Center, Flex, Icon, Text, SimpleGrid } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { FaFlagCheckered } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
@@ -8,7 +8,6 @@ import { setSelectedChallenge } from '../features/challenges/challengeSlice'
 export default function ChallengesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const onModalClose = () => setIsModalOpen(false)
-  const cancelRef = React.useRef()
 
   const dispatch = useDispatch()
 

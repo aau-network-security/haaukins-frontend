@@ -2,15 +2,11 @@ import React from "react";
 import {
   Table,
   Thead,
-  Tbody,
-  Tfoot,
-  Tr,
+  Tbody, Tr,
   Th,
-  Td,
-  TableCaption,
-  TableContainer,
+  Td, TableContainer,
   Center,
-  Icon,
+  Icon
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { GiDrop, GiMedal } from "react-icons/gi";

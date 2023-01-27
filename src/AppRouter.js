@@ -1,22 +1,21 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom'
-import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 import { useDispatch } from "react-redux";
 import { setLoggedInUser } from "./features/users/userSlice";
-import ProfilePage from './pages/ProfilePage'
-import ChallengesPage from './pages/ChallengesPage'
-import Navbar from './components/navbar/Navbar'
+import ProfilePage from './pages/ProfilePage';
+import ChallengesPage from './pages/ChallengesPage';
+import Navbar from './components/navbar/Navbar';
 import Footer from './components/Footer';
 import SignupPage from './pages/SignupPage';
 import ScoreBoardPage from './pages/ScoreBoardPage';
-import TeamsPage from './pages/TeamsPage';
-import LabPage from './pages/LabPage'
+import LabPage from './pages/LabPage';
 import FaqPage from './pages/FaqPage';
-import { Flex } from '@chakra-ui/react'
-import { BASE_URL } from './api/client'
-import { useFetch } from 'react-async'
-import { Buffer } from 'buffer'
+import { Flex } from '@chakra-ui/react';
+import { BASE_URL } from './api/client';
+import { useFetch } from 'react-async';
+import { Buffer } from 'buffer';
 function AppRouter() {
     const dispatch = useDispatch()
 
