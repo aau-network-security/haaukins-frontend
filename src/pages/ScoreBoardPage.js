@@ -1,7 +1,7 @@
-import { Box, Center, Flex, Text, Icon } from '@chakra-ui/react'
-import React from 'react'
-import { SlGraph } from 'react-icons/sl'
-import ScoreTable from '../components/scoreboard/SolveTable'
+import { Box, Center, Flex, Text, Icon } from "@chakra-ui/react";
+import React from "react";
+import { SlGraph } from "react-icons/sl";
+import ScoreTable from "../components/scoreboard/SolveTable";
 
 export default function ScoreBoardPage() {
   return (
@@ -12,12 +12,16 @@ export default function ScoreBoardPage() {
           <Text marginLeft="20px">Scoreboard</Text>
         </Center>
       </Box>
-      <Box>
+      <Box h="300px">
+
+      </Box>
+      <Box
+        marginBottom="100px"
+      >
         <Center>
-        <ScoreTable/>
+          <ScoreTable />
         </Center>
-        
       </Box>
     </Flex>
-  )
+  );
 }
