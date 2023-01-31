@@ -24,6 +24,7 @@ import { useFetch } from "react-async";
 import { Buffer } from "buffer";
 function AppRouter() {
   const dispatch = useDispatch();
+  const publicScoreboard = true //Should be from redux state
 
   const getUsernameFromToken = (token) => {
     try {
@@ -36,17 +37,23 @@ function AppRouter() {
     }
   };
 
+  const overrideAuth = false
   const AuthWrapper = () => {
     let token = localStorage.getItem("token");
     // Thunk will return error if it cannot pass the value as json
     let user = getUsernameFromToken(token);
     let endpoint = "users/" + user;
 
+    
+
     const { data, error } = useFetch(BASE_URL + endpoint, {
       headers: {
         Authorization: token,
       },
     });
+    if (overrideAuth) {
+        return <Outlet />;
+    }
     if (error) {
       return <Navigate to="/login" replace />;
     }
@@ -54,9 +61,13 @@ function AppRouter() {
       data.json().then((data) => {
         dispatch(setLoggedInUser(data));
       });
-      return <Outlet />;
+      
     }
   };
+
+  const PublicWrapper = () => {
+
+  }
 
   return (
     <BrowserRouter>
@@ -76,12 +87,21 @@ function AppRouter() {
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignupPage />} />
           <Route path="profile" element={<ProfilePage />} />
-          <Route path="challenges" element={<ChallengesPage />} />
+          
           {/* <Route path="teams" element={<TeamsPage />} /> */}
-          <Route path="scoreboard" element={<ScoreBoardPage />} />
-          <Route path="lab" element={<LabPage />} />
-          <Route path="faq" element={<FaqPage />} />
+          {publicScoreboard && (
+            <Route path="scoreboard" element={<ScoreBoardPage />} />
+          )}
+          
+          
+          
           <Route element={<AuthWrapper />}>
+            <Route path="faq" element={<FaqPage />} />
+            <Route path="challenges" element={<ChallengesPage />} />
+            <Route path="lab" element={<LabPage />} />
+            {!publicScoreboard && (
+                <Route path="scoreboard" element={<ScoreBoardPage />} />
+            )}
             {/* <Route path="" element={<HomePage />} />
                             <Route path="profile" element={<ProfilePage />} />
                             <Route path="challenges" element={<ChallengesPage />} /> */}
