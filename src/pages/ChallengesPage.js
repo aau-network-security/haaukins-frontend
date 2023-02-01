@@ -1,14 +1,16 @@
 import { Box, Center, Flex, Icon, Text, SimpleGrid } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaFlagCheckered } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import Challenge from '../components/challenges/Challenge'
 import ChallengeModal from '../components/challenges/ChallengeModal'
 import { setSelectedChallenge } from '../features/challenges/challengeSlice'
+import { setScrolledToTop } from '../features/generic/genericSlice'
 export default function ChallengesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const onModalClose = () => setIsModalOpen(false)
 
+  
   const dispatch = useDispatch()
 
   const openModal = (challenge) => {

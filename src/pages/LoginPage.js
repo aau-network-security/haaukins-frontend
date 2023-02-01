@@ -1,91 +1,98 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import {
-    Flex,
-    Input,
-    Button,
-    InputGroup,
-    Stack,
-    InputLeftElement,
-    chakra,
-    Box,
-    FormControl,
-    InputRightElement,
-    Alert,
-    AlertIcon,
-    AlertDescription
-  } from "@chakra-ui/react";
+  Flex,
+  Input,
+  Button,
+  InputGroup,
+  Stack,
+  InputLeftElement,
+  chakra,
+  Box,
+  FormControl,
+  InputRightElement,
+  Alert,
+  AlertIcon,
+  AlertDescription,
+} from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import Logo from "../components/Logo"
+import Logo from "../components/Logo";
 import { useSelector, useDispatch } from "react-redux";
-import { loginUser } from "../features/users/userSlice";
+import { loginTeam } from "../features/teams/teamSlice";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
 export default function LoginPage() {
-  const dispatch = useDispatch()
-  const loggedIn = useSelector((state) => state.user.loggedIn)
-  const error = useSelector((state) => state.user.error)
-    
+  const dispatch = useDispatch();
+  const loggedIn = useSelector((state) => state.team.loggedIn);
+  const eventinfo = useSelector((state) => state.event.eventinfo);
+  const error = useSelector((state) => state.team.error);
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowClick = () => setShowPassword(!showPassword);
 
-  const handleSubmit = (e) => {
-      e.preventDefault();
-      dispatch(loginUser(reqData))
-  }
+  
 
-  const [reqData, setData] = useState({
-      username: '',
-      password: ''
+  const [reqDataState, setData] = useState({
+    username: "",
+    password: "",
   });
-  
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setData({ ...reqDataState, ["eventTag"]: eventinfo.tag });
+    
+    let reqData = {
+      username: reqDataState.username,
+      password: reqDataState.password,
+      eventTag: eventinfo.tag
+    }
+    dispatch(loginTeam(reqData));
+  };
+
   const changeHandler = (e) => {
-      if (e.target.name === 'username'){
-        setData({...reqData, [e.target.name]: e.target.value.trim()})
-      } else {
-        setData({...reqData, [e.target.name]: e.target.value})
-      }    
-  }
-  
+    if (e.target.name === "username") {
+      setData({ ...reqDataState, [e.target.name]: e.target.value.trim() });
+    } else {
+      setData({ ...reqDataState, [e.target.name]: e.target.value });
+    }
+    console.log("reqData", reqDataState)
+  };
+
   if (loggedIn) {
-    return (
-      <Navigate to="/"/>
-    )
+    return <Navigate to="/challenges" />;
   }
   return (
-      <Flex
-        flexDirection="column"
-        width="100%"
-        height="100vh"
-        justifyContent="center"
-        alignItems="center"
-      >
+    <Flex
+      flexDirection="column"
+      width="100%"
+      height="85vh"
+      justifyContent="center"
+      alignItems="center"
+    >
       <Stack
         flexDir="column"
         mb="2"
         justifyContent="center"
         alignItems="center"
       >
-          <Logo white="false" marginBottom={10}></Logo>
-          {(error.apiStatusCode === 401) 
-          ?
-            <Alert status='error'>
-              <AlertIcon />
-              <AlertDescription>Incorrect username or password</AlertDescription>
-            </Alert>
-          : (error.axiosCode === "ERR_NETWORK") 
-          ?
-            <Alert status='error'>
-              <AlertIcon />
-              <AlertDescription>Error connecting to daemon. Please contact an administrator</AlertDescription>
-            </Alert>
-          : 
-            null
-          }
-          <Box minW={{ base: "90%", md: "468px" }}>
+        <Logo white="false" marginBottom={10}></Logo>
+        {error.apiStatusCode === 401 ? (
+          <Alert status="error">
+            <AlertIcon />
+            <AlertDescription>Incorrect username or password</AlertDescription>
+          </Alert>
+        ) : error.axiosCode === "ERR_NETWORK" ? (
+          <Alert status="error">
+            <AlertIcon />
+            <AlertDescription>
+              Error connecting to daemon. Please contact an administrator
+            </AlertDescription>
+          </Alert>
+        ) : null}
+        <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleSubmit}>
             <Stack
               spacing={4}
@@ -99,7 +106,12 @@ export default function LoginPage() {
                     pointerEvents="none"
                     children={<CFaUserAlt color="gray.300" />}
                   />
-                  <Input type="text" name="username" placeholder="username" onChange={changeHandler} />
+                  <Input
+                    type="text"
+                    name="username"
+                    placeholder="username"
+                    onChange={changeHandler}
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl>
@@ -138,4 +150,4 @@ export default function LoginPage() {
       </Stack>
     </Flex>
   );
-};
+}
