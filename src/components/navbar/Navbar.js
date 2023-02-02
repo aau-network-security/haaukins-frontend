@@ -20,7 +20,6 @@ export default function Navbar() {
   };
   const loggedInTeam = useSelector((state) => state.team.loggedInTeam);
   const eventInfo = useSelector((state) => state.event.eventinfo);
-  console.log("eventInfo", eventInfo);
   const scrolledToTop = useSelector((state) => state.generic.scrolledToTop);
 
   const [width, setWindowWidth] = useState(0);
@@ -33,7 +32,6 @@ export default function Navbar() {
     updateDimensions();
 
     window.addEventListener("resize", updateDimensions);
-    console.log("width and navsize: ", width, navSize);
     if (width >= 1250) {
       changeNavSize("large");
     } else if (width < 1250 && width >= 850) {
