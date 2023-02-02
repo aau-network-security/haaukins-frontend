@@ -68,7 +68,7 @@ function AppRouter() {
     if (data) {
       data.json().then((data) => {
         dispatch(setLoggedInTeam(data));
-      });
+      }).catch((err) => {})
       return <Outlet />;
     }
   };
