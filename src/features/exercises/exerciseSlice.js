@@ -31,6 +31,22 @@ export const fetchExercises = createAsyncThunk('exercise/fetchExercises', async 
     }
 })
 
+export const solveExercise = createAsyncThunk('exercise/solveExercise', async (exercise, {rejectWithValue}) => {
+    try {
+        apiClient.defaults.headers.Authorization = localStorage.getItem('token')
+        const response = await apiClient.post('exercises/solve', exercise)
+        return response.data
+    }
+    catch (err) {
+        if (!err.response) {
+            throw err
+        }
+        let error = { axiosMessage: err.message, axiosCode: err.code, apiError: err.response.data, apiStatusCode: err.response.status}
+        return rejectWithValue(error)
+    }
+})
+
+
 const exerciseSlice = createSlice({
     name: 'exercise',
     initialState,
