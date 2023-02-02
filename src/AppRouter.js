@@ -48,7 +48,7 @@ function AppRouter() {
     let token = localStorage.getItem("token");
     // Thunk will return error if it cannot pass the value as json
     let user = getUsernameFromToken(token);
-    let endpoint = "teams/" + user;
+    let endpoint = "teams/self";
     const location = useLocation();
     const { data, error } = useFetch(BASE_URL + endpoint, {
       headers: {
@@ -59,6 +59,7 @@ function AppRouter() {
       return <Outlet />;
     }
     if (error) {
+      localStorage.removeItem('token')
       if (location.pathname === "/") {
         return <HomePage />;
       } else {
