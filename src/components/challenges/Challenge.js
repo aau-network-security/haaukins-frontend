@@ -5,7 +5,8 @@ export default function Challenge({name, points, solved, description, solves, co
   return (
     <Button 
       height="100px"
-      w="100%"
+      width="100%"
+      className='challenge-container'
       bg={solved === false ? '#211a52' : '#5caf8d'}
       _hover={solved === false ? {bg: '#18123a'} : {bg: '#4c9a79'}}
       onClick={onClick}

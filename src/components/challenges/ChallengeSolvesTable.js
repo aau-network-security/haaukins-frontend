@@ -12,12 +12,12 @@ import { useSelector } from "react-redux";
 import { GiDrop, GiMedal } from "react-icons/gi";
 
 function ChallengeSolvesTable() {
-  const selectedChallenge = useSelector(
-    (state) => state.challenge.selectedChallenge
+  const selectedExercise = useSelector(
+    (state) => state.exercise.selectedExercise
   );
   return (
     <>
-      {selectedChallenge.solves.length === 0 ? (
+      {selectedExercise.solves.length === 0 ? (
         <>
           <Center w="100%">No solves yet</Center>
         </>
@@ -45,7 +45,7 @@ function ChallengeSolvesTable() {
               </Tr>
             </Thead>
             <Tbody>
-              {Object.entries(selectedChallenge.solves).map(([key, solve]) => (
+              {Object.entries(selectedExercise.solves).map(([key, solve]) => (
                 <Tr key={key}>
                   {key > 2 ? (
                     <Td width="20px" textAlign="center">

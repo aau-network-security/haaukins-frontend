@@ -4,7 +4,7 @@ import apiClient from "../../api/client"
 const initialState = {
     loading: false,
     categories: [],
-    selectedChallenge: {
+    selectedExercise: {
         name: "",
         tag: "",
         parentTag: "",
@@ -16,10 +16,10 @@ const initialState = {
     error: ''
 }
 // TODO: change to async like other reducers
-export const fetchChallenges = createAsyncThunk('challenge/fetchChallenges', async (obj, {rejectWithValue}) => {
+export const fetchExercises = createAsyncThunk('exercise/fetchExercises', async (obj, {rejectWithValue}) => {
     try {
         apiClient.defaults.headers.Authorization = localStorage.getItem('token')
-        const response = await apiClient.get('challenges')
+        const response = await apiClient.get('exercises')
         return response.data
     }
     catch (err) {
@@ -31,33 +31,31 @@ export const fetchChallenges = createAsyncThunk('challenge/fetchChallenges', asy
     }
 })
 
-const challengeSlice = createSlice({
-    name: 'challenge',
+const exerciseSlice = createSlice({
+    name: 'exercise',
     initialState,
     reducers: {
-        setSelectedChallenge: (state, action) => {
-            state.selectedChallenge = action.payload
+        setSelectedExercise: (state, action) => {
+            state.selectedExercise = action.payload
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchChallenges.pending, (state) => {
+        builder.addCase(fetchExercises.pending, (state) => {
             state.loading = true
         })
-        builder.addCase(fetchChallenges.fulfilled, (state, action) => {
+        builder.addCase(fetchExercises.fulfilled, (state, action) => {
             state.loading = false
-            state.categories = action.payload
-            state.allChallenges = []
+            state.categories = action.payload.eventExercises.categories
             state.error = ''
         })
-        builder.addCase(fetchChallenges.rejected, (state, action) => {
+        builder.addCase(fetchExercises.rejected, (state, action) => {
             state.loading = false
             state.categories = []
-            state.allChallenges = []
             state.error = action.payload.data.status
             state.statusCode = action.payload.status
         })
     }
 })
 
-export default challengeSlice.reducer
-export const { setSelectedChallenge } = challengeSlice.actions
+export default exerciseSlice.reducer
+export const { setSelectedExercise } = exerciseSlice.actions

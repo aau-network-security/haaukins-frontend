@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     status: 'idle',
-    eventinfo: {},
+    eventinfo: {
+        publicScoreboard: false,
+    },
     error: ''
 }
 

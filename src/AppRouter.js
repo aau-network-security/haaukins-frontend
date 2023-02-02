@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter,
   Routes,
   Route,
   Navigate,
   Outlet,
+  useLocation,
 } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoggedInTeam } from "./features/teams/teamSlice";
 import ProfilePage from "./pages/ProfilePage";
 import ChallengesPage from "./pages/ChallengesPage";
@@ -26,7 +27,8 @@ import EventNotFoundPage from "./pages/EventNotFoundPage";
 import { setEventInfo } from "./features/events/eventSlice";
 function AppRouter() {
   const dispatch = useDispatch();
-  const publicScoreboard = true; //Should be from redux state
+  let [ publicScoreboard, setPublicScoreboard ] = useState(false) //Should be from redux state
+  
 
 
   const getUsernameFromToken = (token) => {
@@ -44,11 +46,10 @@ function AppRouter() {
 
   const AuthWrapper = () => {
     let token = localStorage.getItem("token");
-    console.log("token for authwrapper ", token);
     // Thunk will return error if it cannot pass the value as json
     let user = getUsernameFromToken(token);
     let endpoint = "teams/" + user;
-
+    const location = useLocation();
     const { data, error } = useFetch(BASE_URL + endpoint, {
       headers: {
         Authorization: token,
@@ -58,7 +59,11 @@ function AppRouter() {
       return <Outlet />;
     }
     if (error) {
-      return <Navigate to="/login" replace />;
+      if (location.pathname === "/") {
+        return <HomePage />;
+      } else {
+        return <Navigate to="/login" replace />;
+      }
     }
     if (data) {
       data.json().then((data) => {
@@ -72,7 +77,6 @@ function AppRouter() {
     let host = window.location.host;
     let eventTag = host.split('.')[0]
     let endpoint = eventTag;
-    console.log("eventTag ", eventTag);
 
     
     const { data, error } = useFetch(BASE_URL + endpoint);
@@ -82,6 +86,7 @@ function AppRouter() {
     if (data) {
       data.json().then((data) => {
         dispatch(setEventInfo(data));
+        setPublicScoreboard(data.eventinfo.publicScoreboard)
       });
       return <Outlet />;
     }
@@ -102,16 +107,17 @@ function AppRouter() {
               </>
             }
           >
-            <Route path="" element={<HomePage />} />
+            
+            
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignupPage />} />
-
             {/* <Route path="teams" element={<TeamsPage />} /> */}
             {publicScoreboard && (
               <Route path="scoreboard" element={<ScoreBoardPage />} />
             )}
 
             <Route element={<AuthWrapper />}>
+              <Route path="" element={<HomePage />} />
               <Route path="faq" element={<FaqPage />} />
               <Route path="challenges" element={<ChallengesPage />} />
               <Route path="lab" element={<LabPage />} />

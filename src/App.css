@@ -174,3 +174,47 @@ body{
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
 }
+
+.challenges-page {
+  max-width: 1140px;
+  width: 100%;
+}
+
+.challenge-container {
+  max-width: 260px;
+}
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  .challenges-page {
+    max-width: 990px;
+  }
+  .challenge-container {
+    max-width: 303px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .challenges-page {
+    max-width: 720px;
+  }
+  .challenge-container {
+    max-width: 330px;
+  }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .challenges-page {
+    max-width: 540px;
+  }
+  .challenge-container {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .challenges-page {
+    max-width: 540px;
+  }
+  .challenge-container {
+    max-width: 100%;
+  }
+}

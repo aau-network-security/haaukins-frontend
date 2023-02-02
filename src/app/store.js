@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import teamReducer from '../features/teams/teamSlice'
 import eventReducer from '../features/events/eventSlice'
-import challengeReducer from '../features/challenges/challengeSlice'
+import exerciseReducer from '../features/exercises/exerciseSlice'
 import orgReducer from '../features/organizations/organizationSlice'
 import agentReducer from '../features/agents/agentSlice'
 import genericReducer from '../features/generic/genericSlice'
@@ -11,7 +11,7 @@ const store = configureStore({
     reducer: {
         team: teamReducer,
         event: eventReducer,
-        challenge: challengeReducer,
+        exercise: exerciseReducer,
         org: orgReducer,
         agent: agentReducer,
         generic: genericReducer

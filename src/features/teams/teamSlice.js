@@ -12,7 +12,7 @@ const initialState = {
 export const signupTeam = createAsyncThunk('team/signup', async (team, { rejectWithValue }) => {
     try {
         console.log("adding team: ", team)
-        const response = await apiClient.post('teams', team)        
+        const response = await apiClient.post('teams/signup', team)        
         console.log(response)
         return response.data
     }
@@ -63,6 +63,7 @@ const teamSlice = createSlice({
         builder.addCase(signupTeam.fulfilled, (state, action) => {
             state.status = ''
             state.loggedIn = true
+            state.loggedInTeam = action.payload.teaminfo
             localStorage.setItem('token', action.payload.token)      
             state.error = ''
         })

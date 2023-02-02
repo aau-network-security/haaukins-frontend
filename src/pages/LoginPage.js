@@ -14,6 +14,7 @@ import {
   Alert,
   AlertIcon,
   AlertDescription,
+  Text,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import Logo from "../components/Logo";
@@ -78,7 +79,15 @@ export default function LoginPage() {
         justifyContent="center"
         alignItems="center"
       >
-        <Logo white="false" marginBottom={10}></Logo>
+        <Logo white="false" marginBottom="10px"></Logo>
+        <Text
+          marginBottom="10px"
+          fontSize="30px"
+          fontWeight="bold"
+          color="#211a52"
+        >
+          Login
+        </Text>
         {error.apiStatusCode === 401 ? (
           <Alert status="error">
             <AlertIcon />
@@ -92,6 +101,7 @@ export default function LoginPage() {
             </AlertDescription>
           </Alert>
         ) : null}
+        
         <Box minW={{ base: "90%", md: "468px" }}>
           <form onSubmit={handleSubmit}>
             <Stack

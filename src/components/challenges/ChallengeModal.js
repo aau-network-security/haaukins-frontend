@@ -5,7 +5,7 @@ import { FaFlag } from 'react-icons/fa'
 import ChallengeSolvesTable from './ChallengeSolvesTable'
 
 export default function ChallengeModal({ isOpen, onClose }) {
-    const selectedChallenge = useSelector((state) => state.challenge.selectedChallenge)
+    const selectedExercise = useSelector((state) => state.exercise.selectedExercise)
 
     const submitForm = (e) => {
         e.preventDefault()
@@ -32,7 +32,7 @@ export default function ChallengeModal({ isOpen, onClose }) {
                 <Tabs variant='enclosed'>
                 <TabList margin="20px">
                     <Tab color="#211a52">Challenge</Tab>
-                    <Tab color="#211a52">{selectedChallenge.solves.length} Solves</Tab>
+                    <Tab color="#211a52">{selectedExercise.solves.length} Solves</Tab>
                 </TabList>
 
                 <TabPanels >
@@ -42,17 +42,17 @@ export default function ChallengeModal({ isOpen, onClose }) {
                                     <Flex w="100%" flexDir="column" fontFamily="Audiowide" fontSize="20px">
                                         <Box w="100%" marginTop="15px">
                                             <Center>
-                                                <Text textAlign="center">{selectedChallenge.name}</Text>
+                                                <Text textAlign="center">{selectedExercise.name}</Text>
                                             </Center>
                                         </Box>
                                         <Box w="100%" marginTop="10px" marginBottom="45px">
                                             <Center>
-                                                <Text>{selectedChallenge.points}</Text>
+                                                <Text>{selectedExercise.points}</Text>
                                             </Center>
                                         </Box>
                                     </Flex>                                
                                     <Flex className='markdown-body'>
-                                        <div dangerouslySetInnerHTML={{ __html: selectedChallenge.description}} />                                        
+                                        <div dangerouslySetInnerHTML={{ __html: selectedExercise.description}} />                                        
                                     </Flex>
                                 </Stack>
                             </Flex>
@@ -67,7 +67,7 @@ export default function ChallengeModal({ isOpen, onClose }) {
                                                         children={<FaFlag color='#7e8b9f'/>}
                                                     />
                                                     <Input 
-                                                        isDisabled={!selectedChallenge.solved ? false : true} 
+                                                        isDisabled={!selectedExercise.solved ? false : true} 
                                                         size="lg" 
                                                         borderBottomWidth="2px" 
                                                         variant='flushed' 
@@ -83,9 +83,9 @@ export default function ChallengeModal({ isOpen, onClose }) {
                                                 _hover={{backgroundColor: '#434d56'}}
                                                 color="#dfdfe3"
                                                 variant='solid'
-                                                isDisabled={!selectedChallenge.solved ? false : true}
+                                                isDisabled={!selectedExercise.solved ? false : true}
                                             >
-                                                {!selectedChallenge.solved ? 
+                                                {!selectedExercise.solved ? 
                                                 <>
                                                     Submit
                                                 </>
