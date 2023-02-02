@@ -59,7 +59,6 @@ export default function LoginPage() {
     } else {
       setData({ ...reqDataState, [e.target.name]: e.target.value });
     }
-    console.log("reqData", reqDataState)
   };
 
   if (loggedIn) {

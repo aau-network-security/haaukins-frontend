@@ -11,9 +11,7 @@ const initialState = {
 
 export const signupTeam = createAsyncThunk('team/signup', async (team, { rejectWithValue }) => {
     try {
-        console.log("adding team: ", team)
-        const response = await apiClient.post('teams/signup', team)        
-        console.log(response)
+        const response = await apiClient.post('teams/signup', team) 
         return response.data
     }
     catch (err) {

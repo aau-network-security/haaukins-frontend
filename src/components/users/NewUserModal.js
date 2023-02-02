@@ -29,19 +29,14 @@ function NewUserModal({ isOpen, onClose }) {
     
     const submitForm = async (e) => {
         e.preventDefault()
-        console.log('adding user: ', reqData)
         try {
             const response = await dispatch(addUser(reqData)).unwrap()
-            // console.log("user add response: ", response)
             setAddUserError('')
             closeModal()
         }
         catch (err) {
-            console.log(err)
             setAddUserError(err.apiError.status)
-            console.log(!addUserError.includes("error connecting to new agent"))
-        }
-        
+        } 
     }
     const changeHandler = (e) => {
         if (e.target.name === 'username'){
@@ -55,7 +50,6 @@ function NewUserModal({ isOpen, onClose }) {
         } else if (e.target.name === 'email') {
             setReqData({...reqData, [e.target.name]: e.target.value.trim()})
         }
-        console.log(reqData)
     }
     const closeModal = () => {
         setAddUserError('')

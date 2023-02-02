@@ -74,7 +74,6 @@ export default function SignupPage() {
     } else {
       setData({ ...reqDataState, [e.target.name]: e.target.value });
     }
-    console.log("reqData", reqDataState);
     validateInput(e)
   };
 

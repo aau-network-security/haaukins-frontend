@@ -51,7 +51,6 @@ function UsersTable({ byRole }) {
   //Callback for alertDialog 
   // TODO write deleteOrg action, reducer, etc.
   const doDeleteUser = (username, index) => {
-    console.log("deleting org", username)
     let user = {
       id: index,
       name: username
@@ -61,7 +60,6 @@ function UsersTable({ byRole }) {
   
   useEffect(() => {
     if (selectedOrg != null) {
-      console.log("fetching users")
       dispatch(fetchUsers(selectedOrg.Name))
     } else {
       dispatch(fetchUsers(""))
