@@ -18,6 +18,7 @@ import {
   Link,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock, FaKey } from "react-icons/fa";
+import { MdAlternateEmail } from "react-icons/md";
 import Logo from "../components/Logo";
 import { useSelector, useDispatch } from "react-redux";
 import { signupTeam } from "../features/teams/teamSlice";
@@ -25,6 +26,7 @@ import { signupTeam } from "../features/teams/teamSlice";
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 const CFaKey = chakra(FaKey);
+const CMdAlternateEmail = chakra(MdAlternateEmail)
 
 export default function SignupPage() {
   const dispatch = useDispatch();
@@ -188,7 +190,7 @@ export default function SignupPage() {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
+                    children={<CMdAlternateEmail color="gray.300" />}
                   />
                   <Input
                     type="email"
