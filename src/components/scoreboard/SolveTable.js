@@ -2,191 +2,196 @@ import React from "react";
 import {
   Table,
   Thead,
-  Tbody, Tr,
+  Tbody,
+  Tr,
   Th,
-  Td, TableContainer,
+  Td,
+  TableContainer,
   Center,
   Icon,
   Switch,
-  HStack
+  HStack,
 } from "@chakra-ui/react";
 import { FaFlag } from "react-icons/fa";
 import { GiDrop, GiTrophy, GiMedal } from "react-icons/gi";
+import { useSelector } from "react-redux";
 
 function ScoreTable() {
-  const challengesList = [
-    { name: "Challenge1", tag: "challenge-1" },
-    { name: "Challenge2", tag: "challenge-1" },
-    { name: "Challenge3", tag: "challenge-1" },
-    { name: "Challenge4", tag: "challenge-1" },
-    { name: "Challenge5", tag: "challenge-1" },
-    { name: "Challenge60123123", tag: "challenge-1" },
-    { name: "Challenge60123123", tag: "challenge-1" },
-    { name: "Challenge60123123", tag: "challenge-1" },
-    { name: "Challenge60123123", tag: "challenge-1" },
-  ];
-  const teams = [
-    {
-      teamName: "team1",
-      inChart: true,
-      score: 1000,
-      solveStatus: [
-        { name: "Challenge1", tag: "challenge-1", solved: true, rank: 1 },
-        { name: "Challenge2", tag: "challenge-2", solved: true, rank: 2 },
-        { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-      ],
-    },
-    {
-      teamName: "team2",
-      inChart: true,
-      score: 999,
-      solveStatus: [
-        { name: "Challenge1", tag: "challenge-1", solved: false, rank: 2 },
-        { name: "Challenge2", tag: "challenge-2", solved: true, rank: 1 },
-        { name: "Challenge3", tag: "challenge-3", solved: true, rank: 2 },
-        { name: "Challenge4", tag: "challenge-4", solved: false, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: true, rank: 3 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-      ],
-    },
-    {
-      teamName: "team3",
-      inChart: true,
-      score: 998,
-      solveStatus: [
-        { name: "Challenge1", tag: "challenge-1", solved: true, rank: 10 },
-        { name: "Challenge2", tag: "challenge-2", solved: true, rank: 10 },
-        { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 1 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: false, rank: 10 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-      ],
-    },
-    {
-      teamName: "team4",
-      inChart: true,
-      score: 997,
-      solveStatus: [
-        { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
-        { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
-        { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-      ],
-    },
-    {
-      teamName: "team4",
-      inChart: true,
-      score: 997,
-      solveStatus: [
-        { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
-        { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
-        { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-      ],
-    },
-    {
-      teamName: "team4",
-      inChart: true,
-      score: 997,
-      solveStatus: [
-        { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
-        { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
-        { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-      ],
-    },
-    {
-      teamName: "team4",
-      inChart: true,
-      score: 997,
-      solveStatus: [
-        { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
-        { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
-        { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-      ],
-    },
-    {
-      teamName: "team4",
-      inChart: true,
-      score: 997,
-      solveStatus: [
-        { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
-        { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
-        { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-      ],
-    },
-    {
-      teamName: "team4",
-      inChart: true,
-      score: 997,
-      solveStatus: [
-        { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
-        { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
-        { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-      ],
-    },
-    {
-      teamName: "team4",
-      inChart: true,
-      score: 997,
-      solveStatus: [
-        { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
-        { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
-        { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-        { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
-        { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
-        { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
-      ],
-    },
-  ];
+  const teamScores = useSelector((state) => state.score.scores);
+  const challengesList = useSelector((state) => state.score.challengesList);
+  // const challengesList = [
+  //   { name: "Challenge1", tag: "challenge-1" },
+  //   { name: "Challenge2", tag: "challenge-1" },
+  //   { name: "Challenge3", tag: "challenge-1" },
+  //   { name: "Challenge4", tag: "challenge-1" },
+  //   { name: "Challenge5", tag: "challenge-1" },
+  //   { name: "Challenge60123123", tag: "challenge-1" },
+  //   { name: "Challenge60123123", tag: "challenge-1" },
+  //   { name: "Challenge60123123", tag: "challenge-1" },
+  //   { name: "Challenge60123123", tag: "challenge-1" },
+  // ];
+  // const teams = [
+  //   {
+  //     teamName: "team1",
+  //     inChart: true,
+  //     score: 1000,
+  //     solveStatus: [
+  //       { name: "Challenge1", tag: "challenge-1", solved: true, rank: 1 },
+  //       { name: "Challenge2", tag: "challenge-2", solved: true, rank: 2 },
+  //       { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //     ],
+  //   },
+  //   {
+  //     teamName: "team2",
+  //     inChart: true,
+  //     score: 999,
+  //     solveStatus: [
+  //       { name: "Challenge1", tag: "challenge-1", solved: false, rank: 2 },
+  //       { name: "Challenge2", tag: "challenge-2", solved: true, rank: 1 },
+  //       { name: "Challenge3", tag: "challenge-3", solved: true, rank: 2 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: false, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: true, rank: 3 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //     ],
+  //   },
+  //   {
+  //     teamName: "team3",
+  //     inChart: true,
+  //     score: 998,
+  //     solveStatus: [
+  //       { name: "Challenge1", tag: "challenge-1", solved: true, rank: 10 },
+  //       { name: "Challenge2", tag: "challenge-2", solved: true, rank: 10 },
+  //       { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 1 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: false, rank: 10 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //     ],
+  //   },
+  //   {
+  //     teamName: "team4",
+  //     inChart: true,
+  //     score: 997,
+  //     solveStatus: [
+  //       { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
+  //       { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
+  //       { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //     ],
+  //   },
+  //   {
+  //     teamName: "team4",
+  //     inChart: true,
+  //     score: 997,
+  //     solveStatus: [
+  //       { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
+  //       { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
+  //       { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //     ],
+  //   },
+  //   {
+  //     teamName: "team4",
+  //     inChart: true,
+  //     score: 997,
+  //     solveStatus: [
+  //       { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
+  //       { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
+  //       { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //     ],
+  //   },
+  //   {
+  //     teamName: "team4",
+  //     inChart: true,
+  //     score: 997,
+  //     solveStatus: [
+  //       { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
+  //       { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
+  //       { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //     ],
+  //   },
+  //   {
+  //     teamName: "team4",
+  //     inChart: true,
+  //     score: 997,
+  //     solveStatus: [
+  //       { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
+  //       { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
+  //       { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //     ],
+  //   },
+  //   {
+  //     teamName: "team4",
+  //     inChart: true,
+  //     score: 997,
+  //     solveStatus: [
+  //       { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
+  //       { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
+  //       { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //     ],
+  //   },
+  //   {
+  //     teamName: "team4",
+  //     inChart: true,
+  //     score: 997,
+  //     solveStatus: [
+  //       { name: "Challenge1", tag: "challenge-1", solved: false, rank: 1 },
+  //       { name: "Challenge2", tag: "challenge-2", solved: false, rank: 2 },
+  //       { name: "Challenge3", tag: "challenge-3", solved: false, rank: 1 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 2 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //       { name: "Challenge4", tag: "challenge-4", solved: true, rank: 3 },
+  //       { name: "Challenge5", tag: "challenge-5", solved: false, rank: 1 },
+  //       { name: "Challenge6", tag: "challenge-6", solved: true, rank: 10 },
+  //     ],
+  //   },
+  // ];
 
   const columnWidth = 63;
   const maxWidth = 500;
@@ -222,8 +227,8 @@ function ScoreTable() {
             </Tr>
           </Thead>
           <Tbody>
-            {Object.entries(teams).map(([key, team]) => (
-              <Tr key={key}>
+            {Object.entries(teamScores).map(([key, team]) => (
+              <Tr key={String(key)}>
                 {key > 2 ? (
                   <Td textAlign="center" width="20px">
                     {Number(key) + 1}
@@ -289,35 +294,35 @@ function ScoreTable() {
             </Tr>
           </Thead>
           <Tbody>
-            {Object.entries(teams).map(([key, team]) => (
+            {Object.entries(teamScores).map(([key, team]) => (
               <Tr key={key}>
                 {Object.entries(challengesList).map(([key, challenge]) => (
                   <Td key={key} className="table-solve-icon-container">
                     <Center>
-                      {team.solveStatus[key].solved && (
+                      {team.solves[challenge.tag] && (
                         <>
-                          {team.solveStatus[key].rank === 1 && (
+                          {team.solves[challenge.tag].rank === 1 && (
                             <Icon
                               fontSize="xl"
                               color="#bf3d3d"
                               as={GiDrop}
                             ></Icon>
                           )}
-                          {team.solveStatus[key].rank === 2 && (
+                          {team.solves[challenge.tag].rank === 2 && (
                             <Icon
                               fontSize="xl"
                               color="silver"
                               as={GiMedal}
                             ></Icon>
                           )}
-                          {team.solveStatus[key].rank === 3 && (
+                          {team.solves[challenge.tag].rank === 3 && (
                             <Icon
                               fontSize="xl"
                               color="#CD7F32"
                               as={GiMedal}
                             ></Icon>
                           )}
-                          {team.solveStatus[key].rank > 3 && (
+                          {team.solves[challenge.tag].rank > 3 && (
                             <Icon as={FaFlag} />
                           )}
                         </>
