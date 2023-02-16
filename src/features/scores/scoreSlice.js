@@ -22,7 +22,11 @@ export const fetchScores = createAsyncThunk('score/fetchScores', async (obj, { r
             console.log(element)
             if (index < 10) {
                 element.inChart = true
-                response.data.chartSeries.push({name: element.teamName, data: element.teamScoreTimeline, type: 'line'})
+                response.data.chartSeries.push({
+                    name: element.teamName, 
+                    data: element.teamScoreTimeline, 
+                    type: 'line'
+                })
                 console.log(typeof element.solves)
             }  
         })
