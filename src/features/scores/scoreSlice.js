@@ -5,6 +5,7 @@ import apiClient from "../../api/client"
 const initialState = {
     status: 'idle',
     scores: [],
+    tableData: [],
     challengesList: [],
     chartSeries: [],
     statusCode: 200,
@@ -25,6 +26,7 @@ export const fetchScores = createAsyncThunk('score/fetchScores', async (obj, { r
                 console.log(typeof element.solves)
             }  
         })
+        response.data.tableData = response.data.teamsScore
         console.log("dataseries", response.data.chartSeries)
         return response.data
     }
@@ -40,6 +42,11 @@ export const fetchScores = createAsyncThunk('score/fetchScores', async (obj, { r
 const scoreSlice = createSlice({
     name: 'score',
     initialState,
+    reducers: {
+        setTableData: (state, action) => {
+            state.tableData = action.payload
+        }
+    },
     extraReducers: (builder) => {
         // Delete user
         builder.addCase(fetchScores.pending, (state) => {
@@ -48,6 +55,7 @@ const scoreSlice = createSlice({
         builder.addCase(fetchScores.fulfilled, (state, action) => {
             state.status = ''
             state.scores = action.payload.teamsScore
+            state.tableData = action.payload.tableData
             state.challengesList = action.payload.challengesList
             state.chartSeries = action.payload.chartSeries
             state.error = ''
@@ -60,4 +68,4 @@ const scoreSlice = createSlice({
 })
 
 export default scoreSlice.reducer
-
+export const { setTableData } = scoreSlice.actions
