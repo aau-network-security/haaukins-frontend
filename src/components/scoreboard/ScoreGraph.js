@@ -198,13 +198,34 @@ function ScoreGraph() {
   //   ["2018-08-15T16:11:01.339Z", 2200]
   // ]
   const options = {
-    grid: { top: 8, right: 8, bottom: 24, left: 36 },
     xAxis: {
       type: 'time',
+      boundaryGap: false,
     },
     yAxis: {
       type: 'value',
     },
+    toolbox: {
+      feature: {
+        dataZoom: {
+          yAxisIndex: 'none',
+        },
+        saveAsImage: {}
+      }
+    },
+    dataZoom: [
+      {
+        type: 'inside',
+        filterMode: 'none',
+        start: 0,
+        end: 100
+      },
+      {
+        start: 0,
+        end: 10,
+        handleSize: '80%'
+      }
+    ],
     series: chartSeries,
     tooltip: {
       trigger: 'axis',
