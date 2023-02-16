@@ -8,6 +8,7 @@ const initialState = {
     tableData: [],
     challengesList: [],
     chartSeries: [],
+    activeChartSeries: [],
     statusCode: 200,
     error: ''
 }
@@ -18,16 +19,21 @@ export const fetchScores = createAsyncThunk('score/fetchScores', async (obj, { r
         let eventTag = host.split('.')[0]
         const response = await apiClient.get('scores/' + eventTag)
         response.data.chartSeries = []
+        response.data.activeChartSeries = []
         response.data.teamsScore.forEach((element, index) => {
             console.log(element)
+            response.data.chartSeries.push({
+                name: element.teamName, 
+                data: element.teamScoreTimeline, 
+                type: 'line'
+            })
             if (index < 10) {
                 element.inChart = true
-                response.data.chartSeries.push({
+                response.data.activeChartSeries.push({
                     name: element.teamName, 
                     data: element.teamScoreTimeline, 
                     type: 'line'
                 })
-                console.log(typeof element.solves)
             }  
         })
         response.data.tableData = response.data.teamsScore
@@ -49,6 +55,21 @@ const scoreSlice = createSlice({
     reducers: {
         setTableData: (state, action) => {
             state.tableData = action.payload
+        },
+        setActiveChartSeries: (state, action) => {
+            state.activeChartSeries = action.payload
+        },
+        updateInChart: (state, action) => {
+            state.scores[action.payload.team.rank-1].inChart = action.payload.value
+            state.tableData[action.payload.tableDataKey].inChart = action.payload.value
+        },
+        setAllInChart: (state, action) => {
+            state.scores.forEach((element) => {
+                element.inChart = action.payload
+            })
+            state.tableData.forEach((element) => {
+                element.inChart = action.payload
+            })
         }
     },
     extraReducers: (builder) => {
@@ -62,6 +83,7 @@ const scoreSlice = createSlice({
             state.tableData = action.payload.tableData
             state.challengesList = action.payload.challengesList
             state.chartSeries = action.payload.chartSeries
+            state.activeChartSeries = action.payload.activeChartSeries
             state.error = ''
         })
         builder.addCase(fetchScores.rejected, (state, action) => {
@@ -72,4 +94,4 @@ const scoreSlice = createSlice({
 })
 
 export default scoreSlice.reducer
-export const { setTableData } = scoreSlice.actions
+export const { setTableData, setActiveChartSeries, updateInChart, setAllInChart } = scoreSlice.actions

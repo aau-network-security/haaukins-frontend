@@ -13,20 +13,32 @@ import {
   HStack,
   Input,
   Box,
+  InputGroup,
+  InputRightElement,
+  Button,
+  VStack,
 } from "@chakra-ui/react";
 import { FaFlag } from "react-icons/fa";
 import { GiDrop, GiTrophy, GiMedal } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import cloneDeep from "lodash/cloneDeep";
 import throttle from "lodash/throttle";
-import { setTableData } from "../../features/scores/scoreSlice";
+import {
+  setActiveChartSeries,
+  setAllInChart,
+  setTableData,
+  updateInChart,
+} from "../../features/scores/scoreSlice";
 import { debounce } from "lodash";
 
 function ScoreTable() {
   const teamScores = useSelector((state) => state.score.scores);
   const tableData = useSelector((state) => state.score.tableData);
+  const activeChartSeries = useSelector(
+    (state) => state.score.activeChartSeries
+  );
   const challengesList = useSelector((state) => state.score.challengesList);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -48,41 +60,102 @@ function ScoreTable() {
       return "overlay";
     }
   };
-  
+
   const changeSearchData = (text, scores) => {
     if (text === "") {
       dispatch(setTableData(cloneDeep(scores)));
     } else {
-      dispatch(setTableData(
-        cloneDeep(scores.filter((el) => {
-          return el.teamName.toLowerCase().indexOf(text.toLowerCase()) > -1;
-        }))
-      ));
+      dispatch(
+        setTableData(
+          cloneDeep(
+            scores.filter((el) => {
+              return el.teamName.toLowerCase().indexOf(text.toLowerCase()) > -1;
+            })
+          )
+        )
+      );
     }
   };
 
-  const debounceLoadData = useCallback(debounce(changeSearchData, 500), []); 
+  const debounceLoadData = useCallback(debounce(changeSearchData, 500), []);
 
-  
+  const clearChart = () => {
+    dispatch(setActiveChartSeries([]))
+    dispatch(setAllInChart(false))
+  }
 
-  useEffect(() => {
-      debounceLoadData(searchValue, teamScores);
-  }, [searchValue])
+  const chartSwitchHandler = (e, team, tableDataKey) => {
+    console.log("Value and team: ", e.target.checked, team, tableDataKey);
+    var newSeriesArray = [];
+    if (e.target.checked) {
+      newSeriesArray = cloneDeep(activeChartSeries);
+      var seriesToPush = {
+        name: teamScores[team.rank - 1].teamName,
+        data: teamScores[team.rank - 1].teamScoreTimeline,
+        type: "line",
+      };
+      newSeriesArray.push(seriesToPush);
+      dispatch(setActiveChartSeries(newSeriesArray));
+    } else {
+      activeChartSeries.forEach((element) => {
+        if (element.name !== team.teamName) {
+          newSeriesArray.push(element);
+        }
+      });
+      dispatch(setActiveChartSeries(newSeriesArray));
+    }
+
+    var payload = {
+      team,
+      tableDataKey: tableDataKey,
+      value: e.target.checked,
+    };
+    dispatch(updateInChart(payload));
+  };
 
   useEffect(() => {
     debounceLoadData(searchValue, teamScores);
-  }, [teamScores])
-
+  }, [searchValue, teamScores]);
   return (
-    <Box w="100%" className="solve-table-container" style={{caretColor: "black"}}>
-      <Input
-        placeholder="Search Teams"
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
-        w="300px"
-        top="60px"
-        borderColor="#211a52"
-      />
+    <Box
+      w="100%"
+      className="solve-table-container"
+      style={{ caretColor: "black" }}
+    >
+      <HStack w="100%">
+        <InputGroup size="md" w="300px" top="60px">
+          <Input
+            placeholder="Search Teams"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            borderColor="#211a52"
+          />
+          <InputRightElement width="4.5rem">
+            <Button
+              h="1.75rem"
+              size="sm"
+              onClick={(e) => setSearchValue("")}
+              backgroundColor="#54616e"
+              _hover={{ backgroundColor: "#434d56" }}
+              color="#dfdfe3"
+              variant="solid"
+            >
+              Clear
+            </Button>
+          </InputRightElement>
+        </InputGroup>
+        <Button
+          top="60px"
+          backgroundColor="#54616e"
+          _hover={{ backgroundColor: "#434d56" }}
+          color="#dfdfe3"
+          variant="solid"
+          onClick={clearChart}
+        >
+          Clear chart
+        </Button>
+      </HStack>
+
       <HStack spacing="0" w="100%" className="solve-table-container">
         <TableContainer overflowX="overlay" width="100%" minW="500px">
           <Table
@@ -136,7 +209,12 @@ function ScoreTable() {
                     </>
                   )}
                   <Td width="20px">
-                    <Switch isChecked={team.inChart} id="email-alerts" />
+                    <Switch
+                      value={team.inChart}
+                      isChecked={team.inChart}
+                      onChange={(e) => chartSwitchHandler(e, team, key)}
+                      id="email-alerts"
+                    />
                   </Td>
                   <Td minW="200px">{team.teamName}</Td>
                   <Td width="100px">{team.score}</Td>
