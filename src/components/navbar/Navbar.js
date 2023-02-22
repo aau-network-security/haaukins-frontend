@@ -23,7 +23,7 @@ import NavItem from "./NavItem";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutTeam } from "../../features/teams/teamSlice";
 import { Link } from "react-router-dom";
-import ConfigureLabMenu from "./ConfigureLabMenu";
+import ConfigureLabMenu from "./LabMenu";
 
 // TODO new logos
 export default function Navbar() {
