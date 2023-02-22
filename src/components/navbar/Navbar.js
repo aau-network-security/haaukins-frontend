@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Flex as Box, Flex, HStack } from "@chakra-ui/react";
+import {
+  Center,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Flex as Box,
+  Flex,
+  HStack,
+  IconButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
 import { FaFlagCheckered, FaNetworkWired, FaQuestion } from "react-icons/fa";
 import { NavLink as ReactLink } from "react-router-dom";
 import { RiUserSettingsLine, RiUserAddLine } from "react-icons/ri";
 import { SlGraph } from "react-icons/sl";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import NavItem from "./NavItem";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutTeam } from "../../features/teams/teamSlice";
@@ -13,9 +27,11 @@ import ConfigureLabMenu from "./ConfigureLabMenu";
 
 // TODO new logos
 export default function Navbar() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [navSize, changeNavSize] = useState("large"); // Used for the menu buttom which is also commented out below
   const dispatch = useDispatch();
   const logout = () => {
+    onClose()
     dispatch(logoutTeam());
   };
   const loggedInTeam = useSelector((state) => state.team.loggedInTeam);
@@ -30,11 +46,11 @@ export default function Navbar() {
 
   useEffect(() => {
     updateDimensions();
-
+    console.log("navsize", navSize);
     window.addEventListener("resize", updateDimensions);
     if (width >= 1250) {
       changeNavSize("large");
-    } else if (width < 1250 && width >= 850) {
+    } else if (width < 1250 && width >= 900) {
       changeNavSize("medium");
     } else if (width < 850) {
       changeNavSize("small");
@@ -74,7 +90,7 @@ export default function Navbar() {
       <Box
         flexDir="row"
         w="fit-content"
-        display="flex"
+        display={navSize === "small" ? "none" : "flex"}
         top="0"
         margin="auto"
         alignItems="center"
@@ -86,6 +102,7 @@ export default function Navbar() {
             navSize={navSize}
             displayTooltip={false}
             displayTitle
+            scrollSensitive={true}
             icon={FaFlagCheckered}
             title="Challenges"
             to="/challenges"
@@ -94,6 +111,7 @@ export default function Navbar() {
             navSize={navSize}
             displayTooltip={false}
             displayTitle
+            scrollSensitive={true}
             icon={SlGraph}
             title="Scoreboard"
             to="/scoreboard"
@@ -104,6 +122,7 @@ export default function Navbar() {
                 navSize={navSize}
                 displayTooltip={false}
                 displayTitle
+                scrollSensitive={true}
                 icon={FaNetworkWired}
                 title="Lab"
                 to="/lab"
@@ -112,6 +131,7 @@ export default function Navbar() {
                 navSize={navSize}
                 displayTooltip={false}
                 displayTitle
+                scrollSensitive={true}
                 icon={FaQuestion}
                 title="FAQ"
                 to="/faq"
@@ -133,16 +153,31 @@ export default function Navbar() {
         {typeof loggedInTeam.username !== "undefined" ? (
           <>
             <ConfigureLabMenu />
-            <HStack marginLeft="10px" spacing="10px">
+            <IconButton
+              marginLeft="10px"
+              bg={scrolledToTop ? "#211a52" : "#dfdfe3"}
+              color={scrolledToTop ? "white" : "#54616e"}
+              _hover={scrolledToTop ? { bg: "#18123a" } : { bg: "#c8c8d0" }}
+              icon={<HamburgerIcon />}
+              display={navSize === "small" ? "flex" : "none"}
+              onClick={onOpen}
+            />
+            <HStack
+              marginLeft="10px"
+              spacing="10px"
+              display={navSize === "small" ? "none" : "flex"}
+            >
               <NavItem
                 navSize={navSize}
                 displayTooltip={true}
+                scrollSensitive={true}
                 icon={RiUserSettingsLine}
                 title="Profile"
                 to="/profile"
               />
               <NavItem
                 navSize={navSize}
+                scrollSensitive={true}
                 displayTooltip={true}
                 icon={FiLogOut}
                 title="Logout"
@@ -152,9 +187,24 @@ export default function Navbar() {
             </HStack>
           </>
         ) : (
-          <HStack spacing="10px">
+          <>
+          <IconButton
+              marginLeft="10px"
+              bg={scrolledToTop ? "#211a52" : "#dfdfe3"}
+              color={scrolledToTop ? "white" : "#54616e"}
+              _hover={scrolledToTop ? { bg: "#18123a" } : { bg: "#c8c8d0" }}
+              icon={<HamburgerIcon />}
+              display={navSize === "small" ? "flex" : "none"}
+              onClick={onOpen}
+            />
+            <HStack
+            spacing="10px"
+            display={navSize === "small" ? "none" : "flex"}
+          >
+            
             <NavItem
               navSize={navSize}
+              scrollSensitive={true}
               displayTooltip={true}
               icon={RiUserAddLine}
               title="Signup"
@@ -162,13 +212,137 @@ export default function Navbar() {
             />
             <NavItem
               navSize={navSize}
+              scrollSensitive={true}
               displayTooltip={true}
               icon={FiLogIn}
               title="Login"
               to="/login"
             />
           </HStack>
+          </>
         )}
+        <Drawer placement="top" onClose={onClose} isOpen={isOpen}>
+          <DrawerOverlay />
+          <DrawerContent color={"#dfdfe3"} backgroundColor={"#211a52"}>
+            <DrawerCloseButton />
+            <DrawerHeader fontSize="35px">
+              <Link as={ReactLink} _hover={{ textDecor: "none" }} to={"/"}>
+                {eventInfo.name}
+              </Link>
+            </DrawerHeader>
+            <DrawerBody>
+              <Center width="fit-content" margin="auto">
+                <NavItem
+                  navSize={"large"}
+                  scrollSensitive={false}
+                  displayTooltip={false}
+                  displayTitle
+                  icon={FaFlagCheckered}
+                  title="Challenges"
+                  to="/challenges"
+                  customClickEvent={onClose}
+                />
+              </Center>
+              <Center width="fit-content" margin="auto">
+                <NavItem
+                  navSize={"large"}
+                  scrollSensitive={false}
+                  displayTooltip={false}
+                  displayTitle
+                  icon={SlGraph}
+                  title="Scoreboard"
+                  to="/scoreboard"
+                  customClickEvent={onClose}
+                />
+              </Center>
+              {typeof loggedInTeam.username !== "undefined" && (
+                <>
+                  <Center width="fit-content" margin="auto">
+                    <NavItem
+                      navSize={"large"}
+                      scrollSensitive={false}
+                      displayTooltip={false}
+                      displayTitle
+                      icon={FaNetworkWired}
+                      title="Lab"
+                      to="/lab"
+                      customClickEvent={onClose}
+                    />
+                  </Center>
+                  <Center width="fit-content" margin="auto">
+                    <NavItem
+                      navSize={"large"}
+                      scrollSensitive={false}
+                      displayTooltip={false}
+                      displayTitle
+                      icon={FaQuestion}
+                      title="FAQ"
+                      to="/faq"
+                      customClickEvent={onClose}
+                    />
+                  </Center>
+                </>
+              )}
+              {typeof loggedInTeam.username !== "undefined" ? (
+                <>
+                  <HStack
+                    spacing="10px"
+                    width="300px"
+                    margin="auto"
+                    marginTop="30px"
+                    display={navSize === "small" ? "flex" : "none"}
+                  >
+                    <NavItem
+                      navSize={"large"}
+                      scrollSensitive={false}
+                      displayTitle
+                      icon={RiUserSettingsLine}
+                      title="Profile"
+                      to="/profile"
+                      customClickEvent={onClose}
+                    />
+                    <NavItem
+                      navSize={"large"}
+                      scrollSensitive={false}
+                      displayTitle
+                      icon={FiLogOut}
+                      title="Logout"
+                      to="/login"
+                      customClickEvent={logout}
+                    />
+                  </HStack>
+                </>
+              ) : (
+                <HStack
+                  spacing="10px"
+                  width="300px"
+                  margin="auto"
+                  marginTop="30px"
+                  display={navSize === "small" ? "flex" : "none"}
+                >
+                  <NavItem
+                    navSize={"large"}
+                    scrollSensitive={false}
+                    displayTitle
+                    icon={RiUserAddLine}
+                    title="Signup"
+                    to="/signup"
+                    customClickEvent={onClose}
+                  />
+                  <NavItem
+                    navSize={"large"}
+                    scrollSensitive={false}
+                    displayTitle
+                    icon={FiLogIn}
+                    title="Login"
+                    to="/login"
+                    customClickEvent={onClose}
+                  />
+                </HStack>
+              )}
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
 
         {/* <Menu placement="right" p={"12px 12px 5px 12px"} _hover={{ textDecor: 'none', backgroundColor: "#211a52", color: "#FFF"}} >
                     <MenuButton w="100%" lineHeight={1.35} >

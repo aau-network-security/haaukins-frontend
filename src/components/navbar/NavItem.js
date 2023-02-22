@@ -11,7 +11,7 @@ import { NavLink as ReactLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 
-export default function NavItem({ icon, title, navSize, to, customClickEvent, displayTitle, displayTooltip}) {
+export default function NavItem({ icon, title, navSize, to, customClickEvent, displayTitle, displayTooltip, scrollSensitive}) {
     const scrolledToTop = useSelector((state) => state.generic.scrolledToTop)
     return (
         <Flex
@@ -19,16 +19,16 @@ export default function NavItem({ icon, title, navSize, to, customClickEvent, di
             w="100%"
             alignItems="center"
             
-            color={scrolledToTop ? "" : "#dfdfe3"}
+            color={scrolledToTop && scrollSensitive? "" : "#dfdfe3"}
         >
             <Menu placement="right">
                     <Link
                         id={title}
                         as={ReactLink}
                         p={"12px 12px 5px 12px"}
-                        className={scrolledToTop ? "hover-underline-animation" : "hover-underline-animation-light" }
+                        className={scrolledToTop && scrollSensitive ? "hover-underline-animation" : "hover-underline-animation-light" }
                         borderBottom="3px solid transparent"
-                        _activeLink={scrolledToTop ? {borderBottom: "solid", borderBottomRadius: "0", borderBottomColor: "#211a52"} : {borderBottom: "solid", borderBottomRadius: "0", borderBottomColor: "#dfdfe3"}}
+                        _activeLink={scrolledToTop && scrollSensitive ? {borderBottom: "solid", borderBottomRadius: "0", borderBottomColor: "#211a52"} : {borderBottom: "solid", borderBottomRadius: "0", borderBottomColor: "#dfdfe3"}}
                         _hover={{ textDecor: 'none'}}
                         w={navSize === "large" && "100%"}
                         to={to}
