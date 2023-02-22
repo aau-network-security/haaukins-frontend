@@ -23,7 +23,7 @@ import NavItem from "./NavItem";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutTeam } from "../../features/teams/teamSlice";
 import { Link } from "react-router-dom";
-import ConfigureLabMenu from "./LabMenu";
+import LabButton from "./LabButton";
 
 // TODO new logos
 export default function Navbar() {
@@ -152,7 +152,7 @@ export default function Navbar() {
       >
         {typeof loggedInTeam.username !== "undefined" ? (
           <>
-            <ConfigureLabMenu />
+            <LabButton />
             <IconButton
               marginLeft="10px"
               bg={scrolledToTop ? "#211a52" : "#dfdfe3"}
