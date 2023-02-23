@@ -57,6 +57,8 @@ export default function ChallengesPage() {
                   <Challenge
                     key={key}
                     solved={exercise.solved}
+                    parentExerciseTag={exercise.parentExerciseTag}
+                    staticChallenge={exercise.static}
                     name={exercise.name}
                     points={exercise.points}
                     onClick={() => openModal(exercise)}

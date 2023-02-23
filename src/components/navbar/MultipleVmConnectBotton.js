@@ -117,8 +117,9 @@ function MultipleVmConnectBotton() {
             href={connectionUrl}
             target="_blank"
             _hover={{ textDecor: "none" }}
+            key={key}
           >
-            <MenuItem key={key}>
+            <MenuItem >
               <Text>Connection {Number(key) + 1}</Text>
             </MenuItem>
           </Link>
