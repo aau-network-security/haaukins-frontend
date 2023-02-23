@@ -9,7 +9,7 @@ function ChallengeStatusBanner({ parentExerciseTag }) {
   loggedInTeam.lab.labInfo.exercisesStatus[parentExerciseTag].machines.forEach(
     (machine) => {
       if (machine.status !== "running") {
-        challengeRunning = false
+        challengeRunning = false;
       }
     }
   );
@@ -41,7 +41,6 @@ function ChallengeStatusBanner({ parentExerciseTag }) {
       </Box>
     );
   }
-  
 }
 
 export default function Challenge({
@@ -68,7 +67,7 @@ export default function Challenge({
         fontWeight="400"
         fontFamily="'Audiowide', cursive"
       >
-        {!staticChallenge && (
+        {!staticChallenge ? (
           <>
             {typeof loggedInTeam.lab !== "undefined" ? (
               <>
@@ -88,7 +87,9 @@ export default function Challenge({
                     </Box>
                   </>
                 ) : (
-                  <ChallengeStatusBanner parentExerciseTag={parentExerciseTag} />
+                  <ChallengeStatusBanner
+                    parentExerciseTag={parentExerciseTag}
+                  />
                 )}
               </>
             ) : (
@@ -100,10 +101,21 @@ export default function Challenge({
                 borderTopRadius="0.375rem"
                 fontSize="13px"
               >
-                No Lab
+                Requires lab
               </Box>
             )}
           </>
+        ) : (
+          <Box
+            w="100%"
+            bg="grey"
+            position="absolute"
+            top="0"
+            borderTopRadius="0.375rem"
+            fontSize="13px"
+          >
+            Lab not required
+          </Box>
         )}
         <Center
           w="100%"
