@@ -3,7 +3,7 @@ import { template } from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
 
-function ChallengeStatus({ parentExerciseTag }) {
+function ChallengeStatusBanner({ parentExerciseTag }) {
   const loggedInTeam = useSelector((state) => state.team.loggedInTeam);
   let challengeRunning = true;
   loggedInTeam.lab.labInfo.exercisesStatus[parentExerciseTag].machines.forEach(
@@ -88,7 +88,7 @@ export default function Challenge({
                     </Box>
                   </>
                 ) : (
-                  <ChallengeStatus parentExerciseTag={parentExerciseTag} />
+                  <ChallengeStatusBanner parentExerciseTag={parentExerciseTag} />
                 )}
               </>
             ) : (
