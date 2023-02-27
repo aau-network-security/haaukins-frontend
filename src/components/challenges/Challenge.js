@@ -37,7 +37,7 @@ function ChallengeStatusBanner({ parentExerciseTag }) {
         borderTopRadius="0.375rem"
         fontSize="13px"
       >
-        Stopped
+        Not running
       </Box>
     );
   }
@@ -67,7 +67,7 @@ export default function Challenge({
         fontWeight="400"
         fontFamily="'Audiowide', cursive"
       >
-        {!staticChallenge ? (
+        {!staticChallenge && (
           <>
             {typeof loggedInTeam.lab !== "undefined" ? (
               <>
@@ -83,7 +83,7 @@ export default function Challenge({
                       borderTopRadius="0.375rem"
                       fontSize="13px"
                     >
-                      Challenge not in lab
+                      Not running
                     </Box>
                   </>
                 ) : (
@@ -105,17 +105,6 @@ export default function Challenge({
               </Box>
             )}
           </>
-        ) : (
-          <Box
-            w="100%"
-            bg="grey"
-            position="absolute"
-            top="0"
-            borderTopRadius="0.375rem"
-            fontSize="13px"
-          >
-            Lab not required
-          </Box>
         )}
         <Center
           w="100%"
