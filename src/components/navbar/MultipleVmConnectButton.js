@@ -120,7 +120,7 @@ function MultipleVmConnectBotton() {
             key={key}
           >
             <MenuItem >
-              <Text>Browser 1 {Number(key) + 1}</Text>
+              <Text>Browser {Number(key) + 1}</Text>
             </MenuItem>
           </Link>
         ))}

@@ -17,7 +17,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import MultipleVmConnectBotton from "./MultipleVmConnectBotton";
+import MultipleVmConnectBotton from "./MultipleVmConnectButton";
 import { Tooltip } from "react-tooltip";
 
 export default function LabButton() {
@@ -109,26 +109,56 @@ export default function LabButton() {
                 />
               </>
             ) : (
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
-                  color={scrolledToTop ? "#dfdfe3" : "#54616e"}
-                  rightIcon={<FaChevronDown />}
-                  _hover={
-                    scrolledToTop
-                      ? { backgroundColor: "#a9b3bc" }
-                      : { backgroundColor: "#c8c8d0" }
-                  }
-                  isLoading={loggedInTeam.status === "idle" ? false : true}
-                >
-                  <Text>Configure Lab</Text>
-                </MenuButton>
-                <MenuList>
-                  <MenuItem onClick={configureVpnLab}>VPN</MenuItem>
-                  <MenuItem onClick={configureBrowserLab}>Browser</MenuItem>
-                </MenuList>
-              </Menu>
+              <>
+                {eventInfo.type === "beginner" ? (
+                  <Box>
+                    <Button onClick={configureBrowserLab}>Get a lab</Button>
+                  </Box>
+                ) : (
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
+                      color={scrolledToTop ? "#dfdfe3" : "#54616e"}
+                      rightIcon={<FaChevronDown />}
+                      _hover={
+                        scrolledToTop
+                          ? { backgroundColor: "#a9b3bc" }
+                          : { backgroundColor: "#c8c8d0" }
+                      }
+                      isLoading={loggedInTeam.status === "idle" ? false : true}
+                    >
+                      <Text>Get a lab</Text>
+                    </MenuButton>
+                    <MenuList>
+                      <Link id="vpn-lab-button" _hover={{ textDecor: "none" }}>
+                        <MenuItem onClick={configureVpnLab}>VPN</MenuItem>
+                      </Link>
+
+                      <Tooltip
+                        anchorId="vpn-lab-button"
+                        place="left"
+                        html="Get access to the challenges through wireguard VPN <br> If you are a team, each member will get access their own VPN connection"
+                        multiline
+                      />
+                      <Link
+                        id="browser-lab-button"
+                        _hover={{ textDecor: "none" }}
+                      >
+                        <MenuItem onClick={configureBrowserLab}>
+                          Browser
+                        </MenuItem>
+                      </Link>
+                      <Tooltip
+                        anchorId="browser-lab-button"
+                        place="left"
+                        html="Get a Kali VM served in a browser window <br> If you are a team, each member will get access to their own VM"
+                        multiline
+                      />
+                    </MenuList>
+                  </Menu>
+                )}
+              </>
             )}
           </>
         )}
