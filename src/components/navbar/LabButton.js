@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MultipleVmConnectBotton from "./MultipleVmConnectButton";
 import { Tooltip } from "react-tooltip";
 import { configureLab } from "../../features/teams/teamSlice";
+import { BASE_URL } from "../../api/client";
 
 export default function LabButton() {
   const dispatch = useDispatch()
@@ -42,6 +43,41 @@ export default function LabButton() {
     }
     dispatch(configureLab(reqData))
   };
+
+  const [vpnDownloadStatus, setVpnDownloadStatus] = useState("idle")
+  const createFileFromString = (text) => {
+    if (typeof text === "undefined") {
+      setVpnDownloadStatus("idle")
+      return
+    }
+    const element = document.createElement("a");
+    const file = new Blob([text], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = "wg-conf.txt";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+    document.body.removeChild(element);
+    setVpnDownloadStatus("idle")
+  }
+
+  const DownloadWgConfig = () => {
+    let token = localStorage.getItem("token");
+    // Thunk will return error if it cannot pass the value as json
+    let endpoint = "labs/vpnconf";
+    setVpnDownloadStatus("downloading")
+    fetch(BASE_URL + endpoint, {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      createFileFromString(data.message)
+    })
+    .catch((error) => { 
+      setVpnDownloadStatus("idle")
+    });
+  }
 
   useEffect(() => {
     if (typeof loggedInTeam.lab !== "undefined") {
@@ -103,7 +139,19 @@ export default function LabButton() {
               loggedInTeam.status === "idle" ? (
               <MultipleVmConnectBotton />
             ) : (
-              <></>
+              <Button
+                onClick={DownloadWgConfig}
+                backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
+                color={scrolledToTop ? "#dfdfe3" : "#54616e"}
+                _hover={
+                  scrolledToTop
+                    ? { backgroundColor: "#a9b3bc" }
+                    : { backgroundColor: "#c8c8d0" }
+                }
+                isLoading={vpnDownloadStatus === "idle" ? false : true}
+              >
+                Download VPN config
+              </Button>
             )}
           </>
         ) : (
@@ -111,7 +159,7 @@ export default function LabButton() {
             {eventInfo.isMaxLabsReached && loggedInTeam.status === "idle" ? (
               <>
                 <Box id="maxlabsbutton">
-                  <Button isDisabled>Max labs reached</Button>
+                  <Button isDisabled >Max labs reached</Button>
                 </Box>
                 <Tooltip
                   anchorId="maxlabsbutton"
@@ -124,7 +172,19 @@ export default function LabButton() {
               <>
                 {eventInfo.type === "beginner" ? (
                   <Box>
-                    <Button onClick={configureBrowserLab}>Get a lab</Button>
+                    <Button 
+                      onClick={configureBrowserLab}
+                      backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
+                      color={scrolledToTop ? "#dfdfe3" : "#54616e"}
+                      _hover={
+                        scrolledToTop
+                          ? { backgroundColor: "#a9b3bc" }
+                          : { backgroundColor: "#c8c8d0" }
+                      }
+                      isLoading={loggedInTeam.status === "idle" ? false : true}
+                    >
+                      Get a lab
+                    </Button>
                   </Box>
                 ) : (
                   <Menu>
