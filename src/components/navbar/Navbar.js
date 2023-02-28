@@ -353,6 +353,7 @@ export default function Navbar() {
                     </MenuButton>
                 </Menu> */}
       </Box>
+      
     </Flex>
   );
 }

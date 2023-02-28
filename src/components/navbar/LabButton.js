@@ -16,17 +16,31 @@ import {
 import React, { useEffect, useState } from "react";
 import { Link } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MultipleVmConnectBotton from "./MultipleVmConnectButton";
 import { Tooltip } from "react-tooltip";
+import { configureLab } from "../../features/teams/teamSlice";
 
 export default function LabButton() {
+  const dispatch = useDispatch()
+
   const loggedInTeam = useSelector((state) => state.team.loggedInTeam);
   const [connectUrl, setConnectUrl] = useState("");
   const eventInfo = useSelector((state) => state.event.eventinfo);
   const scrolledToTop = useSelector((state) => state.generic.scrolledToTop);
   const configureVpnLab = () => {
     console.log("configuring vpn lab");
+    let reqData = {
+      isVpn: true,
+    }
+    dispatch(configureLab(reqData))
+  };
+  const configureBrowserLab = () => {
+    console.log("configuring browser lab");
+    let reqData = {
+      isVpn: false,
+    }
+    dispatch(configureLab(reqData))
   };
 
   useEffect(() => {
@@ -58,9 +72,7 @@ export default function LabButton() {
     }
   }, [loggedInTeam]);
 
-  const configureBrowserLab = () => {
-    console.log("configuring browser lab");
-  };
+  
   return (
     <>
       <Flex>

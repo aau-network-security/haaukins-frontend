@@ -38,6 +38,34 @@ export const loginTeam = createAsyncThunk('team/login', async (reqData, { reject
     }
 })
 
+export const fetchTeam = createAsyncThunk('team/fetchTeam', async (obj, {rejectWithValue}) => {
+    try {
+        const response = await apiClient.get('teams/self')
+        return response.data
+    }
+    catch (err) {
+        if (!err.response) {
+            throw err
+        }
+        let error = { axiosMessage: err.message, axiosCode: err.code, apiError: err.response.data, apiStatusCode: err.response.status}
+        return rejectWithValue(error)
+    }
+})
+
+export const configureLab = createAsyncThunk('team/configureLab', async (reqData, {rejectWithValue}) => {
+    try {
+        const response = await apiClient.post('labs', reqData)
+        return response.data
+    }
+    catch (err) {
+        if (!err.response) {
+            throw err
+        }
+        let error = { axiosMessage: err.message, axiosCode: err.code, apiError: err.response.data, apiStatusCode: err.response.status}
+        return rejectWithValue(error)
+    }
+})
+
 const teamSlice = createSlice({
     name: 'team',
     initialState,
@@ -85,6 +113,11 @@ const teamSlice = createSlice({
             state.status = ''
             state.loggedIn = false
             state.error = action.payload
+        })
+
+        // fetchTeam
+        builder.addCase(fetchTeam.fulfilled, (state, action) => {
+            state.loggedInTeam = action.payload.teaminfo
         })
     }
 })

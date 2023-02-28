@@ -25,6 +25,7 @@ import { useFetch } from "react-async";
 import { Buffer } from "buffer";
 import EventNotFoundPage from "./pages/EventNotFoundPage";
 import { setEventInfo } from "./features/events/eventSlice";
+import EventWebsocket from "./components/EventWebsocket";
 function AppRouter() {
   const dispatch = useDispatch();
   let [ publicScoreboard, setPublicScoreboard ] = useState(false) //Should be from redux state
@@ -118,17 +119,16 @@ function AppRouter() {
             )}
 
             <Route element={<AuthWrapper />}>
-              <Route path="" element={<HomePage />} />
-              <Route path="faq" element={<FaqPage />} />
-              <Route path="challenges" element={<ChallengesPage />} />
-              <Route path="lab" element={<LabPage />} />
-              <Route path="profile" element={<ProfilePage />} />
-              {!publicScoreboard && (
-                <Route path="scoreboard" element={<ScoreBoardPage />} />
-              )}
-              {/* <Route path="" element={<HomePage />} />
-                            <Route path="profile" element={<ProfilePage />} />
-                            <Route path="challenges" element={<ChallengesPage />} /> */}
+              <Route element={<EventWebsocket />} >
+                <Route path="" element={<HomePage />} />
+                <Route path="faq" element={<FaqPage />} />
+                <Route path="challenges" element={<ChallengesPage />} />
+                <Route path="lab" element={<LabPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+                {!publicScoreboard && (
+                  <Route path="scoreboard" element={<ScoreBoardPage />} />
+                )}
+              </Route>
             </Route>
           </Route>
         </Route>
