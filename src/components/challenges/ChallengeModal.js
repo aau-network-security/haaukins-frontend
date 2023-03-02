@@ -36,6 +36,8 @@ import {
   fetchExercises,
   solveExercise,
 } from "../../features/exercises/exerciseSlice";
+import ChallengeReset from "./ChallengeReset";
+import ChallengeStartStop from "./ChallengeStartStop";
 
 export default function ChallengeModal({ isOpen, onClose }) {
   const selectedExercise = useSelector(
@@ -85,7 +87,13 @@ export default function ChallengeModal({ isOpen, onClose }) {
         <ModalOverlay />
         <ModalContent maxH="100%" minH="400px">
           <ModalCloseButton />
+          
           <ModalBody margin="0" padding="0">
+            <HStack position="absolute" top="17px" right="50px" spacing="20px">
+              <ChallengeReset/>
+              <ChallengeStartStop/>
+            </HStack>
+          
             <Tabs variant="enclosed">
               <TabList margin="20px">
                 <Tab color="#211a52">Challenge</Tab>
