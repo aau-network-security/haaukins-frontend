@@ -40,6 +40,7 @@ import ChallengeReset from "./ChallengeReset";
 import ChallengeStartStop from "./ChallengeStartStop";
 
 export default function ChallengeModal({ isOpen, onClose }) {
+  const eventInfo = useSelector((state) => state.event.eventinfo);
   const selectedExercise = useSelector(
     (state) => state.exercise.selectedExercise
   );
@@ -91,7 +92,10 @@ export default function ChallengeModal({ isOpen, onClose }) {
           <ModalBody margin="0" padding="0">
             <HStack position="absolute" top="17px" right="50px" spacing="20px">
               <ChallengeReset/>
-              <ChallengeStartStop/>
+              {eventInfo.type === "advanced" && (
+                <ChallengeStartStop/>
+              )}
+              
             </HStack>
           
             <Tabs variant="enclosed">
