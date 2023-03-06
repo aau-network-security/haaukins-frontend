@@ -1,14 +1,15 @@
-import { Button } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetExercise } from "../../features/exercises/exerciseSlice";
 
-function ChallengeReset({ parentExerciseTag, onClose }) {
+function ChallengeReset({ parentExerciseTag }) {
   const loggedInTeam = useSelector((state) => state.team.loggedInTeam);
   const status = useSelector((state) => state.exercise.status);
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [resetError, setResetError] = useState("");
 
   useEffect(() => {
     if (loggedInTeam.status === "runningExCommand" && status !== "resetting") {
@@ -26,6 +27,16 @@ function ChallengeReset({ parentExerciseTag, onClose }) {
     }
   }, [status, loggedInTeam])
 
+  const exerciseReset = async () => {
+    try {
+      const response = await dispatch(resetExercise({parentTag: parentExerciseTag})).unwrap()
+      setResetError("");
+    } catch (err) {
+      console.log("got error starting exercise", err)
+      setResetError(err.apiError.status);
+    }
+  }
+
   return (
     <>
       {typeof loggedInTeam.lab !== "undefined" && (
@@ -34,13 +45,27 @@ function ChallengeReset({ parentExerciseTag, onClose }) {
           _hover={{ backgroundColor: "#434d56" }}
           color="#dfdfe3"
           variant="solid"
-          onClick={() => dispatch(resetExercise({parentTag: parentExerciseTag}))}
+          onClick={exerciseReset}
           isLoading={isLoading}
           isDisabled={isDisabled}
         >
           Reset
         </Button>
       )}
+      {resetError !== "" &&
+        <Alert 
+        status='error' 
+        position="absolute"
+        width="475px"
+        left="-300px"
+        top="45px"
+        height="40px"
+        variant="top-accent"
+        >
+          <AlertIcon />
+          <AlertDescription margin="5px">{resetError}</AlertDescription>
+        </Alert>
+      }
     </>
   );
 }

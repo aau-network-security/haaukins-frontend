@@ -49,17 +49,18 @@ export const solveExercise = createAsyncThunk('exercise/solveExercise', async (e
 export const startExercise = createAsyncThunk('exercise/startExercise', async (exercise, {rejectWithValue}) => {
     try {
         apiClient.defaults.headers.Authorization = localStorage.getItem('token')
-        let reqParam = exercise.parentTag
-        if (exercise.replaces !== "") {
-            reqParam += "?replaces=" + exercise.replaces
-        }
-        const response = await apiClient.put('exercises/start/' + reqParam)
+        // let reqParam = exercise.parentTag
+        // if (exercise.replaces !== "") {
+        //     reqParam += "?replaces=" + exercise.replaces
+        // }
+        const response = await apiClient.put('exercises/start/' + exercise.parentTag)
         return response.data
     }
     catch (err) {
         if (!err.response) {
             throw err
         }
+        console.log("got error starting challenge")
         let error = { axiosMessage: err.message, axiosCode: err.code, apiError: err.response.data, apiStatusCode: err.response.status}
         return rejectWithValue(error)
     }
@@ -91,6 +92,7 @@ export const resetExercise = createAsyncThunk('exercise/resetExercise', async (e
             throw err
         }
         let error = { axiosMessage: err.message, axiosCode: err.code, apiError: err.response.data, apiStatusCode: err.response.status}
+        console.log(error)
         return rejectWithValue(error)
     }
 })
@@ -127,7 +129,7 @@ const exerciseSlice = createSlice({
         builder.addCase(startExercise.fulfilled, (state) => {
             state.status = "idle"
         })
-        builder.addCase(startExercise.rejected, (state) => {
+        builder.addCase(startExercise.rejected, (state, action) => {
             state.status = "idle"
         })
 

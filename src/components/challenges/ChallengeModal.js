@@ -121,7 +121,7 @@ export default function ChallengeModal({ isOpen, onClose }) {
                         fontFamily="Audiowide"
                         fontSize="20px"
                       >
-                        <Box w="100%" marginTop="15px">
+                        <Box w="100%" marginTop="20px">
                           <Center>
                             <Text textAlign="center">
                               {selectedExercise.name}
