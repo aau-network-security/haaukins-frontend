@@ -91,9 +91,9 @@ export default function ChallengeModal({ isOpen, onClose }) {
           
           <ModalBody margin="0" padding="0">
             <HStack position="absolute" top="17px" right="50px" spacing="20px">
-              <ChallengeReset/>
+              <ChallengeReset parentExerciseTag={selectedExercise.parentExerciseTag}/>
               {eventInfo.type === "advanced" && (
-                <ChallengeStartStop/>
+                <ChallengeStartStop parentExerciseTag={selectedExercise.parentExerciseTag}/>
               )}
               
             </HStack>
