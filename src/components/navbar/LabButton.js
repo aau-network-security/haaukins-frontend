@@ -115,8 +115,7 @@ export default function LabButton() {
         {typeof loggedInTeam.lab !== "undefined" ? (
           <>
             {!loggedInTeam.lab.labInfo.isVpn &&
-            eventInfo.teamSize === 1 &&
-            loggedInTeam.status === "idle" ? (
+            eventInfo.teamSize === 1 ? (
               <Link
                 href={connectUrl}
                 target="_blank"
@@ -135,8 +134,7 @@ export default function LabButton() {
                 </Button>
               </Link>
             ) : !loggedInTeam.lab.labInfo.isVpn &&
-              eventInfo.teamSize !== 1 &&
-              loggedInTeam.status === "idle" ? (
+              eventInfo.teamSize !== 1 ? (
               <MultipleVmConnectBotton />
             ) : (
               <Button
@@ -181,7 +179,7 @@ export default function LabButton() {
                           ? { backgroundColor: "#a9b3bc" }
                           : { backgroundColor: "#c8c8d0" }
                       }
-                      isLoading={loggedInTeam.status === "idle" ? false : true}
+                      isLoading={loggedInTeam.status === "inLabQueue" || loggedInTeam.status === "waitingForLab" ? true : false}
                     >
                       Get a lab
                     </Button>
@@ -198,7 +196,7 @@ export default function LabButton() {
                           ? { backgroundColor: "#a9b3bc" }
                           : { backgroundColor: "#c8c8d0" }
                       }
-                      isLoading={loggedInTeam.status === "idle" ? false : true}
+                      isLoading={loggedInTeam.status === "inLabQueue" || loggedInTeam.status === "waitingForLab" ? true : false}
                     >
                       <Text>Get a lab</Text>
                     </MenuButton>
