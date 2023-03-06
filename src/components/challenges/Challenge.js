@@ -71,26 +71,31 @@ export default function Challenge({
           <>
             {typeof loggedInTeam.lab !== "undefined" ? (
               <>
-                {typeof loggedInTeam.lab.labInfo.exercisesStatus[
-                  parentExerciseTag
-                ] === "undefined" ? (
-                  <>
-                    <Box
-                      w="100%"
-                      bg="#bf3d3d"
-                      position="absolute"
-                      top="0"
-                      borderTopRadius="0.375rem"
-                      fontSize="13px"
-                    >
-                      Not running
-                    </Box>
-                  </>
-                ) : (
-                  <ChallengeStatusBanner
-                    parentExerciseTag={parentExerciseTag}
-                  />
-                )}
+              {!solved && (
+                <>
+                  {typeof loggedInTeam.lab.labInfo.exercisesStatus[
+                    parentExerciseTag
+                  ] === "undefined" ? (
+                    <>
+                      <Box
+                        w="100%"
+                        bg="#bf3d3d"
+                        position="absolute"
+                        top="0"
+                        borderTopRadius="0.375rem"
+                        fontSize="13px"
+                      >
+                        Not running
+                      </Box>
+                    </>
+                  ) : (
+                    <ChallengeStatusBanner
+                      parentExerciseTag={parentExerciseTag}
+                    />
+                  )}
+                </>
+              )}
+                
               </>
             ) : (
               <Box
