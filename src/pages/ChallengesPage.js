@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FaFlagCheckered } from "react-icons/fa";
+import { MdOutlinedFlag } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Challenge from "../components/challenges/Challenge";
 import ChallengeModal from "../components/challenges/ChallengeModal";
@@ -43,7 +44,7 @@ export default function ChallengesPage() {
       >
         <Box w="100%" marginTop="50px" marginBottom="50px">
           <Center w="100%" fontSize="50px">
-            <Icon as={FaFlagCheckered} />
+            <Icon as={MdOutlinedFlag} />
             <Text marginLeft="20px">Challenges</Text>
           </Center>
         </Box>

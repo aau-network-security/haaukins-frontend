@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
 import { FaFlagCheckered, FaNetworkWired, FaQuestion } from "react-icons/fa";
+import { MdOutlinedFlag } from "react-icons/md";
 import { NavLink as ReactLink } from "react-router-dom";
 import { RiUserSettingsLine, RiUserAddLine } from "react-icons/ri";
 import { SlGraph } from "react-icons/sl";
@@ -103,7 +104,7 @@ export default function Navbar() {
             displayTooltip={false}
             displayTitle
             scrollSensitive={true}
-            icon={FaFlagCheckered}
+            icon={MdOutlinedFlag}
             title="Challenges"
             to="/challenges"
           />
@@ -237,7 +238,7 @@ export default function Navbar() {
                   scrollSensitive={false}
                   displayTooltip={false}
                   displayTitle
-                  icon={FaFlagCheckered}
+                  icon={MdOutlinedFlag}
                   title="Challenges"
                   to="/challenges"
                   customClickEvent={onClose}

@@ -31,6 +31,7 @@ import {
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaFlag } from "react-icons/fa";
+import { MdFlag } from "react-icons/md";
 import ChallengeSolvesTable from "./ChallengeSolvesTable";
 import {
   fetchExercises,
@@ -151,7 +152,7 @@ export default function ChallengeModal({ isOpen, onClose }) {
                             <InputGroup>
                               <InputLeftElement
                                 pointerEvents="none"
-                                children={<FaFlag color="#7e8b9f" />}
+                                children={<MdFlag fontSize="25px" color="#7e8b9f" />}
                               />
                               <Input
                                 isDisabled={
