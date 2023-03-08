@@ -69,45 +69,46 @@ export default function Challenge({
       >
         {!isStatic && (
           <>
-            {typeof loggedInTeam.lab !== "undefined" ? (
+            {!solved && (
               <>
-              {!solved && (
-                <>
-                  {typeof loggedInTeam.lab.labInfo.exercisesStatus[
-                    parentExerciseTag
-                  ] === "undefined" ? (
+                {typeof loggedInTeam.lab !== "undefined" ? (
+                  <>
                     <>
-                      <Box
-                        w="100%"
-                        bg="#bf3d3d"
-                        position="absolute"
-                        top="0"
-                        borderTopRadius="0.375rem"
-                        fontSize="13px"
-                      >
-                        Not running
-                      </Box>
+                      {typeof loggedInTeam.lab.labInfo.exercisesStatus[
+                        parentExerciseTag
+                      ] === "undefined" ? (
+                        <>
+                          <Box
+                            w="100%"
+                            bg="#bf3d3d"
+                            position="absolute"
+                            top="0"
+                            borderTopRadius="0.375rem"
+                            fontSize="13px"
+                          >
+                            Not running
+                          </Box>
+                        </>
+                      ) : (
+                        <ChallengeStatusBanner
+                          parentExerciseTag={parentExerciseTag}
+                        />
+                      )}
                     </>
-                  ) : (
-                    <ChallengeStatusBanner
-                      parentExerciseTag={parentExerciseTag}
-                    />
-                  )}
-                </>
-              )}
-                
+                  </>
+                ) : (
+                  <Box
+                    w="100%"
+                    bg="#bf3d3d"
+                    position="absolute"
+                    top="0"
+                    borderTopRadius="0.375rem"
+                    fontSize="13px"
+                  >
+                    Requires lab
+                  </Box>
+                )}
               </>
-            ) : (
-              <Box
-                w="100%"
-                bg="#bf3d3d"
-                position="absolute"
-                top="0"
-                borderTopRadius="0.375rem"
-                fontSize="13px"
-              >
-                Requires lab
-              </Box>
             )}
           </>
         )}
