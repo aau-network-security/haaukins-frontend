@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router";
 import { BASE_URL } from "../api/client";
+import { fetchEventInfo } from "../features/events/eventSlice";
 import { fetchExercises } from "../features/exercises/exerciseSlice";
 import { fetchTeam } from "../features/teams/teamSlice";
 
@@ -37,6 +38,8 @@ function EventWebsocket() {
                 dispatch(fetchExercises())
               } else if (command === "updateTeam") {
                 dispatch(fetchTeam())
+              } else if (command === "updateEventInfo") {
+                dispatch(fetchEventInfo())
               }
             }
             catch(e) {
