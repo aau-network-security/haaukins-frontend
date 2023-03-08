@@ -1,5 +1,6 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Button } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Center, Fade, ScaleFade, Icon, Collapse } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { MdCheckCircle } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { startExercise, stopExercise } from "../../features/exercises/exerciseSlice";
 
@@ -13,6 +14,7 @@ function ChallengeStartStop({ parentExerciseTag }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [startStopError, setStartStopError] = useState("");
+  const [success, setSuccess] = useState(false)
 
   useEffect(() => {
     if (loggedInTeam.status === "runningExCommand" && stateStatus !== "starting/stopping") {
@@ -55,9 +57,27 @@ function ChallengeStartStop({ parentExerciseTag }) {
     try {
       const response = await dispatch(startExercise({parentTag: parentExerciseTag})).unwrap()
       setStartStopError("");
+      setSuccess(true)
+      setTimeout(() => setSuccess(false), 3000)
     } catch (err) {
       console.log("got error starting exercise", err)
       setStartStopError(err.apiError.status);
+      setSuccess(false)
+      setTimeout(() => setStartStopError(""), 5000)
+    }
+  }
+
+  const exerciseStop = async () => {
+    try {
+      const response = await dispatch(stopExercise({parentTag: parentExerciseTag})).unwrap()
+      setStartStopError("");
+      setSuccess(true)
+      setTimeout(() => setSuccess(false), 3000)
+    } catch (err) {
+      console.log("got error starting exercise", err)
+      setStartStopError(err.apiError.status);
+      setSuccess(false)
+      setTimeout(() => setStartStopError(""), 5000)
     }
   }
 
@@ -83,7 +103,7 @@ function ChallengeStartStop({ parentExerciseTag }) {
               _hover={{ backgroundColor: "#434d56" }}
               color="#dfdfe3"
               variant="solid"
-              onClick={() => dispatch(stopExercise({parentTag: parentExerciseTag}))}
+              onClick={exerciseStop}
               isLoading={isLoading}
               isDisabled={isDisabled}
             >
@@ -92,21 +112,29 @@ function ChallengeStartStop({ parentExerciseTag }) {
           )}
         </>
       )}
-      {startStopError !== "" &&
-        <Alert 
-        status='error' 
+
+      <Box
         position="absolute"
-        width="475px"
-        left="-300px"
+        width="470px"
+        left="-297px"
         top="45px"
-        height="60px"
-        variant="top-accent"
-        >
-          <AlertIcon />
-          <AlertDescription margin="5px">{startStopError}</AlertDescription>
-        </Alert>
-      }
-      
+      >
+        <ScaleFade in={success} unmountOnExit>
+          <Center marginTop="15px">
+            <Icon color="#5caf8d" fontSize="30px" as={MdCheckCircle}></Icon>
+          </Center>
+        </ScaleFade>
+        <Collapse in={startStopError} unmountOnExit>
+          <Alert 
+          status='error' 
+          height="60px"
+          variant="top-accent"
+          >
+            <AlertIcon />
+            <AlertDescription margin="5px">{startStopError}</AlertDescription>
+          </Alert>
+        </Collapse>
+      </Box>      
     </>
   );
 }

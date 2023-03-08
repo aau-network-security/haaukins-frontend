@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Center,
+  Collapse,
   Flex,
   FormControl,
   FormLabel,
@@ -63,6 +64,7 @@ export default function ChallengeModal({ isOpen, onClose }) {
       closeModal();
     } catch (err) {
       setSubmitError(err.apiError.status);
+      setTimeout(() => setSubmitError(""), 3000)
     }
     setFlagState("");
   };
@@ -91,13 +93,16 @@ export default function ChallengeModal({ isOpen, onClose }) {
           <ModalCloseButton />
           
           <ModalBody margin="0" padding="0">
-            <HStack position="absolute" top="17px" right="50px" spacing="20px">
-              <ChallengeReset parentExerciseTag={selectedExercise.parentExerciseTag}/>
-              {eventInfo.type === "advanced" && (
-                <ChallengeStartStop parentExerciseTag={selectedExercise.parentExerciseTag}/>
-              )}
-              
-            </HStack>
+            {!selectedExercise.static && 
+              <HStack position="absolute" top="17px" right="50px" spacing="20px">
+                <ChallengeReset parentExerciseTag={selectedExercise.parentExerciseTag}/>
+                {eventInfo.type === "advanced" && (
+                  <ChallengeStartStop parentExerciseTag={selectedExercise.parentExerciseTag}/>
+                )}
+            
+              </HStack>
+            }
+            
           
             <Tabs variant="enclosed">
               <TabList margin="20px">
@@ -168,14 +173,14 @@ export default function ChallengeModal({ isOpen, onClose }) {
                               />
                             </InputGroup>
                           </FormControl>
-                          {submitError && (
+                          <Collapse in={submitError}>
                             <Alert status="error">
                               <AlertIcon />
                               <AlertDescription>
                                 {submitError}
                               </AlertDescription>
                             </Alert>
-                          )}
+                          </Collapse>
                           <Button
                             w="100%"
                             type="submit"

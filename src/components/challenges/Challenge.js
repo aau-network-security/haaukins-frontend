@@ -48,7 +48,7 @@ export default function Challenge({
   parentExerciseTag,
   points,
   solved,
-  staticChallenge,
+  isStatic,
   onClick,
 }) {
   const loggedInTeam = useSelector((state) => state.team.loggedInTeam);
@@ -67,7 +67,7 @@ export default function Challenge({
         fontWeight="400"
         fontFamily="'Audiowide', cursive"
       >
-        {!staticChallenge && (
+        {!isStatic && (
           <>
             {typeof loggedInTeam.lab !== "undefined" ? (
               <>
