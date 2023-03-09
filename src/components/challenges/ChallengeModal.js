@@ -140,7 +140,8 @@ export default function ChallengeModal({ isOpen, onClose }) {
                           </Center>
                         </Box>
                       </Flex>
-                      <Flex className="markdown-body">
+                      <Flex backgroundColor="#fff" color="#000"
+                       className="markdown-body">
                         <div
                           dangerouslySetInnerHTML={{
                             __html: selectedExercise.description,
