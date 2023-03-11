@@ -60,10 +60,10 @@ export default function LabButton() {
     setVpnDownloadStatus("idle")
   }
 
-  const DownloadWgConfig = () => {
+  const DownloadWgConfig = (vpnConfIndex) => {
     let token = localStorage.getItem("token");
     // Thunk will return error if it cannot pass the value as json
-    let endpoint = "labs/vpnconf";
+    let endpoint = "labs/vpnconf/" + vpnConfIndex;
     setVpnDownloadStatus("downloading")
     fetch(BASE_URL + endpoint, {
       headers: {
@@ -138,7 +138,7 @@ export default function LabButton() {
               <MultipleVmConnectBotton />
             ) : (
               <Button
-                onClick={DownloadWgConfig}
+                onClick={() => DownloadWgConfig(0)}
                 backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
                 color={scrolledToTop ? "#dfdfe3" : "#54616e"}
                 _hover={
