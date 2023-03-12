@@ -126,7 +126,7 @@ export default function LabButton() {
                   color={scrolledToTop ? "#dfdfe3" : "#54616e"}
                   _hover={
                     scrolledToTop
-                      ? { backgroundColor: "#a9b3bc" }
+                      ? { backgroundColor: "#434d56" }
                       : { backgroundColor: "#c8c8d0" }
                   }
                 >
@@ -143,7 +143,7 @@ export default function LabButton() {
                 color={scrolledToTop ? "#dfdfe3" : "#54616e"}
                 _hover={
                   scrolledToTop
-                    ? { backgroundColor: "#a9b3bc" }
+                    ? { backgroundColor: "#434d56" }
                     : { backgroundColor: "#c8c8d0" }
                 }
                 isLoading={vpnDownloadStatus === "idle" ? false : true}
@@ -176,7 +176,7 @@ export default function LabButton() {
                       color={scrolledToTop ? "#dfdfe3" : "#54616e"}
                       _hover={
                         scrolledToTop
-                          ? { backgroundColor: "#a9b3bc" }
+                          ? { backgroundColor: "#434d56" }
                           : { backgroundColor: "#c8c8d0" }
                       }
                       isLoading={loggedInTeam.status === "inLabQueue" || loggedInTeam.status === "waitingForLab" ? true : false}
@@ -193,7 +193,7 @@ export default function LabButton() {
                       rightIcon={<FaChevronDown />}
                       _hover={
                         scrolledToTop
-                          ? { backgroundColor: "#a9b3bc" }
+                          ? { backgroundColor: "#434d56" }
                           : { backgroundColor: "#c8c8d0" }
                       }
                       isLoading={loggedInTeam.status === "inLabQueue" || loggedInTeam.status === "waitingForLab" ? true : false}

@@ -6,11 +6,13 @@ import {
   Text,
   SimpleGrid,
   Wrap,
+  IconButton,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { FaFlagCheckered } from "react-icons/fa";
-import { MdOutlinedFlag } from "react-icons/md";
+import Countdown from "react-countdown";
+import { MdOutlinedFlag, MdOutlineMoreTime } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { BASE_URL } from "../api/client";
 import Challenge from "../components/challenges/Challenge";
 import ChallengeModal from "../components/challenges/ChallengeModal";
 import {
@@ -22,6 +24,7 @@ export default function ChallengesPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const onModalClose = () => setIsModalOpen(false);
   const categories = useSelector((state) => state.exercise.categories);
+  const loggedInTeam = useSelector((state) => state.team.loggedInTeam);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,6 +36,34 @@ export default function ChallengesPage() {
     setIsModalOpen(true);
   };
 
+  var nowPlusOneHour = () => {
+    var date = new Date.now()
+    date.setHours(date.getHours() + 2);
+    return date
+  }
+
+  const [extendLabTimeStatus, setExtendLabTimeStatus] = useState("idle")
+  const extendLabTimeRemaining = () => {
+    console.log("extending")
+    let token = localStorage.getItem("token");
+    // Thunk will return error if it cannot pass the value as json
+    let endpoint = "labs/extend";
+    setExtendLabTimeStatus("extending")
+    fetch(BASE_URL + endpoint, {
+      headers: {
+        Authorization: token,
+      },
+      method: "PATCH"
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      setExtendLabTimeStatus("idle")
+    })
+    .catch((error) => { 
+      setExtendLabTimeStatus("idle")
+    });
+  }
+
   return (
     <>
       <Flex
@@ -42,12 +73,40 @@ export default function ChallengesPage() {
         flexDir="column"
         color="#211a52"
       >
-        <Box w="100%" marginTop="50px" marginBottom="50px">
+        <Box w="100%" marginTop="50px" marginBottom="30px">
           <Center w="100%" fontSize="50px">
             <Icon as={MdOutlinedFlag} />
             <Text marginLeft="20px">Challenges</Text>
           </Center>
         </Box>
+        {typeof loggedInTeam.lab !== "undefined" && 
+        <Box marginBottom="20px">
+        <Center>
+        <Text fontSize="25px">Lab time remaining: </Text>
+        <Text marginLeft="10px" fontSize="25px">
+          <Countdown date={Date.parse(loggedInTeam.lab.labInfo.expiresAtTime)}/>
+          {Date.parse(loggedInTeam.lab.labInfo.expiresAtTime) < (new Date()).setHours((new Date()).getHours() + 1) && 
+          <IconButton 
+            icon={<MdOutlineMoreTime size="20px"/>} 
+            top="-2px"
+            position="relative"
+            size="sm"
+            marginLeft="10px"
+            backgroundColor="#54616e"
+            _hover={{ backgroundColor: "#434d56" }}
+            color="#dfdfe3"
+            variant="solid"
+            onClick={extendLabTimeRemaining}
+            isLoading={extendLabTimeStatus !== "idle" ? true: false}
+          />
+          }
+          
+        </Text>
+        </Center>
+        
+      </Box>
+        }
+        
 
         <Box marginBottom="100px">
           {Object.entries(categories).map(([key, category]) => (

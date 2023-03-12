@@ -26,6 +26,7 @@
     "react-apexcharts": "^1.4.0",
     "react-async": "^10.0.1",
     "react-axios": "^2.0.6",
+    "react-countdown": "^2.3.5",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-loading-spin": "^2.1.9",
