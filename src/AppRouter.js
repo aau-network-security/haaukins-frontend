@@ -17,7 +17,6 @@ import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/Footer";
 import SignupPage from "./pages/SignupPage";
 import ScoreBoardPage from "./pages/ScoreBoardPage";
-import LabPage from "./pages/LabPage";
 import FaqPage from "./pages/FaqPage";
 import { Flex } from "@chakra-ui/react";
 import { BASE_URL } from "./api/client";
@@ -26,6 +25,7 @@ import { Buffer } from "buffer";
 import EventNotFoundPage from "./pages/EventNotFoundPage";
 import { setEventInfo } from "./features/events/eventSlice";
 import EventWebsocket from "./components/EventWebsocket";
+import HostsPage from "./pages/HostsPage";
 function AppRouter() {
   const dispatch = useDispatch();
   let [ publicScoreboard, setPublicScoreboard ] = useState(false) //Should be from redux state
@@ -123,7 +123,7 @@ function AppRouter() {
                 <Route path="" element={<HomePage />} />
                 <Route path="faq" element={<FaqPage />} />
                 <Route path="challenges" element={<ChallengesPage />} />
-                <Route path="lab" element={<LabPage />} />
+                <Route path="hosts" element={<HostsPage />} />
                 <Route path="profile" element={<ProfilePage />} />
                 {!publicScoreboard && (
                   <Route path="scoreboard" element={<ScoreBoardPage />} />

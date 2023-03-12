@@ -125,8 +125,8 @@ export default function Navbar() {
                 displayTitle
                 scrollSensitive={true}
                 icon={FaNetworkWired}
-                title="Lab"
-                to="/lab"
+                title="Hosts"
+                to="/hosts"
               />
               <NavItem
                 navSize={navSize}
@@ -154,6 +154,7 @@ export default function Navbar() {
         {typeof loggedInTeam.username !== "undefined" ? (
           <>
             <LabButton />
+            
             <IconButton
               marginLeft="10px"
               bg={scrolledToTop ? "#211a52" : "#dfdfe3"}
@@ -265,8 +266,8 @@ export default function Navbar() {
                       displayTooltip={false}
                       displayTitle
                       icon={FaNetworkWired}
-                      title="Lab"
-                      to="/lab"
+                      title="Hosts"
+                      to="/hosts"
                       customClickEvent={onClose}
                     />
                   </Center>
