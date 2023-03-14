@@ -79,6 +79,22 @@ export default function LabButton() {
     });
   }
 
+  const RenderVpnConfButtons = () => {
+    let buttons = [];
+    for (let i = 0; i < eventInfo.teamSize; i++) {
+      buttons.push(
+        <MenuItem 
+          key={i}
+          onClick={() => DownloadWgConfig(i)}  
+        >
+          <Text>Config {i+1}</Text>
+        </MenuItem>
+      )
+    }
+
+    return buttons
+  }
+
   useEffect(() => {
     if (typeof loggedInTeam.lab !== "undefined") {
       let host = loggedInTeam.lab.parentAgent.url.split(":")[0];
@@ -136,7 +152,7 @@ export default function LabButton() {
             ) : !loggedInTeam.lab.labInfo.isVpn &&
               eventInfo.teamSize !== 1 ? (
               <MultipleVmConnectBotton />
-            ) : (
+            ) : loggedInTeam.lab.labInfo.isVpn && eventInfo.teamSize === 1 ? (
               <Button
                 onClick={() => DownloadWgConfig(0)}
                 backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
@@ -150,6 +166,25 @@ export default function LabButton() {
               >
                 Download VPN config
               </Button>
+            ) : loggedInTeam.lab.labInfo.isVpn && eventInfo.teamSize !== 1 && (
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
+                  color={scrolledToTop ? "#dfdfe3" : "#54616e"}
+                  rightIcon={<FaChevronDown />}
+                  _hover={
+                    scrolledToTop
+                      ? { backgroundColor: "#434d56" }
+                      : { backgroundColor: "#c8c8d0" }
+                  }
+                >
+                  <Text>Download VPN config</Text>
+                </MenuButton>
+                <MenuList>
+                    {<RenderVpnConfButtons />}
+                </MenuList>
+              </Menu>
             )}
           </>
         ) : (
