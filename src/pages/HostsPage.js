@@ -13,7 +13,7 @@ export default function HostsPage() {
   }, [dispatch]);
 
   return (
-    <Flex maxW={"1140px"} w="100%" m={"auto"} flexDir="column" color="#211a52">
+    <Flex maxW={"1140px"} w="100%" m={"auto"} flexDir="column" color="#211a52" marginBottom="100px">
       <Box w="100%" marginTop="50px" marginBottom="50px">
         <Center w="100%" fontSize="50px">
           <Icon as={FaNetworkWired} />
@@ -26,10 +26,11 @@ export default function HostsPage() {
         alignItems='center'
         justifyContent='center'
         textAlign='center'
-        height='300px'
+        height='fit-content'
         width="100%"
         marginBottom="20px"
         borderRadius="5px"
+        overflowY="auto"
       >
         <Flex marginBottom="20px">
           <AlertIcon boxSize='20px' mr={0} />
