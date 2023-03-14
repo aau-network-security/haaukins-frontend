@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import { MdOutlinedFlag, MdOutlineMoreTime } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { Tooltip } from "react-tooltip";
 import { BASE_URL } from "../api/client";
 import Challenge from "../components/challenges/Challenge";
 import ChallengeModal from "../components/challenges/ChallengeModal";
@@ -85,8 +86,8 @@ export default function ChallengesPage() {
         <Text fontSize="25px">Lab time remaining: </Text>
         <Text marginLeft="10px" fontSize="25px">
           <Countdown date={Date.parse(loggedInTeam.lab.labInfo.expiresAtTime)}/>
-          {Date.parse(loggedInTeam.lab.labInfo.expiresAtTime) < (new Date()).setHours((new Date()).getHours() + 1) && 
           <IconButton 
+            id="extend-lab-button"
             icon={<MdOutlineMoreTime size="20px"/>} 
             top="-2px"
             position="relative"
@@ -98,12 +99,19 @@ export default function ChallengesPage() {
             variant="solid"
             onClick={extendLabTimeRemaining}
             isLoading={extendLabTimeStatus !== "idle" ? true: false}
+            isDisabled={Date.parse(loggedInTeam.lab.labInfo.expiresAtTime) < (new Date()).setHours((new Date()).getHours() + 1) ? false : true}
           />
-          }
           
         </Text>
         </Center>
-        
+        {Date.parse(loggedInTeam.lab.labInfo.expiresAtTime) > (new Date()).setHours((new Date()).getHours() + 1) && 
+            <Tooltip 
+              anchorId="extend-lab-button" 
+              place="bottom"
+              content="Can only extend if time remaining is less than 1 hour"
+              style={{fontSize: "15px"}}          
+            />
+          }
       </Box>
         }
         
