@@ -77,7 +77,7 @@ function ChallengeReset({ parentExerciseTag }) {
         <Collapse in={resetError} unmountOnExit>
           <Alert 
             status='error'
-            height="40px"
+            height="60px"
             variant="top-accent"
           >
             <AlertIcon />
@@ -101,7 +101,7 @@ function ChallengeReset({ parentExerciseTag }) {
         <Collapse in={resetError} unmountOnExit>
           <Alert 
             status='error'
-            height="40px"
+            height="60px"
             variant="top-accent"
           >
             <AlertIcon />
