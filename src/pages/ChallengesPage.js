@@ -37,11 +37,14 @@ export default function ChallengesPage() {
     setIsModalOpen(true);
   };
 
-  var nowPlusOneHour = () => {
-    var date = new Date.now()
-    date.setHours(date.getHours() + 2);
-    return date
-  }
+  const [time, setTime] = useState(Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(Date.now()), 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   const [extendLabTimeStatus, setExtendLabTimeStatus] = useState("idle")
   const extendLabTimeRemaining = () => {
@@ -86,6 +89,7 @@ export default function ChallengesPage() {
         <Text fontSize="25px">Lab time remaining: </Text>
         <Text marginLeft="10px" fontSize="25px">
           <Countdown date={Date.parse(loggedInTeam.lab.labInfo.expiresAtTime)}/>
+          
           <IconButton 
             id="extend-lab-button"
             icon={<MdOutlineMoreTime size="20px"/>} 
@@ -99,19 +103,26 @@ export default function ChallengesPage() {
             variant="solid"
             onClick={extendLabTimeRemaining}
             isLoading={extendLabTimeStatus !== "idle" ? true: false}
-            isDisabled={Date.parse(loggedInTeam.lab.labInfo.expiresAtTime) < (new Date()).setHours((new Date()).getHours() + 1) ? false : true}
+            isDisabled={time > (new Date(loggedInTeam.lab.labInfo.expiresAtTime)).setHours((new Date(loggedInTeam.lab.labInfo.expiresAtTime)).getHours() - 1) ? false : true}
           />
           
         </Text>
         </Center>
-        {Date.parse(loggedInTeam.lab.labInfo.expiresAtTime) > (new Date()).setHours((new Date()).getHours() + 1) && 
-            <Tooltip 
+        {time < (new Date(loggedInTeam.lab.labInfo.expiresAtTime)).setHours((new Date(loggedInTeam.lab.labInfo.expiresAtTime)).getHours() - 1) ? (
+          <Tooltip 
               anchorId="extend-lab-button" 
               place="bottom"
               content="Can only extend if time remaining is less than 1 hour"
               style={{fontSize: "15px"}}          
             />
-          }
+        ) : (
+            <Tooltip 
+              anchorId="extend-lab-button" 
+              place="bottom"
+              content="Extend time remaining"
+              style={{fontSize: "15px"}}          
+            />
+        )}
       </Box>
         }
         
