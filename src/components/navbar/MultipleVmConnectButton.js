@@ -105,7 +105,7 @@ function MultipleVmConnectBotton() {
         rightIcon={<FaChevronDown />}
         _hover={
           scrolledToTop
-            ? { backgroundColor: "#a9b3bc" }
+            ? { backgroundColor: "#434d56" }
             : { backgroundColor: "#c8c8d0" }
         }
       >
