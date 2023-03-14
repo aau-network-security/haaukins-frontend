@@ -51,9 +51,9 @@ export default function Navbar() {
     window.addEventListener("resize", updateDimensions);
     if (width >= 1250) {
       changeNavSize("large");
-    } else if (width < 1250 && width >= 900) {
+    } else if (width < 1250 && width >= 950) {
       changeNavSize("medium");
-    } else if (width < 850) {
+    } else if (width < 950) {
       changeNavSize("small");
     }
     return () => window.removeEventListener("resize", updateDimensions);
