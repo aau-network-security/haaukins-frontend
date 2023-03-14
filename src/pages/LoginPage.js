@@ -71,6 +71,7 @@ export default function LoginPage() {
       height="85vh"
       justifyContent="center"
       alignItems="center"
+      marginBottom="100px"
     >
       <Stack
         flexDir="column"
