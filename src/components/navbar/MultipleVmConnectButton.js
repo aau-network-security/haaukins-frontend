@@ -51,15 +51,15 @@ function MultipleVmConnectBotton() {
       })
       .then(function (data) {
         console.log(data);
+        //"guacamole-token": data.authToken,
         fetch(
           baseurl +
-            "/guacamole/api/session/data/mysql/connectionGroups/ROOT/tree",
+            "/guacamole/api/session/data/mysql/connectionGroups/ROOT/tree?token=" + data.authToken,
           {
             headers: {
               accept: "application/json, text/plain, */*",
               "accept-language": "en-US,en;q=0.9,da-DK;q=0.8,da;q=0.7,es;q=0.6",
               "cache-control": "no-cache",
-              "guacamole-token": data.authToken,
               pragma: "no-cache",
             },
             referrer: baseurl + "/guacamole/",
