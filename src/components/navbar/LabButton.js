@@ -203,9 +203,13 @@ export default function LabButton() {
                 <IconButton 
                   icon={<MdRefresh fontSize="18px"/>}
                   id={"connection"}
-                  backgroundColor="#54616e"
-                  _hover={{ backgroundColor: "#434d56" }}
-                  color="#dfdfe3"
+                  backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
+                  color={scrolledToTop ? "#dfdfe3" : "#54616e"}
+                  _hover={
+                    scrolledToTop
+                      ? { backgroundColor: "#434d56" }
+                      : { backgroundColor: "#c8c8d0" }
+                  }
                   variant="solid"
                   onClick={() => openAlertDialog()}
                   isLoading={isLoading}
