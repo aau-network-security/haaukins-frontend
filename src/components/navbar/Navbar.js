@@ -82,6 +82,7 @@ export default function Navbar() {
         position="fixed"
         fontSize="35px"
         as="nav"
+        top="0"
       >
         <Link as={ReactLink} _hover={{ textDecor: "none" }} to={"/"}>
           {eventInfo.name}
@@ -150,6 +151,7 @@ export default function Navbar() {
         position="fixed"
         alignItems="center"
         as="nav"
+        top="0"
       >
         {typeof loggedInTeam.username !== "undefined" ? (
           <>

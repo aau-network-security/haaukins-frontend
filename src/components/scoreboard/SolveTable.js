@@ -55,9 +55,9 @@ function ScoreTable() {
   const calculateOverflow = () => {
     let width = challengesList.length * columnWidth;
     if (width < maxWidth) {
-      return "visible";
+      return "visible!important";
     } else {
-      return "overlay";
+      return "overlay!important";
     }
   };
 
@@ -157,7 +157,7 @@ function ScoreTable() {
       </HStack>
 
       <HStack spacing="0" w="100%" className="solve-table-container">
-        <TableContainer overflowX="overlay" width="100%" minW="500px">
+        <TableContainer style={{overflowX: "auto", overflowX: "overlay"}} width="100%" minW="500px">
           <Table
             variant="unstyled"
             className="rotated-header solve-table table-left"
@@ -225,7 +225,9 @@ function ScoreTable() {
         </TableContainer>
         <TableContainer
           minW={calculateMinWidth}
+          style={{overflowX: "auto"}}
           overflowX={calculateOverflow}
+          paddingLeft="1px"
           overflowY="visible"
         >
           <Table
