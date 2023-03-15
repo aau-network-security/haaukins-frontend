@@ -12,6 +12,9 @@ import {
   Text,
   background,
   Box,
+  HStack,
+  IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Link } from "@chakra-ui/react";
@@ -21,6 +24,9 @@ import MultipleVmConnectBotton from "./MultipleVmConnectButton";
 import { Tooltip } from "react-tooltip";
 import { configureLab } from "../../features/teams/teamSlice";
 import { BASE_URL } from "../../api/client";
+import { MdRefresh } from "react-icons/md";
+import AlertDialogResetVm from "../AlertDialogResetVm";
+import { resetVm } from "../../features/labs/labSlice";
 
 export default function LabButton() {
   const dispatch = useDispatch()
@@ -29,6 +35,67 @@ export default function LabButton() {
   const [connectUrl, setConnectUrl] = useState("");
   const eventInfo = useSelector((state) => state.event.eventinfo);
   const scrolledToTop = useSelector((state) => state.generic.scrolledToTop);
+
+
+  const toast = useToast()
+  const toastIdRef = React.useRef()
+
+  const vmReset = async (connectionIdentifier) => {
+    console.log("Resetting vm with identifier: ", connectionIdentifier)
+    let request = {
+      connectionIdentifier: "0",
+    }
+    try {
+      const response = await dispatch(resetVm(request)).unwrap()
+      toastIdRef.current = toast({
+        title: 'Vm successfully reset',
+        description: "Your vm reset request was processed successfully",
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      })
+    } catch (err) {
+      console.log("got error starting exercise", err)
+      toastIdRef.current = toast({
+        title: 'Error resetting vm',
+        description: err.apiError.status,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      })
+    }
+  }
+
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
+  const onAlertClose = () => setIsAlertOpen(false)
+  const cancelRef = React.useRef()
+
+  const openAlertDialog = () => {
+    console.log("Opening alert dialog")
+    setIsAlertOpen(true)
+  }
+
+  const stateStatus = useSelector((state) => state.lab.status);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+  
+
+  useEffect(() => {
+    if (loggedInTeam.status === "runningVmCommand" && stateStatus !== "resetting-vm") {
+      setIsDisabled(true)
+      setIsLoading(false)
+    } else if (loggedInTeam.status === "runningVmCommand" && stateStatus === "resetting-vm") {
+      setIsLoading(true)
+      setIsDisabled(false)
+    } else if (stateStatus === "resetting-vm") {
+      setIsLoading(true)
+      setIsDisabled(false)
+    } else {
+      setIsLoading(false)
+      setIsDisabled(false)
+    }
+  }, [stateStatus, loggedInTeam])
+
   const configureVpnLab = () => {
     console.log("configuring vpn lab");
     let reqData = {
@@ -45,7 +112,7 @@ export default function LabButton() {
   };
 
   const [vpnDownloadStatus, setVpnDownloadStatus] = useState("idle")
-  const createFileFromString = (text) => {
+  const createFileFromString = (text, vpnConfIndex) => {
     if (typeof text === "undefined") {
       setVpnDownloadStatus("idle")
       return
@@ -53,7 +120,8 @@ export default function LabButton() {
     const element = document.createElement("a");
     const file = new Blob([text], {type: 'text/plain'});
     element.href = URL.createObjectURL(file);
-    element.download = "wg-conf.txt";
+    console.log(vpnConfIndex)
+    element.download = "wg-conf-" + (vpnConfIndex + 1) + ".conf";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
     document.body.removeChild(element);
@@ -72,7 +140,7 @@ export default function LabButton() {
     })
     .then((response) => response.json())
     .then((data) => {
-      createFileFromString(data.message)
+      createFileFromString(data.message, vpnConfIndex)
     })
     .catch((error) => { 
       setVpnDownloadStatus("idle")
@@ -124,7 +192,6 @@ export default function LabButton() {
     }
   }, [loggedInTeam]);
 
-  
   return (
     <>
       <Flex>
@@ -132,23 +199,42 @@ export default function LabButton() {
           <>
             {!loggedInTeam.lab.labInfo.isVpn &&
             eventInfo.teamSize === 1 ? (
-              <Link
-                href={connectUrl}
-                target="_blank"
-                _hover={{ textDecor: "none" }}
-              >
-                <Button
-                  backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
-                  color={scrolledToTop ? "#dfdfe3" : "#54616e"}
-                  _hover={
-                    scrolledToTop
-                      ? { backgroundColor: "#434d56" }
-                      : { backgroundColor: "#c8c8d0" }
-                  }
+              <HStack>
+                <IconButton 
+                  icon={<MdRefresh fontSize="18px"/>}
+                  id={"connection"}
+                  backgroundColor="#54616e"
+                  _hover={{ backgroundColor: "#434d56" }}
+                  color="#dfdfe3"
+                  variant="solid"
+                  onClick={() => openAlertDialog()}
+                  isLoading={isLoading}
+                  isDisabled={isDisabled}
+                />
+                <Tooltip 
+                  anchorId={"connection"}
+                  content={"Reset VM"}
+                  place="bottom"
+                />
+                <Link
+                  href={connectUrl}
+                  target="_blank"
+                  _hover={{ textDecor: "none" }}
                 >
-                  <Text>Connect to lab</Text>
-                </Button>
-              </Link>
+                  <Button
+                    backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
+                    color={scrolledToTop ? "#dfdfe3" : "#54616e"}
+                    _hover={
+                      scrolledToTop
+                        ? { backgroundColor: "#434d56" }
+                        : { backgroundColor: "#c8c8d0" }
+                    }
+                  >
+                    <Text>Connect to lab</Text>
+                  </Button>
+                </Link>
+              </HStack>
+              
             ) : !loggedInTeam.lab.labInfo.isVpn &&
               eventInfo.teamSize !== 1 ? (
               <MultipleVmConnectBotton />
@@ -267,6 +353,13 @@ export default function LabButton() {
             )}
           </>
         )}
+        <AlertDialogResetVm
+          vmName="VM"
+          isOpen={isAlertOpen}
+          onClose={onAlertClose}
+          cancelRef={cancelRef}
+          resetVm={vmReset}
+        />
       </Flex>
     </>
   );

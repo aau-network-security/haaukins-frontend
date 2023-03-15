@@ -27,6 +27,22 @@ export const fetchHosts = createAsyncThunk('lab/fetchHosts', async (obj, {reject
     }
 })
 
+export const resetVm = createAsyncThunk('lab/resetVm', async (vm, {rejectWithValue}) => {
+    try {
+        apiClient.defaults.headers.Authorization = localStorage.getItem('token')
+        const response = await apiClient.put('labs/resetvm/' + vm.connectionIdentifier)
+        return response.data
+    }
+    catch (err) {
+        if (!err.response) {
+            throw err
+        }
+        let error = { axiosMessage: err.message, axiosCode: err.code, apiError: err.response.data, apiStatusCode: err.response.status}
+        console.log(error)
+        return rejectWithValue(error)
+    }
+})
+
 const labSlice = createSlice({
     name: 'lab',
     initialState,
@@ -46,6 +62,19 @@ const labSlice = createSlice({
             state.error = action.payload.data.status
             state.statusCode = action.payload.status
         })    
+        //resetting VM
+        builder.addCase(resetVm.pending, (state) => {
+            state.status = "resetting-vm"
+        })
+        builder.addCase(resetVm.fulfilled, (state, action) => {
+            state.status = "idle"
+            state.error = ''
+        })
+        builder.addCase(resetVm.rejected, (state, action) => {
+            state.status = "idle"
+            state.error = action.payload.data.status
+            state.statusCode = action.payload.status
+        })
     }
 })
 

@@ -46,7 +46,7 @@ export default function HostsPage() {
           Once added to the hosts file, you can contact the hosts based on their URL instead of IP. <br/><br/>
 
 
-          <b>OBS.</b> Records are added dynamically to this page as challenges are started from the Challenges page.
+          <b>NOTE</b> Records are added dynamically to this page as challenges are started from the Challenges page.
         </AlertDescription>
       </Alert>
       <Box 
