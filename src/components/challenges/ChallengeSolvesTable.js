@@ -29,6 +29,7 @@ function ChallengeSolvesTable() {
           marginRight="3px"
           marginBottom="25px"
           padding="0px 40px 0px 45px"
+          minH="400px"
         >
           <Table maxH="600px" w="100%" variant="simple">
             <Thead
