@@ -7,6 +7,10 @@ import {
   SimpleGrid,
   Wrap,
   IconButton,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
@@ -16,6 +20,7 @@ import { Tooltip } from "react-tooltip";
 import { BASE_URL } from "../api/client";
 import Challenge from "../components/challenges/Challenge";
 import ChallengeModal from "../components/challenges/ChallengeModal";
+import GetStarted from "../components/GetStarted";
 import {
   fetchExercises,
   setSelectedExercise,
@@ -125,6 +130,7 @@ export default function ChallengesPage() {
         )}
       </Box>
         }
+        <GetStarted/>
         
 
         <Box marginBottom="100px">

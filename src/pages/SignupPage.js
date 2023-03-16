@@ -281,7 +281,7 @@ export default function SignupPage() {
                 color="white"
                 width="full"
               >
-                Login
+                Sign up
               </Button>
             </Stack>
           </form>
