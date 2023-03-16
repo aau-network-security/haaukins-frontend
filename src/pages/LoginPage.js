@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { NavLink as ReactLink } from 'react-router-dom';
+import { Link } from '@chakra-ui/react'
 import {
   Flex,
   Input,
@@ -157,6 +159,11 @@ export default function LoginPage() {
             </Stack>
           </form>
         </Box>
+        <Text>
+          Don't have a user yet?{' '}
+          <Link as={ReactLink} to="/signup" color="#54616e">Click here</Link>
+          {' '}to sign up
+        </Text>
       </Stack>
     </Flex>
   );
