@@ -155,7 +155,9 @@ export default function Navbar() {
       >
         {typeof loggedInTeam.username !== "undefined" ? (
           <>
-            <LabButton />
+            <LabButton 
+              display={navSize !== "small" ? "flex" : "none"}
+            />
             
             <IconButton
               marginLeft="10px"
@@ -235,6 +237,15 @@ export default function Navbar() {
               </Link>
             </DrawerHeader>
             <DrawerBody>
+              {typeof loggedInTeam.username !== "undefined" && (
+                <Center>
+                  <LabButton 
+                    display={navSize === "small" ? "flex" : "none"}
+                    inDrawer
+                  />
+                </Center>
+                
+              )}
               <Center width="fit-content" margin="auto">
                 <NavItem
                   navSize={"large"}

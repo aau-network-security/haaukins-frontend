@@ -19,7 +19,7 @@ import { Tooltip } from "react-tooltip";
 import AlertDialogResetVm from "../AlertDialogResetVm";
 import { resetVm } from "../../features/labs/labSlice";
 
-function MultipleVmConnectBotton() {
+function MultipleVmConnectBotton({inDrawer}) {
   const loggedInTeam = useSelector((state) => state.team.loggedInTeam);
   const eventInfo = useSelector((state) => state.event.eventinfo);
   const scrolledToTop = useSelector((state) => state.generic.scrolledToTop);
@@ -174,13 +174,13 @@ function MultipleVmConnectBotton() {
     <Menu>
       <MenuButton
         as={Button}
-        backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
-        color={scrolledToTop ? "#dfdfe3" : "#54616e"}
         rightIcon={<FaChevronDown />}
+        backgroundColor={!scrolledToTop || inDrawer ? "#dfdfe3" : "#54616e"}
+        color={!scrolledToTop || inDrawer ? "#54616e": "#dfdfe3" }
         _hover={
-          scrolledToTop
-            ? { backgroundColor: "#434d56" }
-            : { backgroundColor: "#c8c8d0" }
+          !scrolledToTop || inDrawer
+            ? { backgroundColor: "#c8c8d0" }
+            : { backgroundColor: "#434d56" }
         }
       >
         <Text>Connect to lab</Text>
@@ -205,6 +205,7 @@ function MultipleVmConnectBotton() {
               target="_blank"
               _hover={{ textDecor: "none" }}
               width="100%"
+              color="black"
             >
               <MenuItem>
                 <Text>VM {Number(key) + 1}</Text>

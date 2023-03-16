@@ -28,7 +28,7 @@ import { MdRefresh } from "react-icons/md";
 import AlertDialogResetVm from "../AlertDialogResetVm";
 import { resetVm } from "../../features/labs/labSlice";
 
-export default function LabButton() {
+export default function LabButton({display, inDrawer}) {
   const dispatch = useDispatch()
 
   const loggedInTeam = useSelector((state) => state.team.loggedInTeam);
@@ -155,7 +155,7 @@ export default function LabButton() {
           key={i}
           onClick={() => DownloadWgConfig(i)}  
         >
-          <Text>Config {i+1}</Text>
+          <Text color="black">Config {i+1}</Text>
         </MenuItem>
       )
     }
@@ -194,7 +194,7 @@ export default function LabButton() {
 
   return (
     <>
-      <Flex>
+      <Flex display={display}>
         {typeof loggedInTeam.lab !== "undefined" ? (
           <>
             {!loggedInTeam.lab.labInfo.isVpn &&
@@ -203,12 +203,12 @@ export default function LabButton() {
                 <IconButton 
                   icon={<MdRefresh fontSize="18px"/>}
                   id={"connection"}
-                  backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
-                  color={scrolledToTop ? "#dfdfe3" : "#54616e"}
+                  backgroundColor={!scrolledToTop || inDrawer ? "#dfdfe3" : "#54616e"}
+                  color={!scrolledToTop || inDrawer ? "#54616e": "#dfdfe3" }
                   _hover={
-                    scrolledToTop
-                      ? { backgroundColor: "#434d56" }
-                      : { backgroundColor: "#c8c8d0" }
+                    !scrolledToTop || inDrawer
+                      ? { backgroundColor: "#c8c8d0" }
+                      : { backgroundColor: "#434d56" }
                   }
                   variant="solid"
                   onClick={() => openAlertDialog()}
@@ -226,12 +226,12 @@ export default function LabButton() {
                   _hover={{ textDecor: "none" }}
                 >
                   <Button
-                    backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
-                    color={scrolledToTop ? "#dfdfe3" : "#54616e"}
+                    backgroundColor={!scrolledToTop || inDrawer ? "#dfdfe3" : "#54616e"}
+                    color={!scrolledToTop || inDrawer ? "#54616e": "#dfdfe3" }
                     _hover={
-                      scrolledToTop
-                        ? { backgroundColor: "#434d56" }
-                        : { backgroundColor: "#c8c8d0" }
+                      !scrolledToTop || inDrawer
+                        ? { backgroundColor: "#c8c8d0" }
+                        : { backgroundColor: "#434d56" }
                     }
                   >
                     <Text>Connect to lab</Text>
@@ -241,16 +241,16 @@ export default function LabButton() {
               
             ) : !loggedInTeam.lab.labInfo.isVpn &&
               eventInfo.teamSize !== 1 ? (
-              <MultipleVmConnectBotton />
+              <MultipleVmConnectBotton inDrawer={inDrawer}/>
             ) : loggedInTeam.lab.labInfo.isVpn && eventInfo.teamSize === 1 ? (
               <Button
                 onClick={() => DownloadWgConfig(0)}
-                backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
-                color={scrolledToTop ? "#dfdfe3" : "#54616e"}
+                backgroundColor={!scrolledToTop || inDrawer ? "#dfdfe3" : "#54616e"}
+                color={!scrolledToTop || inDrawer ? "#54616e": "#dfdfe3" }
                 _hover={
-                  scrolledToTop
-                    ? { backgroundColor: "#434d56" }
-                    : { backgroundColor: "#c8c8d0" }
+                  !scrolledToTop || inDrawer
+                    ? { backgroundColor: "#c8c8d0" }
+                    : { backgroundColor: "#434d56" }
                 }
                 isLoading={vpnDownloadStatus === "idle" ? false : true}
               >
@@ -260,13 +260,13 @@ export default function LabButton() {
               <Menu>
                 <MenuButton
                   as={Button}
-                  backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
-                  color={scrolledToTop ? "#dfdfe3" : "#54616e"}
                   rightIcon={<FaChevronDown />}
+                  backgroundColor={!scrolledToTop || inDrawer ? "#dfdfe3" : "#54616e"}
+                  color={!scrolledToTop || inDrawer ? "#54616e": "#dfdfe3" }
                   _hover={
-                    scrolledToTop
-                      ? { backgroundColor: "#434d56" }
-                      : { backgroundColor: "#c8c8d0" }
+                    !scrolledToTop || inDrawer
+                      ? { backgroundColor: "#c8c8d0" }
+                      : { backgroundColor: "#434d56" }
                   }
                 >
                   <Text>Download VPN config</Text>
@@ -297,12 +297,12 @@ export default function LabButton() {
                   <Box>
                     <Button 
                       onClick={configureBrowserLab}
-                      backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
-                      color={scrolledToTop ? "#dfdfe3" : "#54616e"}
+                      backgroundColor={!scrolledToTop || inDrawer ? "#dfdfe3" : "#54616e"}
+                      color={!scrolledToTop || inDrawer ? "#54616e": "#dfdfe3" }
                       _hover={
-                        scrolledToTop
-                          ? { backgroundColor: "#434d56" }
-                          : { backgroundColor: "#c8c8d0" }
+                        !scrolledToTop || inDrawer
+                          ? { backgroundColor: "#c8c8d0" }
+                          : { backgroundColor: "#434d56" }
                       }
                       isLoading={loggedInTeam.status === "inLabQueue" || loggedInTeam.status === "waitingForLab" ? true : false}
                     >
@@ -313,20 +313,20 @@ export default function LabButton() {
                   <Menu>
                     <MenuButton
                       as={Button}
-                      backgroundColor={scrolledToTop ? "#54616e" : "#dfdfe3"}
-                      color={scrolledToTop ? "#dfdfe3" : "#54616e"}
                       rightIcon={<FaChevronDown />}
+                      backgroundColor={!scrolledToTop || inDrawer ? "#dfdfe3" : "#54616e"}
+                      color={!scrolledToTop || inDrawer ? "#54616e": "#dfdfe3" }
                       _hover={
-                        scrolledToTop
-                          ? { backgroundColor: "#434d56" }
-                          : { backgroundColor: "#c8c8d0" }
+                        !scrolledToTop || inDrawer
+                          ? { backgroundColor: "#c8c8d0" }
+                          : { backgroundColor: "#434d56" }
                       }
                       isLoading={loggedInTeam.status === "inLabQueue" || loggedInTeam.status === "waitingForLab" ? true : false}
                     >
                       <Text>Get a lab</Text>
                     </MenuButton>
                     <MenuList>
-                      <Link id="vpn-lab-button" _hover={{ textDecor: "none" }}>
+                      <Link id="vpn-lab-button" color="black" _hover={{ textDecor: "none" }}>
                         <MenuItem onClick={configureVpnLab}>VPN</MenuItem>
                       </Link>
 
@@ -339,6 +339,7 @@ export default function LabButton() {
                       <Link
                         id="browser-lab-button"
                         _hover={{ textDecor: "none" }}
+                        color="black"
                       >
                         <MenuItem onClick={configureBrowserLab}>
                           Browser
