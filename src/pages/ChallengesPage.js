@@ -118,14 +118,14 @@ export default function ChallengesPage() {
               anchorId="extend-lab-button" 
               place="bottom"
               content="Can only extend if time remaining is less than 1 hour"
-              style={{fontSize: "15px"}}          
+              style={{fontSize: "15px", zIndex: "1000"}}          
             />
         ) : (
             <Tooltip 
               anchorId="extend-lab-button" 
               place="bottom"
               content="Extend time remaining"
-              style={{fontSize: "15px"}}          
+              style={{fontSize: "15px", zIndex: "1000"}}          
             />
         )}
       </Box>
