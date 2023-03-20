@@ -41,11 +41,13 @@ function ChallengeStartStop({ parentExerciseTag }) {
         return
       } else if (typeof loggedInTeam.lab.labInfo.exercisesStatus[parentExerciseTag] !== "undefined") {
         let status = "stopped";
-        loggedInTeam.lab.labInfo.exercisesStatus[parentExerciseTag].machines.forEach(element => {
-          if (element.status === "running") {
-            status = "running";
-          }
-        });
+        if (loggedInTeam.lab.labInfo.exercisesStatus[parentExerciseTag].machines !== null) {
+          loggedInTeam.lab.labInfo.exercisesStatus[parentExerciseTag].machines.forEach(element => {
+            if (element.status === "running") {
+              status = "running";
+            }
+          });
+        }
         setChallengeStatus(status)
         return
       }

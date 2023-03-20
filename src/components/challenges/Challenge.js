@@ -6,13 +6,18 @@ import { useSelector } from "react-redux";
 function ChallengeStatusBanner({ parentExerciseTag }) {
   const loggedInTeam = useSelector((state) => state.team.loggedInTeam);
   let challengeRunning = true;
-  loggedInTeam.lab.labInfo.exercisesStatus[parentExerciseTag].machines.forEach(
-    (machine) => {
-      if (machine.status !== "running") {
-        challengeRunning = false;
+  if (loggedInTeam.lab.labInfo.exercisesStatus[parentExerciseTag].machines !== null) {
+    loggedInTeam.lab.labInfo.exercisesStatus[parentExerciseTag].machines.forEach(
+      (machine) => {
+        if (machine.status !== "running") {
+          challengeRunning = false;
+        }
       }
-    }
-  );
+    );
+  } else {
+    challengeRunning = false;
+  }
+  
 
   if (challengeRunning) {
     return (
