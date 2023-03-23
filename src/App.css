@@ -75,7 +75,8 @@ html{
   -o-background-size: cover;
   background-size: cover;
   background-color: #f7fafc;
-  height: 100%!important
+  height: 100%!important;
+  scroll-padding-top: 100px;
 }
 body{
   background: #00000000!important;

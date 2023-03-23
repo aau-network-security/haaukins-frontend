@@ -89,8 +89,8 @@ function ChallengeStartStop({ parentExerciseTag }) {
         <>
           {challengeStatus === "stopped" ? (
             <Button
-              backgroundColor="#54616e"
-              _hover={{ backgroundColor: "#434d56" }}
+              backgroundColor="#5caf8d"
+              _hover={{ backgroundColor: "#4c9a79" }}
               color="#dfdfe3"
               variant="solid"
               onClick={exerciseStart}
@@ -101,8 +101,8 @@ function ChallengeStartStop({ parentExerciseTag }) {
             </Button>
           ) : (
             <Button
-              backgroundColor="#54616e"
-              _hover={{ backgroundColor: "#434d56" }}
+              backgroundColor="#bf3d3d"
+              _hover={{ backgroundColor: "#9b3131" }}
               color="#dfdfe3"
               variant="solid"
               onClick={exerciseStop}
