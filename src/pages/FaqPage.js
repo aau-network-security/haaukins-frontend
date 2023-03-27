@@ -61,10 +61,16 @@ export default function FaqPage() {
           <ReactMarkdown
             components={{
               h2: ({ node, ...props }) => (
-                <h2 id={generateSlug(props.children[0])} {...props}></h2>
+                <h2 {...props}>
+                  <a id={generateSlug(props.children[0])} href={"#" + generateSlug(props.children[0])} className="anchor" aria-hidden="true"></a>
+                  {props.children[0]}
+                </h2>
               ),
               h3: ({ node, ...props }) => (
-                <h3 id={generateSlug(props.children[0])} {...props}></h3>
+                <h3 id={generateSlug(props.children[0])} {...props}>
+                  <a id={generateSlug(props.children[0])} href={"#" + generateSlug(props.children[0])} className="anchor" aria-hidden="true"></a>
+                  {props.children[0]}
+                </h3>
               ),
               a: ({ node, ...props }) => (
                 <a style={{ color: "#54616e" }} {...props}></a>
