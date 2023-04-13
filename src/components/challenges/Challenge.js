@@ -21,16 +21,7 @@ function ChallengeStatusBanner({ parentExerciseTag }) {
 
   if (challengeRunning) {
     return (
-      <Box
-        w="100%"
-        bg="#5caf8d"
-        position="absolute"
-        top="0"
-        borderTopRadius="0.375rem"
-        fontSize="13px"
-      >
-        Running
-      </Box>
+      <></>
     );
   } else {
     return (
