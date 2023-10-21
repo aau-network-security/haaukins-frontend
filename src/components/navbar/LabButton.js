@@ -96,19 +96,56 @@ export default function LabButton({display, inDrawer}) {
     }
   }, [stateStatus, loggedInTeam])
 
-  const configureVpnLab = () => {
+  const configureVpnLab = async () => {
     console.log("configuring vpn lab");
     let reqData = {
       isVpn: true,
     }
-    dispatch(configureLab(reqData))
+    
+    try {
+      const response = await dispatch(configureLab(reqData)).unwrap()
+      toastIdRef.current = toast({
+        title: "Configuring lab",
+        description: "You should receive a lab shortly!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (err) {
+      console.log("got error starting exercise", err)
+      toastIdRef.current = toast({
+        title: "Error configuring lab",
+        description: err.apiError.status,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
-  const configureBrowserLab = () => {
+  const configureBrowserLab = async () => {
     console.log("configuring browser lab");
     let reqData = {
       isVpn: false,
     }
-    dispatch(configureLab(reqData))
+    try {
+      const response = await dispatch(configureLab(reqData)).unwrap()
+      toastIdRef.current = toast({
+        title: "Configuring lab",
+        description: "You should receive a lab shortly!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (err) {
+      console.log("got error starting exercise", err)
+      toastIdRef.current = toast({
+        title: "Error configuring lab",
+        description: err.apiError.status,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   const [vpnDownloadStatus, setVpnDownloadStatus] = useState("idle")

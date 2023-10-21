@@ -40,6 +40,7 @@ export const loginTeam = createAsyncThunk('team/login', async (reqData, { reject
 
 export const fetchTeam = createAsyncThunk('team/fetchTeam', async (obj, {rejectWithValue}) => {
     try {
+        apiClient.defaults.headers.Authorization = localStorage.getItem('token')
         const response = await apiClient.get('teams/self')
         return response.data
     }
@@ -54,6 +55,7 @@ export const fetchTeam = createAsyncThunk('team/fetchTeam', async (obj, {rejectW
 
 export const configureLab = createAsyncThunk('team/configureLab', async (reqData, {rejectWithValue}) => {
     try {
+        apiClient.defaults.headers.Authorization = localStorage.getItem('token')
         const response = await apiClient.post('labs', reqData)
         return response.data
     }

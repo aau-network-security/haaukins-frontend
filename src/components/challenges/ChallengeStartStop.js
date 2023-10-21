@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Center, Fade, ScaleFade, Icon, Collapse } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Center, Fade, ScaleFade, Icon, Collapse, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { MdCheckCircle } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,31 +55,50 @@ function ChallengeStartStop({ parentExerciseTag }) {
     
   }, [loggedInTeam]);
 
+  const toast = useToast();
+  const toastIdRef = React.useRef();
+
   const exerciseStart = async () => {
     try {
       const response = await dispatch(startExercise({parentTag: parentExerciseTag})).unwrap()
-      setStartStopError("");
-      setSuccess(true)
-      setTimeout(() => setSuccess(false), 3000)
+      toastIdRef.current = toast({
+        title: "Challenge started",
+        description: "The challenge was successfully started",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (err) {
       console.log("got error starting exercise", err)
-      setStartStopError(err.apiError.status);
-      setSuccess(false)
-      setTimeout(() => setStartStopError(""), 5000)
+      toastIdRef.current = toast({
+        title: "Challenge start failed",
+        description: err.apiError.status,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   }
 
   const exerciseStop = async () => {
     try {
       const response = await dispatch(stopExercise({parentTag: parentExerciseTag})).unwrap()
-      setStartStopError("");
-      setSuccess(true)
-      setTimeout(() => setSuccess(false), 3000)
+      toastIdRef.current = toast({
+        title: "Challenge stopped",
+        description: "The challenge was successfully stopped",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (err) {
       console.log("got error starting exercise", err)
-      setStartStopError(err.apiError.status);
-      setSuccess(false)
-      setTimeout(() => setStartStopError(""), 5000)
+      toastIdRef.current = toast({
+        title: "Challenge stop failed",
+        description: err.apiError.status,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   }
 
@@ -113,30 +132,7 @@ function ChallengeStartStop({ parentExerciseTag }) {
             </Button>
           )}
         </>
-      )}
-
-      <Box
-        position="absolute"
-        width="470px"
-        left="-297px"
-        top="45px"
-      >
-        <ScaleFade in={success} unmountOnExit>
-          <Center marginTop="15px">
-            <Icon color="#5caf8d" fontSize="30px" as={MdCheckCircle}></Icon>
-          </Center>
-        </ScaleFade>
-        <Collapse in={startStopError} unmountOnExit>
-          <Alert 
-          status='error' 
-          height="60px"
-          variant="top-accent"
-          >
-            <AlertIcon />
-            <AlertDescription margin="5px">{startStopError}</AlertDescription>
-          </Alert>
-        </Collapse>
-      </Box>      
+      )}    
     </>
   );
 }

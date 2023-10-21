@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertIcon, Box, Button, Center, Collapse, Fade, Icon, ScaleFade } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, Box, Button, Center, Collapse, Fade, Icon, ScaleFade, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetExercise } from "../../features/exercises/exerciseSlice";
@@ -32,17 +32,28 @@ function ChallengeReset({ parentExerciseTag }) {
     }
   }, [status, loggedInTeam])
 
+  const toast = useToast();
+  const toastIdRef = React.useRef();
   const exerciseReset = async () => {
     try {
       const response = await dispatch(resetExercise({parentTag: parentExerciseTag})).unwrap()
       setResetError("");
-      setSuccess(true)
-      setTimeout(() => setSuccess(false), 3000)
+      toastIdRef.current = toast({
+        title: "Challenge reset",
+        description: "The challenge was successfully reset",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (err) {
       console.log("got error starting exercise", err)
-      setResetError(err.apiError.status);
-      setSuccess(false);
-      setTimeout(() => setResetError(""), 3000)
+      toastIdRef.current = toast({
+        title: "Challenge reset failed",
+        description: err.apiError.status,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   }
 
@@ -60,57 +71,7 @@ function ChallengeReset({ parentExerciseTag }) {
         >
           Reset
         </Button>
-      )}
-      {eventInfo.type === "advanced" ? (
-        <Box
-        position="absolute"
-        width="470px"
-        left="-297px"
-        top="45px"
-      >
-        <ScaleFade in={success} unmountOnExit>
-          <Center marginTop="15px">
-            <Icon color="#5caf8d" fontSize="30px" as={MdCheckCircle}></Icon>
-          </Center>
-          
-        </ScaleFade>
-        <Collapse in={resetError} unmountOnExit>
-          <Alert 
-            status='error'
-            height="60px"
-            variant="top-accent"
-          >
-            <AlertIcon />
-            <AlertDescription margin="5px">{resetError}</AlertDescription>
-          </Alert>
-        </Collapse>
-      </Box>
-      ) : (
-        <Box
-        position="absolute"
-        width="470px"
-        left="-386px"
-        top="45px"
-      >
-        <ScaleFade in={success} unmountOnExit>
-          <Center marginTop="15px">
-            <Icon color="#5caf8d" fontSize="30px" as={MdCheckCircle}></Icon>
-          </Center>
-          
-        </ScaleFade>
-        <Collapse in={resetError} unmountOnExit>
-          <Alert 
-            status='error'
-            height="60px"
-            variant="top-accent"
-          >
-            <AlertIcon />
-            <AlertDescription margin="5px">{resetError}</AlertDescription>
-          </Alert>
-        </Collapse>
-      </Box>
-      )}
-      
+      )}      
     </>
   );
 }
