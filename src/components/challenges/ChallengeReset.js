@@ -56,9 +56,8 @@ function ChallengeReset({ parentExerciseTag }) {
     <>
       {typeof loggedInTeam.lab !== "undefined" && (
         <Button
-          backgroundColor="#211a52"
-          _hover={{ backgroundColor: "#18123a" }}
-          color="#dfdfe3"
+          colorScheme="aau.button"
+          color="#fff"
           variant="solid"
           onClick={exerciseReset}
           isLoading={isLoading}

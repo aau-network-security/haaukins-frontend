@@ -105,9 +105,8 @@ function ChallengeStartStop({ parentExerciseTag }) {
         <>
           {challengeStatus === "stopped" ? (
             <Button
-              backgroundColor="#5caf8d"
-              _hover={{ backgroundColor: "#4c9a79" }}
-              color="#dfdfe3"
+              colorScheme="aau.buttonGreen"
+              color="#fff"
               variant="solid"
               onClick={exerciseStart}
               isLoading={isLoading}
@@ -117,9 +116,8 @@ function ChallengeStartStop({ parentExerciseTag }) {
             </Button>
           ) : (
             <Button
-              backgroundColor="#bf3d3d"
-              _hover={{ backgroundColor: "#9b3131" }}
-              color="#dfdfe3"
+              colorScheme="aau.buttonRed"
+              color="#fff"
               variant="solid"
               onClick={exerciseStop}
               isLoading={isLoading}
