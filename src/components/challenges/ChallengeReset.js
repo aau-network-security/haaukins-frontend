@@ -1,20 +1,16 @@
-import { Alert, AlertDescription, AlertIcon, Box, Button, Center, Collapse, Fade, Icon, ScaleFade, useToast } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetExercise } from "../../features/exercises/exerciseSlice";
-import { MdCheckCircle } from "react-icons/md";
 
 function ChallengeReset({ parentExerciseTag }) {
   const loggedInTeam = useSelector((state) => state.team.loggedInTeam);
   const status = useSelector((state) => state.exercise.status);
-  const eventInfo = useSelector((state) => state.event.eventinfo);
 
   const dispatch = useDispatch()
 
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [resetError, setResetError] = useState("");
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     if (loggedInTeam.status === "runningExCommand" && status !== "resetting") {
@@ -37,7 +33,6 @@ function ChallengeReset({ parentExerciseTag }) {
   const exerciseReset = async () => {
     try {
       const response = await dispatch(resetExercise({parentTag: parentExerciseTag})).unwrap()
-      setResetError("");
       toastIdRef.current = toast({
         title: "Challenge reset",
         description: "The challenge was successfully reset",

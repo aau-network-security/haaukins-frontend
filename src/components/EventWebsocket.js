@@ -55,10 +55,12 @@ function EventWebsocket() {
           webSocket.onerror = function (err) {
             console.log('Socket encountered error: ', err.message, 'Closing socket');
             webSocket.close();
+            setTimeout(() => setWebSocket(new WebSocket(wsUrl), 1000))
           };
       
           return () => {
              webSocket.close();
+             setTimeout(() => setWebSocket(new WebSocket(wsUrl), 1000))
           };
         }
       }, [webSocket]);

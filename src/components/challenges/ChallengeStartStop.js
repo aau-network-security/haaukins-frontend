@@ -1,6 +1,5 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Center, Fade, ScaleFade, Icon, Collapse, useToast } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { MdCheckCircle } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { startExercise, stopExercise } from "../../features/exercises/exerciseSlice";
 
@@ -13,8 +12,6 @@ function ChallengeStartStop({ parentExerciseTag }) {
   
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [startStopError, setStartStopError] = useState("");
-  const [success, setSuccess] = useState(false)
 
   useEffect(() => {
     if (loggedInTeam.status === "runningExCommand" && stateStatus !== "starting/stopping") {

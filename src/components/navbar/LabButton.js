@@ -1,32 +1,27 @@
 import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
+  Box,
   Button,
   Flex,
-  Text,
-  background,
-  Box,
   HStack,
   IconButton,
-  useToast,
+  Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+  useToast
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { Link } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import MultipleVmConnectBotton from "./MultipleVmConnectButton";
-import { Tooltip } from "react-tooltip";
-import { configureLab } from "../../features/teams/teamSlice";
-import { BASE_URL } from "../../api/client";
 import { MdRefresh } from "react-icons/md";
-import AlertDialogResetVm from "../AlertDialogResetVm";
+import { useDispatch, useSelector } from "react-redux";
+import { Tooltip } from "react-tooltip";
+import { BASE_URL } from "../../api/client";
 import { resetVm } from "../../features/labs/labSlice";
+import { configureLab } from "../../features/teams/teamSlice";
+import AlertDialogResetVm from "../AlertDialogResetVm";
+import MultipleVmConnectBotton from "./MultipleVmConnectButton";
 
 export default function LabButton({display, inDrawer}) {
   const dispatch = useDispatch()

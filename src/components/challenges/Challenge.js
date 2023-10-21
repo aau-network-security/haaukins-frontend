@@ -1,5 +1,4 @@
 import { Box, Button, Center, Text, VStack } from "@chakra-ui/react";
-import { template } from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
 
