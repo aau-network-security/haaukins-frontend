@@ -1,5 +1,5 @@
 import { Box, Center, Flex, Text, Icon } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SlGraph } from "react-icons/sl";
 import { useDispatch, useSelector } from "react-redux";
 import ScoreGraph from "../components/scoreboard/ScoreGraph";
@@ -12,6 +12,15 @@ export default function ScoreBoardPage() {
   useEffect(() => {
     dispatch(fetchScores(eventinfo));
   }, [dispatch]);
+
+  useEffect(() => {
+    const interval = setInterval(() => dispatch(fetchScores(eventinfo)), 5000);
+    dispatch(fetchScores(eventinfo));
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <Flex maxW={"1140px"} w="100%" m={"auto"} flexDir="column" color="#211a52">
       <Box w="100%" marginTop="50px" marginBottom="50px">

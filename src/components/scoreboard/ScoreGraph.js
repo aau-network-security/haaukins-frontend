@@ -18,6 +18,10 @@ function ScoreGraph() {
     xAxis: {
       type: 'time',
       boundaryGap: false,
+      max: () => {
+        let now = new Date().toISOString();
+        return now
+      }
     },
     yAxis: {
       type: 'value',
