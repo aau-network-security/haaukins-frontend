@@ -10,9 +10,7 @@ function ScoreGraph() {
   const options = {
     legend: {
       // Try 'horizontal'
-      orient: 'vertical',
-      right: 10,
-      top: 'center',
+      orient: 'horizontal',
       selectedMode: false,
     },
     xAxis: {

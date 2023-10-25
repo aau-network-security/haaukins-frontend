@@ -61,7 +61,7 @@ export default function ScoreBoardPage() {
       <Checkbox value={autoRefreshEnabled} onChange={onCheckChange}>Enabled</Checkbox>
       </Flex>
       <Text fontSize="12px">Auto refreshing resets "in chart" selections in the table</Text>
-      <Box h="500px">
+      <Box h="500px" marginTop="20px">
         <ScoreGraph/>
       </Box>
       <Box
