@@ -14,7 +14,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
-import { FaFlagCheckered, FaNetworkWired, FaQuestion } from "react-icons/fa";
+import { FaFlagCheckered, FaNetworkWired, FaQuestion,FaToolbox } from "react-icons/fa";
 import { MdOutlinedFlag } from "react-icons/md";
 import { NavLink as ReactLink } from "react-router-dom";
 import { RiUserSettingsLine, RiUserAddLine } from "react-icons/ri";
@@ -137,6 +137,15 @@ export default function Navbar() {
                 icon={FaQuestion}
                 title="FAQ"
                 to="/faq"
+              />
+               <NavItem
+                navSize={navSize}
+                displayTooltip={false}
+                displayTitle
+                scrollSensitive={true}
+                icon={FaToolbox}
+                title="Hints"
+                to="/hints"
               />
             </>
           )}

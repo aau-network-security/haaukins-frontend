@@ -7,7 +7,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 
 import App from './App';
 import './App.css'
-import './github-markdown.css'
+import './github-markdown-light.css'
 export const defaultTheme = {
   colors: {
     aau: {
