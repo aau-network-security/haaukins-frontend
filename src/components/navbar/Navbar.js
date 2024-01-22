@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Avatar,
   Center,
   Drawer,
   DrawerBody,
@@ -25,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutTeam } from "../../features/teams/teamSlice";
 import { Link } from "react-router-dom";
 import LabButton from "./LabButton";
+import { Tooltip } from "react-tooltip";
 
 // TODO new logos
 export default function Navbar() {
@@ -182,14 +184,20 @@ export default function Navbar() {
               spacing="10px"
               display={navSize === "small" ? "none" : "flex"}
             >
-              <NavItem
+            <Avatar name={loggedInTeam.username} id="avatar" bg="aau.primary" size="sm"/>
+              <Tooltip 
+                  anchorId={"avatar"}
+                  content={loggedInTeam.username}
+                  place="bottom"
+                />
+              {/* <NavItem
                 navSize={navSize}
                 displayTooltip={true}
                 scrollSensitive={true}
                 icon={RiUserSettingsLine}
                 title="Profile"
                 to="/profile"
-              />
+              /> */}
               <NavItem
                 navSize={navSize}
                 scrollSensitive={true}
@@ -316,15 +324,8 @@ export default function Navbar() {
                     marginTop="30px"
                     display={navSize === "small" ? "flex" : "none"}
                   >
-                    <NavItem
-                      navSize={"large"}
-                      scrollSensitive={false}
-                      displayTitle
-                      icon={RiUserSettingsLine}
-                      title="Profile"
-                      to="/profile"
-                      customClickEvent={onClose}
-                    />
+
+                    <Avatar name={loggedInTeam.username} id="avatar" bg="aau.primary" size="md"/>
                     <NavItem
                       navSize={"large"}
                       scrollSensitive={false}

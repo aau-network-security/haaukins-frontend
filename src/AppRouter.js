@@ -126,7 +126,6 @@ function AppRouter() {
                 <Route path="hints" element={<HintsPage />} />
                 <Route path="challenges" element={<ChallengesPage />} />
                 <Route path="hosts" element={<HostsPage />} />
-                <Route path="profile" element={<ProfilePage />} />
                 {!publicScoreboard && (
                   <Route path="scoreboard" element={<ScoreBoardPage />} />
                 )}
