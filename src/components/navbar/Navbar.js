@@ -144,7 +144,7 @@ export default function Navbar() {
                 displayTitle
                 scrollSensitive={true}
                 icon={FaToolbox}
-                title="Hints"
+                title="Toolbox"
                 to="/hints"
               />
             </>

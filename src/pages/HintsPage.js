@@ -36,7 +36,7 @@ export default function HintsPage() {
       <Box w="100%" marginTop="50px" marginBottom="50px">
         <Center w="100%" fontSize="50px">
           <Icon as={FaToolbox} />
-          <Text marginLeft="20px">Hints</Text>
+          <Text marginLeft="20px">Toolbox</Text>
         </Center>
       </Box>
       <Box
