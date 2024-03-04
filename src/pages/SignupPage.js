@@ -272,16 +272,6 @@ export default function SignupPage() {
             </Stack>
           </form>
         </Box>
-        <Text>
-          By registering a user you accept the {" "}
-          <Link
-            href="http://danishcybersecurityclusters.dk/"
-            target="_blank"
-            color="#54616e"
-          >
-            Privacy Policy
-          </Link>
-        </Text>
       </Stack>
     </Flex>
   );
