@@ -39,7 +39,7 @@ export default function SignupPage() {
   const handleShowClick = () => setShowPassword(!showPassword);
 
   const [reqDataState, setData] = useState({
-    email: "",
+    email: "hardcoded@email.dk",
     username: "",
     password: "",
     confirmPassword: "",
@@ -60,7 +60,7 @@ export default function SignupPage() {
     }
 
     let reqData = {
-      email: reqDataState.email,
+      email: "hardcoded@email.dk",
       username: reqDataState.username,
       password: reqDataState.password,
       confirmPassword: reqDataState.confirmPassword,
@@ -187,20 +187,6 @@ export default function SignupPage() {
               backgroundColor="whiteAlpha.900"
               boxShadow="md"
             >
-              <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents="none"
-                    children={<CMdAlternateEmail color="gray.300" />}
-                  />
-                  <Input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    onChange={changeHandler}
-                  />
-                </InputGroup>
-              </FormControl>
               <FormControl>
                 <InputGroup>
                   <InputLeftElement
