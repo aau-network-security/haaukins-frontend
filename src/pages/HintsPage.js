@@ -1,27 +1,26 @@
 import { Box, Center, Flex, Icon, Spinner, Text } from "@chakra-ui/react";
-import { FaQuestion } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import { faQ } from "@fortawesome/free-solid-svg-icons";
+import { FaQuestion, FaToolbox } from "react-icons/fa";
 import LoadingSpin from "react-loading-spin";
 
-export default function FaqPage() {
-  const [faqMd, setFaqMd] = useState("");
+export default function HintsPage() {
+  const [toolMd, setToolMd] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
-    const url = "https://api.github.com/gists/baf85e1faa3847597c405f2a00209d52";
+    const url = "https://api.github.com/gists/21205ae9ec5cc8fda55abdc2b2a527fc";
     setIsLoading(true);
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        setFaqMd(data.files["FAQ.md"].content);
+        setToolMd(data.files["tools-english.md"].content);
         setIsLoading(false);
       })
       .catch((error) => {
         setIsLoading(false);
       });
   }, []);
-
+  console.log(toolMd)
   const generateSlug = (string) => {
     let str = string.replace(/^\s+|\s+$/g, "");
     str = str.toLowerCase();
@@ -36,8 +35,8 @@ export default function FaqPage() {
     <Flex maxW={"1140px"} w="100%" m={"auto"} flexDir="column" color="#211a52">
       <Box w="100%" marginTop="50px" marginBottom="50px">
         <Center w="100%" fontSize="50px">
-          <Icon as={FaQuestion} />
-          <Text marginLeft="20px">FAQ</Text>
+          <Icon as={FaToolbox} />
+          <Text marginLeft="20px">Toolbox</Text>
         </Center>
       </Box>
       <Box
@@ -58,7 +57,7 @@ export default function FaqPage() {
           </Center>
           
         ) : (
-          <ReactMarkdown
+          <ReactMarkdown 
             components={{
               h2: ({ node, ...props }) => (
                 <h2 {...props}>
@@ -75,9 +74,11 @@ export default function FaqPage() {
               a: ({ node, ...props }) => (
                 <a style={{ color: "#54616e" }} {...props}></a>
               ),
+              
             }}
+            
           >
-            {faqMd}
+            {toolMd}
           </ReactMarkdown>
         )}
       </Box>

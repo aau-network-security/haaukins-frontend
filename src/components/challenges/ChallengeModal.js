@@ -1,14 +1,9 @@
 import {
-    Alert,
-  AlertDescription,
-  AlertIcon,
   Box,
   Button,
   Center,
-  Collapse,
   Flex,
   FormControl,
-  FormLabel,
   HStack,
   Input,
   InputGroup,
@@ -18,9 +13,7 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
-  Spacer,
   Stack,
   Tab,
   TabList,
@@ -28,10 +21,10 @@ import {
   TabPanels,
   Tabs,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaFlag } from "react-icons/fa";
 import { MdFlag } from "react-icons/md";
 import ChallengeSolvesTable from "./ChallengeSolvesTable";
 import {
@@ -47,8 +40,10 @@ export default function ChallengeModal({ isOpen, onClose }) {
     (state) => state.exercise.selectedExercise
   );
   const [flagState, setFlagState] = useState("");
-  const [submitError, setSubmitError] = useState("");
   const dispatch = useDispatch();
+  
+  const toast = useToast();
+  const toastIdRef = React.useRef();
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -59,12 +54,23 @@ export default function ChallengeModal({ isOpen, onClose }) {
     };
     try {
       const response = await dispatch(solveExercise(reqData)).unwrap();
-      setSubmitError("");
       dispatch(fetchExercises());
+      toastIdRef.current = toast({
+        title: "Challenge successfully solved",
+        description: "The flag you entered was correct",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
       closeModal();
     } catch (err) {
-      setSubmitError(err.apiError.status);
-      setTimeout(() => setSubmitError(""), 3000)
+      toastIdRef.current = toast({
+        title: "Challenge solve failed",
+        description: err.apiError.status,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
     setFlagState("");
   };
@@ -74,7 +80,6 @@ export default function ChallengeModal({ isOpen, onClose }) {
   };
 
   const closeModal = () => {
-    setSubmitError("");
     setFlagState("");
     onClose();
   };
@@ -174,14 +179,6 @@ export default function ChallengeModal({ isOpen, onClose }) {
                               />
                             </InputGroup>
                           </FormControl>
-                          <Collapse in={submitError}>
-                            <Alert status="error">
-                              <AlertIcon />
-                              <AlertDescription>
-                                {submitError}
-                              </AlertDescription>
-                            </Alert>
-                          </Collapse>
                           <Button
                             w="100%"
                             type="submit"

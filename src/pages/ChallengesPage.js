@@ -95,13 +95,14 @@ export default function ChallengesPage() {
         <Text marginLeft="10px" fontSize="25px">
           <Countdown date={Date.parse(loggedInTeam.lab.labInfo.expiresAtTime)}/>
           
+          <span id="extend-lab-button" 
+            style={{marginLeft: '10px'}}
+          >
           <IconButton 
-            id="extend-lab-button"
             icon={<MdOutlineMoreTime size="20px"/>} 
             top="-2px"
             position="relative"
             size="sm"
-            marginLeft="10px"
             backgroundColor="#54616e"
             _hover={{ backgroundColor: "#434d56" }}
             color="#dfdfe3"
@@ -110,6 +111,8 @@ export default function ChallengesPage() {
             isLoading={extendLabTimeStatus !== "idle" ? true: false}
             isDisabled={time > (new Date(loggedInTeam.lab.labInfo.expiresAtTime)).setHours((new Date(loggedInTeam.lab.labInfo.expiresAtTime)).getHours() - 1) ? false : true}
           />
+          </span>
+          
           
         </Text>
         </Center>

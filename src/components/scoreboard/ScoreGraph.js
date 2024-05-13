@@ -10,14 +10,16 @@ function ScoreGraph() {
   const options = {
     legend: {
       // Try 'horizontal'
-      orient: 'vertical',
-      right: 10,
-      top: 'center',
+      orient: 'horizontal',
       selectedMode: false,
     },
     xAxis: {
       type: 'time',
       boundaryGap: false,
+      max: () => {
+        let now = new Date().toISOString();
+        return now
+      }
     },
     yAxis: {
       type: 'value',
