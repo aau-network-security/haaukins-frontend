@@ -4,6 +4,7 @@ import { Link } from '@chakra-ui/react'
 import ifLogoBlack from '../assets/if_logo_black.png'
 import blueLogo from '../assets/bluelogo.png'
 import cyberSkillsLogoBlack from '../assets/cyberskills_logo_black.png'
+import campfireSecurityLogo from '../assets/campfirelogo.png'
 import daniaLogo from '../assets/da-90.png'
 import dtuLogo from '../assets/dtu-90.png'
 import keaLogo from '../assets/kea-90.jpg'
@@ -42,7 +43,7 @@ export default function HomePage() {
         >
           <Center>
             <Text>Founded by{' '}
-              <Link href="http://danishcybersecurityclusters.dk/" target="_blank" color="#54616e">Danish Cyber Security Clusters</Link>
+              <Link href="https://danishcybersecurityclusters.dk/" target="_blank" color="#54616e">Danish Cyber Security Clusters</Link>
               {' '}and supported by
             </Text>
           </Center>
@@ -64,7 +65,7 @@ export default function HomePage() {
           <Center>
             <Text>
               Developed at{' '}
-              <Link href="http://es.aau.dk/" target="_blank" color="#54616e">Aalborg University</Link>
+              <Link href="https://es.aau.dk/" target="_blank" color="#54616e">Aalborg University</Link>
               {' '}(Department of electronic systems)
             </Text>
           </Center>
@@ -104,8 +105,42 @@ export default function HomePage() {
             </Flex>
           </Center>
         </Box>
+        {/* campfire logo */}
+        <Box
+          marginTop="60px"
+        >
+          <Center>
 
+            <Text>
+              Maintained by {' '}
+              <Link href="https://campfiresecurity.dk/" target="_blank" color="#54616e">Campfire Security</Link>.  
+              </Text>
+          </Center>
+        </Box>
+        <Box
+        >
+          <Center>
+            <Link
+              href="https://campfiresecurity.dk/" 
+              target="_blank"
+            >
+              <Image w="600px" src={campfireSecurityLogo}/>
+            </Link>
+            
+          </Center>          
+        </Box>
+        <Box
+          marginTop="0px"
+        >
+          <Center>
 
+            <Text>
+               Experiencing problems with the platform? Reach out to our support at haaukins@campfiresecurity.dk 
+            </Text>
+          </Center>
+        </Box>
+
+        {/* cyberskills logo */}
         <Box
           marginTop="60px"
         >
