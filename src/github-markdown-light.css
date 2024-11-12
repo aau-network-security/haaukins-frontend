@@ -830,6 +830,8 @@
   line-height: 1.45;
   background-color: #f6f8fa;
   border-radius: 6px;
+  border-color: #211A52;
+  border-width: 2px;
 }
 
 .markdown-body pre code,

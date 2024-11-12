@@ -26,6 +26,7 @@ import EventNotFoundPage from "./pages/EventNotFoundPage";
 import { setEventInfo } from "./features/events/eventSlice";
 import EventWebsocket from "./components/EventWebsocket";
 import HostsPage from "./pages/HostsPage";
+import HintsPage from "./pages/HintsPage";
 function AppRouter() {
   const dispatch = useDispatch();
   let [ publicScoreboard, setPublicScoreboard ] = useState(false) //Should be from redux state
@@ -122,9 +123,9 @@ function AppRouter() {
               <Route element={<EventWebsocket />} >
                 <Route path="" element={<HomePage />} />
                 <Route path="faq" element={<FaqPage />} />
+                <Route path="hints" element={<HintsPage />} />
                 <Route path="challenges" element={<ChallengesPage />} />
                 <Route path="hosts" element={<HostsPage />} />
-                <Route path="profile" element={<ProfilePage />} />
                 {!publicScoreboard && (
                   <Route path="scoreboard" element={<ScoreBoardPage />} />
                 )}
