@@ -14,13 +14,15 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
-import { MdRefresh } from "react-icons/md";
+import { MdRefresh, MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "react-tooltip";
 import { BASE_URL } from "../../api/client";
-import { resetVm } from "../../features/labs/labSlice";
+import { resetVm, closeLab, cancelLabQueue } from "../../features/labs/labSlice";
 import { configureLab } from "../../features/teams/teamSlice";
 import AlertDialogResetVm from "../AlertDialogResetVm";
+import CloseLabAlertDialog from "../CloseLabAlertDialog";
+import CancelLabQueueAlertDialog from "../CancelLabQueueAlertDialog";
 import MultipleVmConnectBotton from "./MultipleVmConnectButton";
 
 export default function LabButton({display, inDrawer}) {
@@ -61,14 +63,89 @@ export default function LabButton({display, inDrawer}) {
     }
   }
 
-  const [isAlertOpen, setIsAlertOpen] = useState(false)
-  const onAlertClose = () => setIsAlertOpen(false)
+  const [isCloseLabLoading, setIsCloseLabLoading] = useState(false)
+  const CloseLab = async () => {
+    console.log("Closing lab");
+    try {
+      setIsCloseLabLoading(true)
+      const response = await dispatch(closeLab()).unwrap()
+      toastIdRef.current = toast({
+        title: "Lab closed",
+        description: "Your lab was successfully closed",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+      setIsCloseLabLoading(false)
+    } catch (err) {
+      setIsCloseLabLoading(false)
+      console.log("got error starting exercise", err)
+      toastIdRef.current = toast({
+        title: "Error closing lab",
+        description: err.apiError.status,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const [isCancelLabQueueLoading, setIsCancelLabQueueLoading] = useState(false)
+  const CancelLabQueue = async () => {
+    console.log("Cancelling lab queue");
+    try {
+      setIsCancelLabQueueLoading(true)
+      const response = await dispatch(cancelLabQueue()).unwrap()
+      toastIdRef.current = toast({
+        title: "Lab queue cancelled",
+        description: "Your succesfully cancelled waiting for a lab",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+      setIsCancelLabQueueLoading(false)
+    } catch (err) {
+      setIsCancelLabQueueLoading(false)
+      console.log("got error starting exercise", err)
+      toastIdRef.current = toast({
+        title: "Error cancelling lab queue",
+        description: err.apiError.status,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
+
+  const [isResetLabAlertOpen, setIsResetLabAlertOpen] = useState(false)
+  const onResetLabAlertClose = () => setIsResetLabAlertOpen(false)
   const cancelRef = React.useRef()
 
-  const openAlertDialog = () => {
+  const openResetLabAlertDialog = () => {
     console.log("Opening alert dialog")
-    setIsAlertOpen(true)
+    setIsResetLabAlertOpen(true)
   }
+
+  const [isCloseLabAlertOpen, setIsCloseLabAlertOpen] = useState(false)
+  const onCloseLabAlertClose = () => setIsCloseLabAlertOpen(false)
+  const closeRef = React.useRef()
+
+  const openCloseLabAlertDialog = () => {
+    console.log("Opening alert dialog")
+    setIsCloseLabAlertOpen(true)
+  }
+
+  const [isCancelLabQueueAlertOpen, setIsCancelLabQueueAlertOpen] = useState(false)
+  const onCancelLabQueueAlertClose = () => setIsCancelLabQueueAlertOpen(false)
+  const cancelLabQueueRef = React.useRef()
+
+  const openCancelLabQueueAlertDialog = () => {
+    console.log("Opening alert dialog")
+    setIsCancelLabQueueAlertOpen(true)
+  }
+
+   
 
   const stateStatus = useSelector((state) => state.lab.status);
   const [isLoading, setIsLoading] = useState(false);
@@ -243,7 +320,7 @@ export default function LabButton({display, inDrawer}) {
                       : { backgroundColor: "#434d56" }
                   }
                   variant="solid"
-                  onClick={() => openAlertDialog()}
+                  onClick={() => openResetLabAlertDialog()}
                   isLoading={isLoading}
                   isDisabled={isDisabled}
                 />
@@ -308,6 +385,27 @@ export default function LabButton({display, inDrawer}) {
                 </MenuList>
               </Menu>
             )}
+            <IconButton 
+                  icon={<MdClose fontSize="18px"/>}
+                  id={"close-lab"}
+                  backgroundColor={"#bf3d3d"}
+                  color={"#dfdfe3" }
+                  _hover={
+                    !scrolledToTop || inDrawer
+                      ? { backgroundColor: "#c8c8d0" }
+                      : { backgroundColor: "#434d56" }
+                  }
+                  marginLeft="10px"
+                  variant="solid"
+                  onClick={() => openCloseLabAlertDialog()}
+                  isLoading={isCloseLabLoading}
+                  isDisabled={isCloseLabLoading}
+            />
+            <Tooltip 
+              anchorId={"close-lab"}
+              content={"Close lab"}
+              place="bottom"
+            />
           </>
         ) : (
           <>
@@ -386,16 +484,54 @@ export default function LabButton({display, inDrawer}) {
                     </MenuList>
                   </Menu>
                 )}
+                {(loggedInTeam.status === "inLabQueue" || loggedInTeam.status === "waitingForLab") && (
+                  <>
+                    <IconButton 
+                      icon={<MdClose fontSize="18px"/>}
+                      id={"cancel-lab-queue"}
+                      backgroundColor={"#bf3d3d"}
+                      color={"#dfdfe3" }
+                      _hover={
+                        !scrolledToTop || inDrawer
+                          ? { backgroundColor: "#c8c8d0" }
+                          : { backgroundColor: "#434d56" }
+                      }
+                      marginLeft="10px"
+                      variant="solid"
+                      onClick={() => openCancelLabQueueAlertDialog()}
+                      isLoading={isCancelLabQueueLoading}
+                      isDisabled={isCancelLabQueueLoading}
+                    />
+                    <Tooltip 
+                      anchorId={"cancel-lab-queue"}
+                      content={"Cancel waiting for a lab"}
+                      place="bottom"
+                    />
+                  </>
+                )}
+                
               </>
             )}
           </>
         )}
         <AlertDialogResetVm
           vmName="VM"
-          isOpen={isAlertOpen}
-          onClose={onAlertClose}
+          isOpen={isResetLabAlertOpen}
+          onClose={onResetLabAlertClose}
           cancelRef={cancelRef}
           resetVm={vmReset}
+        />
+        <CloseLabAlertDialog
+          isOpen={isCloseLabAlertOpen}
+          onClose={onCloseLabAlertClose}
+          cancelRef={closeRef}
+          closeLab={CloseLab}
+        />
+        <CancelLabQueueAlertDialog
+          isOpen={isCancelLabQueueAlertOpen}
+          onClose={onCancelLabQueueAlertClose}
+          cancelRef={cancelLabQueueRef}
+          cancelLabQueue={CancelLabQueue}
         />
       </Flex>
     </>
