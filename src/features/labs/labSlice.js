@@ -43,6 +43,38 @@ export const resetVm = createAsyncThunk('lab/resetVm', async (vm, {rejectWithVal
     }
 })
 
+export const closeLab = createAsyncThunk('lab/closeLab', async (lab, {rejectWithValue}) => {
+    try {
+        apiClient.defaults.headers.Authorization = localStorage.getItem('token')
+        const response = await apiClient.delete('labs/close')
+        return response.data
+    }
+    catch (err) {
+        if (!err.response) {
+            throw err
+        }
+        let error = { axiosMessage: err.message, axiosCode: err.code, apiError: err.response.data, apiStatusCode: err.response.status}
+        console.log(error)
+        return rejectWithValue(error)
+    }
+})
+
+export const cancelLabQueue = createAsyncThunk('lab/cancelLabQueue', async (lab, {rejectWithValue}) => {
+    try {
+        apiClient.defaults.headers.Authorization = localStorage.getItem('token')
+        const response = await apiClient.delete('labs/queue/cancel')
+        return response.data
+    }
+    catch (err) {
+        if (!err.response) {
+            throw err
+        }
+        let error = { axiosMessage: err.message, axiosCode: err.code, apiError: err.response.data, apiStatusCode: err.response.status}
+        console.log(error)
+        return rejectWithValue(error)
+    }
+})
+
 const labSlice = createSlice({
     name: 'lab',
     initialState,
