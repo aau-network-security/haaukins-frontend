@@ -91,6 +91,14 @@ body{
   /* height: 100%; */
 }
 
+.partner-image {
+  max-width: 100px;
+  max-height: 90px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
 /* .container {
   padding: 16px 16px 16px 16px;
   width: 100%;

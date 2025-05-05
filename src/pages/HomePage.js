@@ -7,6 +7,7 @@ import cyberSkillsLogoBlack from '../assets/cyberskills_logo_black.png'
 import campfireSecurityLogo from '../assets/campfirelogo.png'
 import daniaLogo from '../assets/da-90.png'
 import dtuLogo from '../assets/dtu-90.png'
+import aauLogo from '../assets/aau-uk.png'
 import keaLogo from '../assets/kea-90.jpg'
 import happyLogo from '../assets/happy-90.png'
 import eaaLogo from '../assets/eaa-90.png'
@@ -184,40 +185,46 @@ export default function HomePage() {
           <Center>
             <HStack spacing="15px">
             <Link
+              href="https://aau.dk/" 
+              target="_blank"
+            >
+              <Image className="partner-image" src={aauLogo}/> 
+            </Link>
+            <Link
               href="https://happy42.dk/" 
               target="_blank"
             >
-              <Image w="100px" src={happyLogo}/> 
+              <Image className="partner-image" src={happyLogo}/> 
             </Link>
             <Link
               href="https://eadania.dk/" 
               target="_blank"
             >
-              <Image w="100px" src={daniaLogo}/> 
+              <Image className="partner-image" src={daniaLogo}/> 
             </Link>
             <Link
               href="https://www.dtu.dk/" 
               target="_blank"
             >
-              <Image w="100px" src={dtuLogo}/> 
+              <Image className="partner-image" src={dtuLogo}/> 
             </Link>
             <Link
               href="https://kea.dk/" 
               target="_blank"
             >
-              <Image w="100px" src={keaLogo}/> 
+              <Image className="partner-image" src={keaLogo}/> 
             </Link>
             <Link
               href="https://www.eaaa.dk/" 
               target="_blank"
             >
-              <Image w="100px" src={eaaLogo}/>
+              <Image className="partner-image" src={eaaLogo}/>
             </Link>
             <Link
               href="https://www.cbs.dk/" 
               target="_blank"
             >
-              <Image w="100px" src={cbslogo}/> 
+              <Image className="partner-image" src={cbslogo}/> 
             </Link>
             </HStack>
           </Center>
